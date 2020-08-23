@@ -20,6 +20,7 @@ buildscript {
 plugins {
     id "com.github.hierynomus.license" version "0.15.0"
     id 'com.github.kt3k.coveralls' version '2.8.2'
+    id 'pmd'
 }
 
 apply plugin : 'java'
@@ -70,12 +71,18 @@ processResources {
 }
 
 // [ Plugin 세부 설정 ] ------------------------------------------------------------------------
+// Reference : https://java.ihoney.pe.kr/367
 // 1. Code Style 라이브러리
 checkstyle {
-    toolVersion = "7.6"
-    configFile = rootProject.file('codequality/checkstyle.xml') as File
-    ignoreFailures = true
-    showViolations = true
+    ignoreFailures = true // 분석결과 예외가 발생하면 빌드실패 발생시키는 것을 제외
+    configFile = file("checkstyle.xml") // 1.1.2 에서 작성한 checkstyle 파일 지정
+    reportsDir = file("${buildDir}/checkstyle-output") // 리포트 파일이 위치할 디렉토리 지정
+}
+
+checkstyleMain {
+    reports {
+        xml.destination = file("${checkstyle.reportsDir}/checkstyle-report.xml") // 리포트 파일의 위치 및 파일명 지정
+    }
 }
 
 // 2. 코드 내 라이센스 관련 라이브러리
@@ -83,13 +90,28 @@ checkstyle {
 // 이제 헤더에 라이선스가 기록되지 않은 소스코드를 만들고 빌드하면 빌드 에러가 발생할 것이다.
 // `./gradlew licenseFormat` 를 실행하면 자동으로 라이선스가 빠진 소스코드에 헤더를 넣어준다.
 license {
-    header rootProject.file('codequality/HEADER')
+    header rootProject.file('LICENSE')
     strictCheck true
     ext.year = Calendar.getInstance().get(Calendar.YEAR)
-    ext.name = 'Company'
-    ext.email = 'support@company.com'
+    ext.name = 'wnsgml972'
+    ext.email = 'wnsgml972@gmail.com'
 }
 
 // 3. 코드 커버리지 라이브러리
 // Reference : https://jojoldu.tistory.com/275
 // cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
+
+// 4.
+
+pmd {
+    ignoreFailures = true // 분석결과 예외가 발생하면 빌드실패 발생시키는 것을 제외
+    reportsDir = file("${buildDir}/pmd-output")
+}
+
+pmdMain {
+    reports {
+        xml.destination = file("${pmd.reportsDir}/pmd-report.xml")
+        xml.enabled = true
+    }
+}
+
