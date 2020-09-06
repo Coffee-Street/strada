@@ -1,33 +1,28 @@
 buildscript {
     ext {
-        springBootVersion = '2.3.2.RELEASE'
-
+        springBootVersion = "2.3.2.RELEASE"
     }
     repositories {
         mavenCentral()
         jcenter()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
     }
 }
 
 plugins {
     id "com.github.hierynomus.license" version "0.15.0"
-    id 'com.github.kt3k.coveralls' version '2.8.2'
-    id 'pmd'
+    id "pmd"
 }
 
-apply plugin : 'java'
-apply plugin : 'idea'
-apply plugin : 'org.springframework.boot'
-apply plugin : 'io.spring.dependency-management'
-apply plugin : 'checkstyle' // 정적분석 툴
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'checkstyle'
 
 group = 'com.wnsgml972'
 version = '1.0-SNAPSHOT'
@@ -71,11 +66,12 @@ processResources {
 }
 
 // [ Plugin 세부 설정 ] ------------------------------------------------------------------------
+// 1. Check Style
 // Reference : https://java.ihoney.pe.kr/367
-// 1. Code Style 라이브러리
+// Code Style 라이브러리
 checkstyle {
     ignoreFailures = true // 분석결과 예외가 발생하면 빌드실패 발생시키는 것을 제외
-    configFile = file("checkstyle.xml") // 1.1.2 에서 작성한 checkstyle 파일 지정
+    configFile = file("/checkstyle.xml") // 1.1.2 에서 작성한 checkstyle 파일 지정
     reportsDir = file("${buildDir}/checkstyle-output") // 리포트 파일이 위치할 디렉토리 지정
 }
 
@@ -85,24 +81,9 @@ checkstyleMain {
     }
 }
 
-// 2. 코드 내 라이센스 관련 라이브러리
-// 프로젝트의 모든 소스코드에는 라이선스가 표기되어 있어야 한다는 요구사항이 있다고 가정하자.
-// 이제 헤더에 라이선스가 기록되지 않은 소스코드를 만들고 빌드하면 빌드 에러가 발생할 것이다.
-// `./gradlew licenseFormat` 를 실행하면 자동으로 라이선스가 빠진 소스코드에 헤더를 넣어준다.
-license {
-    header rootProject.file('LICENSE')
-    strictCheck true
-    ext.year = Calendar.getInstance().get(Calendar.YEAR)
-    ext.name = 'wnsgml972'
-    ext.email = 'wnsgml972@gmail.com'
-}
-
-// 3. 코드 커버리지 라이브러리
-// Reference : https://jojoldu.tistory.com/275
-// cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
-
-// 4.
-
+// 2. pmd
+// Reference : https://java.ihoney.pe.kr/367
+// 코드 정적 분석 라이브러리
 pmd {
     ignoreFailures = true // 분석결과 예외가 발생하면 빌드실패 발생시키는 것을 제외
     reportsDir = file("${buildDir}/pmd-output")
@@ -115,3 +96,39 @@ pmdMain {
     }
 }
 
+// 3. license
+// 코드 내 라이센스 관련 라이브러리
+// 프로젝트의 모든 소스코드에는 라이선스가 표기되어 있어야 한다는 요구사항이 있다고 가정하자.
+// 이제 헤더에 라이선스가 기록되지 않은 소스코드를 만들고 빌드하면 빌드 에러가 발생할 것이다.
+// `./gradlew licenseFormat` 를 실행하면 자동으로 라이선스가 빠진 소스코드에 헤더를 넣어준다.
+license {
+    header rootProject.file('/LICENSE')
+    strictCheck true
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.name = 'wnsgml972'
+    ext.email = 'wnsgml972@gmail.com'
+}
+
+
+// 4. Jacoco
+// Test Coverage 라이브러리
+// TODO: 테스트 커버리지 라이브러리 CI / CD 완성하기
+// Referebce : https://nesoy.github.io/articles/2018-04/Coveralls
+// Referebce : https://woowabros.github.io/experience/2020/02/02/jacoco-config-on-gradle-project.html
+
+
+// 5. uploadArchives
+// 생성된 아티펙트를 배포할 수 있음
+/*
+uploadArchives {
+    repositories {
+        ivy {
+            credentials {
+                username "username"
+                password "pw"
+            }
+            url "http://repo.mycompany.com"
+        }
+    }
+}
+*/
