@@ -1,0 +1,26 @@
+version: "3"
+services:
+    test_database:
+        # 컨테이너 이름을 주고 싶다면 작성한다
+        # container_name: test_database
+        image: mysql:5.7
+#        restart: always
+        environment:
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: root
+          MYSQL_PASSWORD: ''
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+        ports:
+          - 3307:3306
+        command:
+          - "--character-set-server=utf8mb4"
+          - "--collation-server=utf8mb4_unicode_ci"
+#        volumes:
+#          - $HOME/mnt/mysql:/var/lib/mysql
+    test_application:
+        build: .
+        ports:
+          - 8080:8080
+        depends_on:
+          - test_database
