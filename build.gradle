@@ -215,3 +215,9 @@ task testCoverage(type: Test) {
 // https://docs.codecov.io/docs/supported-languages
 // 뭐 따로 해줄 건 없고 Jacoco Report를 codecov.io에 travis로 보내주기만 하면 됨, travis에 해놓음
 
+// 6. fossa : Open Source Management for Enterprise Teams
+// Reference : https://fossa.com/
+// Referebce : https://github.com/fossas/fossa-cli
+// 5개 저장소 넘어가면 유료
+// 일단 라이센스 Bedge 용으로 사용 중
+
