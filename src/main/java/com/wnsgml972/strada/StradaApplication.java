@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.wnsgml972.fashion;
+package com.wnsgml972.strada;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FashionApplication {
+public class StradaApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FashionApplication.class, args);
+        SpringApplication.run(StradaApplication.class, args);
     }
 
 }

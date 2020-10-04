@@ -4,7 +4,7 @@ services:
         # 컨테이너 이름을 주고 싶다면 작성한다
         # container_name: test_database
         image: mysql:5.7
-#        restart: always
+#        restart: always # 항상 켜 놓을 건 아니니까? 직접 컴포즈 up해서 테스트 하는 게 나을 듯
         environment:
           MYSQL_DATABASE: test_db
           MYSQL_USER: root
@@ -17,7 +17,7 @@ services:
           - "--character-set-server=utf8mb4"
           - "--collation-server=utf8mb4_unicode_ci"
 #        volumes:
-#          - $HOME/mnt/mysql:/var/lib/mysql
+#          - $HOME/mnt/mysql:/var/lib/mysql # 내가 다른 제품 여기다가 마운트 하고 있어서 똑같이 해도 될지 모르겠넹
     test_application:
         build: .
         ports:
