@@ -143,7 +143,7 @@ jacocoTestReport {
 
 //      각 리포트 타입 마다 리포트 저장 경로를 설정할 수 있다.
 //      html.destination file("$buildDir/jacocoHtml")
-        xml.destination file("jacoco.xml")
+        xml.destination file(".jacoco.xml")
     }
 
     finalizedBy 'jacocoTestCoverageVerification'

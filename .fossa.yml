@@ -14,3 +14,4 @@ analyze:
     path: .
 
 # token : e3365319a4826a4a5f20a175d5f4f8c3
+# cli example : FOSSA_API_KEY=e3365319a4826a4a5f20a175d5f4f8c3 fossa analyze --project=strada
