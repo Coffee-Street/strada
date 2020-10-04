@@ -16,6 +16,7 @@ buildscript {
 plugins {
     id "com.github.hierynomus.license" version "0.15.0"
     id "pmd"
+    id 'jacoco'
 }
 
 apply plugin: 'java'
@@ -112,6 +113,106 @@ license {
 
 // 4. Jacoco
 // Test Coverage 라이브러리
-// TODO: 테스트 커버리지 라이브러리 CI / CD 완성하기
-// Referebce : https://nesoy.github.io/articles/2018-04/Coveralls
-// Referebce : https://woowabros.github.io/experience/2020/02/02/jacoco-config-on-gradle-project.html
+// jacoco Referebce : https://woowabros.github.io/experience/2020/02/02/jacoco-config-on-gradle-project.html
+// jacoco github bedge Referebce : https://github.com/dawnwords/jacoco-badge-gradle-plugin
+test {
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/jacoco.exec")
+    }
+
+    useJUnitPlatform()
+
+    finalizedBy 'jacocoTestReport'
+}
+
+jacoco {
+    // JaCoCo 버전
+    toolVersion = '0.8.5'
+
+//  테스트결과 리포트를 저장할 경로 변경
+//  default는 "${project.reporting.baseDir}/jacoco"
+//  reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+jacocoTestReport {
+    reports {
+        // 원하는 리포트를 켜고 끌 수 있다.
+        html.enabled true
+        xml.enabled false
+        csv.enabled false
+
+//      각 리포트 타입 마다 리포트 저장 경로를 설정할 수 있다.
+//      html.destination file("$buildDir/jacocoHtml")
+//      xml.destination file("$buildDir/jacoco.xml")
+    }
+
+    finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            // 'element'가 없으면 프로젝트의 전체 파일을 합친 값을 기준으로 한다.
+            limit {
+                // 'counter'를 지정하지 않으면 default는 'INSTRUCTION'
+                // 'value'를 지정하지 않으면 default는 'COVEREDRATIO'
+//                minimum = 0.30
+            }
+        }
+
+        rule {
+            // 룰을 간단히 켜고 끌 수 있다.
+            enabled = true
+
+            // 룰을 체크할 단위는 클래스 단위
+            element = 'CLASS'
+
+            // 브랜치 커버리지를 최소한 90% 만족시켜야 한다.
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+//                minimum = 0.90
+            }
+
+            // 라인 커버리지를 최소한 80% 만족시켜야 한다.
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+//                minimum = 0.80
+            }
+
+            // 빈 줄을 제외한 코드의 라인수를 최대 200라인으로 제한한다.
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+//                maximum = 200
+            }
+
+            // 커버리지 체크를 제외할 클래스들
+            excludes = [
+//                    '*.test.*',
+//                    '*.Kotlin*'
+            ]
+        }
+    }
+}
+
+task testCoverage(type: Test) {
+    group 'verification'
+    description 'Runs the unit tests with coverage'
+
+    dependsOn(':test',
+            ':jacocoTestReport',
+            ':jacocoTestCoverageVerification')
+
+    tasks['jacocoTestReport'].mustRunAfter(tasks['test'])
+    tasks['jacocoTestCoverageVerification'].mustRunAfter(tasks['jacocoTestReport'])
+}
+
+// 5. codecov.io : code coverage bedge
+// CODECOV_TOKEN="e5e93beb-c88e-4b41-8ea6-84c1032addbb" // 근데 Travis는 안필요하다고 하네?
+// Reference : https://stackoverflow.com/questions/59203704/how-create-a-badge-with-test-coverage-jacoco-on-github-actions
+// https://docs.codecov.io/docs/about-the-codecov-bash-uploader
+// https://docs.codecov.io/docs/supported-languages
+// 뭐 따로 해줄 건 없고 Jacoco Report를 codecov.io에 travis로 보내주기만 하면 됨, travis에 해놓음
+
