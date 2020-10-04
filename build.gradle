@@ -138,12 +138,12 @@ jacocoTestReport {
     reports {
         // 원하는 리포트를 켜고 끌 수 있다.
         html.enabled true
-        xml.enabled false
+        xml.enabled true
         csv.enabled false
 
 //      각 리포트 타입 마다 리포트 저장 경로를 설정할 수 있다.
 //      html.destination file("$buildDir/jacocoHtml")
-//      xml.destination file("$buildDir/jacoco.xml")
+        xml.destination file("jacoco.xml")
     }
 
     finalizedBy 'jacocoTestCoverageVerification'
@@ -210,7 +210,6 @@ task testCoverage(type: Test) {
 }
 
 // 5. codecov.io : code coverage bedge
-// CODECOV_TOKEN="e5e93beb-c88e-4b41-8ea6-84c1032addbb" // 근데 Travis는 안필요하다고 하네?
 // Reference : https://stackoverflow.com/questions/59203704/how-create-a-badge-with-test-coverage-jacoco-on-github-actions
 // https://docs.codecov.io/docs/about-the-codecov-bash-uploader
 // https://docs.codecov.io/docs/supported-languages
