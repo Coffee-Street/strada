@@ -71,7 +71,7 @@ processResources {
 // Code Style 라이브러리
 checkstyle {
     ignoreFailures = true // 분석결과 예외가 발생하면 빌드실패 발생시키는 것을 제외
-    configFile = file("/checkstyle.xml") // 1.1.2 에서 작성한 checkstyle 파일 지정
+    configFile = file("checkstyle/checkstyle.xml") // 1.1.2 에서 작성한 checkstyle 파일 지정
     reportsDir = file("${buildDir}/checkstyle-output") // 리포트 파일이 위치할 디렉토리 지정
 }
 
@@ -102,7 +102,7 @@ pmdMain {
 // 이제 헤더에 라이선스가 기록되지 않은 소스코드를 만들고 빌드하면 빌드 에러가 발생할 것이다.
 // `./gradlew licenseFormat` 를 실행하면 자동으로 라이선스가 빠진 소스코드에 헤더를 넣어준다.
 license {
-    header rootProject.file('/LICENSE')
+    header rootProject.file('LICENSE')
     strictCheck true
     ext.year = Calendar.getInstance().get(Calendar.YEAR)
     ext.name = 'wnsgml972'

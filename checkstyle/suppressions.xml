@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+"-//Puppy Crawl//DTD Suppressions 1.1//EN"
+"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+<suppressions>
+  <suppress checks="FileLength" files="AccountServiceImpl.java" />
+  <suppress checks="FileLength" files="UserAccountServiceImpl.java" />
+  <suppress checks="FileLength" files="MessagingServiceImpl.java" />
+  <suppress checks="FileLength" files="MatchServiceImpl.java" />
+  <suppress checks="LineLength" files="FriendServiceImpl.java" />
+  <suppress checks="FileLength" files="TestAdminController.java" />
+  <suppress checks="FileLength" files="ItemServiceImpl.java" />
+  <suppress checks=".*" files="RedisRunner.java" />
+  <suppress checks=".*" files="CORSFilter.java" />
+</suppressions>
