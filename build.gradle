@@ -68,7 +68,7 @@ processResources {
 // [ Plugin 세부 설정 ] ------------------------------------------------------------------------
 // 1. Check Style
 // Reference : https://java.ihoney.pe.kr/367
-// Code Style 라이브러리
+// Remote Code Style 라이브러리
 checkstyle {
     ignoreFailures = true // 분석결과 예외가 발생하면 빌드실패 발생시키는 것을 제외
     configFile = file("checkstyle/checkstyle.xml") // 1.1.2 에서 작성한 checkstyle 파일 지정
@@ -115,20 +115,3 @@ license {
 // TODO: 테스트 커버리지 라이브러리 CI / CD 완성하기
 // Referebce : https://nesoy.github.io/articles/2018-04/Coveralls
 // Referebce : https://woowabros.github.io/experience/2020/02/02/jacoco-config-on-gradle-project.html
-
-
-// 5. uploadArchives
-// 생성된 아티펙트를 배포할 수 있음
-/*
-uploadArchives {
-    repositories {
-        ivy {
-            credentials {
-                username "username"
-                password "pw"
-            }
-            url "http://repo.mycompany.com"
-        }
-    }
-}
-*/
