@@ -139,4 +139,8 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 
+## Custom Layer
+# jacoco
+.jacoco.xml
+
 # End of https://www.toptal.com/developers/gitignore/api/java,java-web,intellij+all,gradle
