@@ -32,5 +32,4 @@ public class StradaApplication {
     public static void main(String[] args) {
         SpringApplication.run(StradaApplication.class, args);
     }
-
 }
