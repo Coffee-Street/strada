@@ -1,0 +1,26 @@
+<!--
+
+    MIT License
+
+    Copyright (c) 2020 JunHee Kim
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+-->
+<!DOCTYPE html> <html lang="ko" xmlns:th="http://www.thymeleaf.org"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <title>Test Error Page!</title> <link rel="stylesheet" th:href="@{/css/style.css}"></link> </head> <body> <div class="errorPage"> <span class="errorHead">Error!</span><br /> <p th:text="${'path: ' + path}"></p> <p th:text="${'status: ' + status}"></p> <p th:text="${'timestamp: ' + timestamp}"></p> <p th:text="${'error: ' + error}"></p> <p th:text="${'errors: ' + errors}"></p> <p th:text="${'exception: ' + exception}"></p> <p th:text="${'message: ' + message}"></p> <p th:text="${'trace: ' + trace}"></p> </div> </body> </html>

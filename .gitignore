@@ -139,7 +139,7 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 
-## Custom Layer
+### Test Report XML ###
 # jacoco
 jacoco.xml
 

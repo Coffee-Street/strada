@@ -20,11 +20,11 @@ plugins {
 }
 
 apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'checkstyle'
-apply plugin: 'groovy'
 
 group = 'com.wnsgml972'
 version = '1.0-SNAPSHOT'
@@ -36,9 +36,7 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     compileOnly 'org.projectlombok:lombok'
@@ -50,9 +48,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     testImplementation 'io.projectreactor:reactor-test'
 
-    testCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
-        exclude module: "groovy-all"
-    }
+    compile "org.codehaus.groovy:groovy-all:2.4.15"
+    testCompile('org.spockframework:spock-core:1.1-groovy-2.4')
     testCompile('org.spockframework:spock-spring:1.1-groovy-2.4')
 }
 
@@ -227,3 +224,5 @@ task testCoverage(type: Test) {
 // 5개 저장소 넘어가면 유료
 // 일단 라이센스 Bedge 용으로 사용 중
 
+// 7. Github Action CodeQL
+// 정적 분석, 보안 관련 사용 중
