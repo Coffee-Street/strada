@@ -23,10 +23,13 @@
  */
 package com.wnsgml972.strada.example
 
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
 
 import java.math.RoundingMode
 
+@SpringBootTest
 class SpockTestExampleTest extends Specification {
     void setup() {
     }
@@ -34,7 +37,8 @@ class SpockTestExampleTest extends Specification {
     void cleanup() {
     }
 
-    def "Calculate"() {
+    @Test
+    def "소수점 버리기 테스트"() {
 
         given:
         RoundingMode roundingMode = RoundingMode.DOWN

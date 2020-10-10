@@ -23,8 +23,11 @@
  */
 package com.wnsgml972.strada
 
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
 
+@SpringBootTest
 class StradaApplicationTest extends Specification {
     void setup() {
     }
@@ -32,6 +35,7 @@ class StradaApplicationTest extends Specification {
     void cleanup() {
     }
 
+    @Test
     def "Main"() {
     }
 }
