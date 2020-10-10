@@ -50,9 +50,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     testImplementation 'io.projectreactor:reactor-test'
 
-    testCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
-        exclude module: "groovy-all"
-    }
+    testCompile('org.spockframework:spock-core:1.1-groovy-2.4')
     testCompile('org.spockframework:spock-spring:1.1-groovy-2.4')
 }
 
@@ -227,3 +225,5 @@ task testCoverage(type: Test) {
 // 5개 저장소 넘어가면 유료
 // 일단 라이센스 Bedge 용으로 사용 중
 
+// 7. Github Action CodeQL
+// 정적 분석, 보안 관련 사용 중
