@@ -1,0 +1,23 @@
+# 이거 해야만 하는 이유, 쉘 스크립트 실행 파일의 경우 윈도우에서 도커에 복사해서 쓰게 될 텐데, 여기서 개행이 CRLF로 깨져버리면 리눅스에서 못쓰니 해당 파일 고정이 필요.
+# 물론 나머지 파일들도 마찬가지~
+# Reference : https://docs.github.com/en/free-pro-team@latest/github/using-git/configuring-git-to-handle-line-endings#platform-windows
+
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.c text
+*.h text
+*.txt text
+
+# Declare files that will always have CRLF line endings on checkout.
+*.sln text eol=crlf
+*.vcproj text eol=crlf 
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+
+# Declare files that will always have LF line endings on checkout.
+*.sh text eol=lf 

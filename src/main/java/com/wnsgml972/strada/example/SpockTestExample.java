@@ -21,15 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.wnsgml972.strada;
+package com.wnsgml972.strada.example;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-@SpringBootApplication
-public class StradaApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(StradaApplication.class, args);
+public class SpockTestExample {
+    public static long calculate(long amount, float rate, RoundingMode roundingMode) {
+        return BigDecimal.valueOf(amount * rate * 0.01)
+                .setScale(0, roundingMode).longValue();
     }
 }

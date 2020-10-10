@@ -1,4 +1,4 @@
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2020 JunHee Kim
@@ -21,15 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.wnsgml972.strada;
+package com.wnsgml972.strada.example
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import spock.lang.Specification
 
-@SpringBootApplication
-public class StradaApplication {
+import java.math.RoundingMode
 
-    public static void main(String[] args) {
-        SpringApplication.run(StradaApplication.class, args);
+class SpockTestExampleTest extends Specification {
+    void setup() {
+    }
+
+    void cleanup() {
+    }
+
+    def "Calculate"() {
+
+        given:
+        RoundingMode roundingMode = RoundingMode.DOWN
+
+        when:
+        def calculate = SpockTestExample.calculate(10000L, 0.1f, roundingMode)
+
+        then:
+        calculate == 10L
     }
 }

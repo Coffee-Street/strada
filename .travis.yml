@@ -16,5 +16,9 @@ cache:
 # clean 후 Build (Build시 자동으로 test 수행)
 script: "./gradlew clean build"
 
+# 권한 추가
+before_install:
+  - chmod +x gradlew
+
 after_success:
   - bash <(curl -s https://codecov.io/bash)
