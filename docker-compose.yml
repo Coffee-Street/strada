@@ -1,10 +1,7 @@
 version: "3"
 services:
-  test_database:
-    # 컨테이너 이름을 주고 싶다면 작성한다
-    # container_name: test_database
+  strada_mysql: # MySQL
     image: mysql:5.7
-    #        restart: always # 항상 켜 놓을 건 아니니까? 직접 컴포즈 up해서 테스트 하는 게 나을 듯
     environment:
       MYSQL_DATABASE: test_db
       MYSQL_USER: root
@@ -17,12 +14,27 @@ services:
       - "--character-set-server=utf8mb4"
       - "--collation-server=utf8mb4_unicode_ci"
       - "--innodb-use-native-aio=0"
-#   뭐 지금은 굳이 볼륨 설정해서 쓸 건 없겠지
-#    volumes:
-#      - "$HOME/mnt/mysql:/var/lib/mysql"
-  test_application:
-    build: .
+    volumes:
+      - "$HOME/mnt/mysql:/var/lib/strada/mysql"
+  strada_redis: # Redis
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+  strada_rabbitmq: # RebiitMQ
+    image: rabbitmq:3
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_VHOST: azar
+    ports:
+      - 5672:5672
+  strada_application: # strada application
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 8080:8080
-    depends_on:
-      - test_database
+    depends_on: # 서비스간의 종속성 순서를 조절할 수 있음, 아래 서비스들 다 뜨고 application 띄우기
+      - strada_mysql
+      - strada_redis
+      - strada_rabbitmq
