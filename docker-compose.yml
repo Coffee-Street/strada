@@ -10,13 +10,16 @@ services:
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
     ports:
-      - 3307:3306
+      - 3306:3306
     command:
       - "--character-set-server=utf8mb4"
       - "--collation-server=utf8mb4_unicode_ci"
       - "--innodb-use-native-aio=0"
     volumes:
       - "$HOME/mnt/mysql:/var/lib/strada/mysql"
+# 추후에 Primary - Secondary 구조로 하게 되면?
+#      - "$HOME/mnt/mysql:/var/lib/strada/mysql:ro" #ReadOnly
+#      - "$HOME/mnt/mysql:/var/lib/strada/mysql:rw" #ReadWrite
   strada_redis: # Redis
     image: redis
     restart: on-failure
@@ -29,7 +32,7 @@ services:
       RABBITMQ_DEFAULT_VHOST: azar
     ports:
       - 5672:5672
-  strada_application: # strada application
+  strada_application: # strada application, 서버 개발자는 여기 블럭 주석하고 나머지 백엔드 서비스만 띄어놓고, 따로 서버만 개발하면 됨
     build:
       context: .
       dockerfile: Dockerfile
