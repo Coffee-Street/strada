@@ -17,9 +17,8 @@ services:
       - "--character-set-server=utf8mb4"
       - "--collation-server=utf8mb4_unicode_ci"
       - "--innodb-use-native-aio=0"
-#   뭐 지금은 굳이 볼륨 설정해서 쓸 건 없겠지
-#    volumes:
-#      - "$HOME/mnt/mysql:/var/lib/mysql"
+    volumes:
+      - "$HOME/mnt/mysql:/var/lib/strada/mysql"
   test_application:
     build: .
     ports:
