@@ -29,6 +29,8 @@ import spock.lang.Specification
 
 import java.math.RoundingMode
 
+// Reference : http://spockframework.org/spock/docs/1.3/all_in_one.html -> 공식 문서
+// Reference : https://github.com/spockframework/spock-example -> 예제 공식 문서
 // Reference : https://jojoldu.tistory.com/228
 // Reference : https://d2.naver.com/helloworld/568425
 

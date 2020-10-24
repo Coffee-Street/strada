@@ -1,30 +1,14 @@
-buildscript {
-    ext {
-        springBootVersion = "2.3.2.RELEASE"
-    }
-    repositories {
-        mavenCentral()
-        jcenter()
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-
-    dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-    }
-}
-
 plugins {
     id "com.github.hierynomus.license" version "0.15.0"
     id "pmd"
     id 'jacoco'
+    id 'java'
+    id 'groovy'
+    id 'idea'
+    id 'checkstyle'
+    id 'org.springframework.boot' version "2.3.2.RELEASE"
+    id "io.spring.dependency-management" version "1.0.10.RELEASE"
 }
-
-apply plugin: 'java'
-apply plugin: 'groovy'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'checkstyle'
 
 group = 'com.wnsgml972'
 version = '1.0-SNAPSHOT'
@@ -36,28 +20,28 @@ repositories {
 
 dependencies {
     // Spring Boot Starter
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+    // Spring Boot Devtools
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    // Spring Boot Starter WebFlux (React)
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    testImplementation("io.projectreactor:reactor-test")
 
     // Lombok
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
 
     // Spring Boot Starter Security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    testImplementation 'org.springframework.security:spring-security-test'
-
-    // Spring Boot Starter WebFlux (React)
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    testImplementation 'io.projectreactor:reactor-test'
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    testImplementation("org.springframework.security:spring-security-test")
 
     // Groovy, Spock Framework
-    compile "org.codehaus.groovy:groovy-all:2.4.15"
-    testCompile('org.spockframework:spock-core:1.1-groovy-2.4')
-    testCompile('org.spockframework:spock-spring:1.1-groovy-2.4')
+    compile("org.codehaus.groovy:groovy-all:2.4.15")
+    testCompile("org.spockframework:spock-core:1.1-groovy-2.4")
+    testCompile("org.spockframework:spock-spring:1.1-groovy-2.4")
 }
 
 configurations {
@@ -79,9 +63,10 @@ processResources {
 // [ Plugin 세부 설정 ] ------------------------------------------------------------------------
 // 1. Check Style
 // Reference : https://java.ihoney.pe.kr/367
+// Reference : https://docs.gradle.org/current/dsl/org.gradle.api.plugins.quality.Checkstyle.html
 // Remote Code Style 라이브러리
 checkstyle {
-    ignoreFailures = true // 분석결과 예외가 발생하면 빌드실패 발생시키는 것을 제외
+    maxWarnings = 0
     configFile = file("checkstyle/checkstyle.xml") // 1.1.2 에서 작성한 checkstyle 파일 지정
     reportsDir = file("${buildDir}/checkstyle-output") // 리포트 파일이 위치할 디렉토리 지정
 }
@@ -115,16 +100,21 @@ pmdMain {
 license {
     header rootProject.file('LICENSE')
     strictCheck true
-    ext.year = Calendar.getInstance().get(Calendar.YEAR)
-    ext.name = 'wnsgml972'
-    ext.email = 'wnsgml972@gmail.com'
+    ext {
+        year = Calendar.getInstance().get(Calendar.YEAR)
+        name = 'wnsgml972'
+        email = 'wnsgml972@gmail.com'
+    }
+    mapping {
+        javascript = 'JAVADOC_STYLE'
+    }
 }
 
 
 // 4. Jacoco
 // Test Coverage 라이브러리
-// jacoco Referebce : https://woowabros.github.io/experience/2020/02/02/jacoco-config-on-gradle-project.html
-// jacoco github bedge Referebce : https://github.com/dawnwords/jacoco-badge-gradle-plugin
+// jacoco Reference : https://woowabros.github.io/experience/2020/02/02/jacoco-config-on-gradle-project.html
+// jacoco github badge Reference : https://github.com/dawnwords/jacoco-badge-gradle-plugin
 test {
     jacoco {
         destinationFile = file("$buildDir/jacoco/jacoco.exec")
@@ -140,32 +130,32 @@ jacoco {
     toolVersion = '0.8.5'
 
 //  테스트결과 리포트를 저장할 경로 변경
-//  default는 "${project.reporting.baseDir}/jacoco"
+//  default 는 "${project.reporting.baseDir}/jacoco"
 //  reportsDir = file("$buildDir/customJacocoReportDir")
 }
 
 jacocoTestReport {
     reports {
         // 원하는 리포트를 켜고 끌 수 있다.
-        html.enabled true
         xml.enabled true
+        html.enabled false
         csv.enabled false
 
 //      각 리포트 타입 마다 리포트 저장 경로를 설정할 수 있다.
-//      html.destination file("$buildDir/jacocoHtml")
         xml.destination file("jacoco.xml")
     }
 
     finalizedBy 'jacocoTestCoverageVerification'
 }
 
+// TODO: 좀 짜면 각 커버리지 설정들 좀 풀어 놓기..
 jacocoTestCoverageVerification {
     violationRules {
         rule {
-            // 'element'가 없으면 프로젝트의 전체 파일을 합친 값을 기준으로 한다.
+            // 'element' 가 없으면 프로젝트의 전체 파일을 합친 값을 기준으로 한다.
             limit {
-                // 'counter'를 지정하지 않으면 default는 'INSTRUCTION'
-                // 'value'를 지정하지 않으면 default는 'COVEREDRATIO'
+                // 'counter' 를 지정하지 않으면 default 는 'INSTRUCTION'
+                // 'value' 를 지정하지 않으면 default 는 'COVERED RATIO'
 //                minimum = 0.30
             }
         }
@@ -195,13 +185,12 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'LINE'
                 value = 'TOTALCOUNT'
-//                maximum = 200
+                maximum = 200
             }
 
             // 커버리지 체크를 제외할 클래스들
             excludes = [
-//                    '*.test.*',
-//                    '*.Kotlin*'
+                    '*.test.*',
             ]
         }
     }
@@ -219,17 +208,22 @@ task testCoverage(type: Test) {
     tasks['jacocoTestCoverageVerification'].mustRunAfter(tasks['jacocoTestReport'])
 }
 
-// 5. codecov.io : code coverage bedge
-// Reference : https://stackoverflow.com/questions/59203704/how-create-a-badge-with-test-coverage-jacoco-on-github-actions
-// https://docs.codecov.io/docs/about-the-codecov-bash-uploader
-// https://docs.codecov.io/docs/supported-languages
-// 뭐 따로 해줄 건 없고 Jacoco Report를 codecov.io에 travis로 보내주기만 하면 됨, travis에 해놓음
+/*
+ * 외부 CI 연동
+ *
+ * 5. codecov.io : code coverage badge
+ * Reference : https://stackoverflow.com/questions/59203704/how-create-a-badge-with-test-coverage-jacoco-on-github-actions
+ * https://docs.codecov.io/docs/about-the-codecov-bash-uploader
+ * https://docs.codecov.io/docs/supported-languages
+ * 뭐 따로 해줄 건 없고 Jacoco Report 를 codecov.io에 travis 로 보내주기만 하면 됨, travis 에 해놓음
+ *
+ * 6. fossa : Open Source Management for Enterprise Teams
+ * Reference : https://fossa.com/
+ * Reference : https://github.com/fossas/fossa-cli
+ * 5개 저장소 넘어가면 유료
+ * 일단 라이센스 badge 용으로 사용 중
+ *
+ * 7. Github Action CodeQL
+ * 정적 분석, 보안 관련 사용 중
+* */
 
-// 6. fossa : Open Source Management for Enterprise Teams
-// Reference : https://fossa.com/
-// Referebce : https://github.com/fossas/fossa-cli
-// 5개 저장소 넘어가면 유료
-// 일단 라이센스 Bedge 용으로 사용 중
-
-// 7. Github Action CodeQL
-// 정적 분석, 보안 관련 사용 중
