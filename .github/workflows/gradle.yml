@@ -40,7 +40,7 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Run a one-line script
-      run: Build Success!
+      run: echo 'Build Success!'
           
     - name: Report Codecov
       uses: codecov/codecov-action@v1.0.14
