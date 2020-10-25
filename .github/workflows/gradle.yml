@@ -48,7 +48,7 @@ jobs:
         # User defined upload name. Visible in Codecov UI
         name: codecov-strada # optional
         # Repository upload token - get it from codecov.io. Required only for private repositories
-        # token: # optional
+        token: b9af0f87-aa2e-4a75-b753-e02f53985936 # optional
         # Path to coverage file to upload
         file: jacoco.xml # optional
         # Comma-separated list of files to upload
