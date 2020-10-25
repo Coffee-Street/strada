@@ -6,13 +6,23 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches: [master]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [master]
-  schedule:
-    - cron: '0 11 * * 2'
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      name:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Person to greet'
+        # Default value if no value is explicitly provided
+        default: 'World'
+        # Input has to be provided for the workflow to run
+        required: true
+#  push:
+#    branches: [master]
+#  pull_request:
+#    # The branches below must be a subset of the branches above
+#    branches: [master]
+#  schedule:
+#    - cron: '0 11 * * 2'
 
 jobs:
   analyze:
