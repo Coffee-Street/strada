@@ -5,7 +5,7 @@ version: 2
 cli:
   server: https://app.fossa.com
   fetcher: custom
-  project: https://github.com/wnsgml972/SpringBootServer.git
+  project: https://github.com/wnsgml972/strada.git
 analyze:
   modules:
   - name: strada

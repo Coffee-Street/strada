@@ -15,7 +15,7 @@
 
 ```shell script
 # quick start strada coffee main server
-git clone https://github.com/wnsgml972/SpringBootServer.git
+git clone https://github.com/wnsgml972/strada.git
 docker-compose up
 ```
 
