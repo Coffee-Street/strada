@@ -204,22 +204,3 @@ task testCoverage(type: Test) {
     tasks['jacocoTestCoverageVerification'].mustRunAfter(tasks['jacocoTestReport'])
 }
 
-/*
- * 외부 CI 연동
- *
- * 5. codecov.io : code coverage badge
- * Reference : https://stackoverflow.com/questions/59203704/how-create-a-badge-with-test-coverage-jacoco-on-github-actions
- * https://docs.codecov.io/docs/about-the-codecov-bash-uploader
- * https://docs.codecov.io/docs/supported-languages
- * 뭐 따로 해줄 건 없고 Jacoco Report 를 codecov.io에 travis 로 보내주기만 하면 됨, travis 에 해놓음
- *
- * 6. fossa : Open Source Management for Enterprise Teams
- * Reference : https://fossa.com/
- * Reference : https://github.com/fossas/fossa-cli
- * 5개 저장소 넘어가면 유료
- * 일단 라이센스 badge 용으로 사용 중
- *
- * 7. Github Action CodeQL
- * 정적 분석, 보안 관련 사용 중
-* */
-
