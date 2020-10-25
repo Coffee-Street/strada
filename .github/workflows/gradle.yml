@@ -4,8 +4,8 @@
 name: build-test-pipeline
 
 on:
-  push:
-    branches: [ master ]
+#  push:  can't push
+#    branches: [ master ]
   pull_request:
     branches: [ master ]
 
