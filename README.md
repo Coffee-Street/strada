@@ -11,8 +11,6 @@
 
 ## Quick Start
 
-> 추 후엔 aws에 자동 배포하도록 설정해놓을 예정입니다.
-
 ```shell script
 # quick start strada coffee main server
 git clone https://github.com/wnsgml972/strada.git
