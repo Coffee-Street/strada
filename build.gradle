@@ -1,18 +1,19 @@
 plugins {
     id "com.github.hierynomus.license" version "0.15.0"
     id "pmd"
-    id 'jacoco'
-    id 'java'
-    id 'groovy'
-    id 'idea'
-    id 'checkstyle'
-    id 'org.springframework.boot' version "2.3.2.RELEASE"
+    id "jacoco"
+    id "java"
+    id "groovy"
+    id "idea"
+    id "checkstyle"
+    id "org.springframework.boot" version "2.3.4.RELEASE"
     id "io.spring.dependency-management" version "1.0.10.RELEASE"
 }
 
 group = 'com.wnsgml972'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '15'
+targetCompatibility = '15'
 
 repositories {
     mavenCentral()
@@ -37,11 +38,6 @@ dependencies {
     // Spring Boot Starter Security
     implementation("org.springframework.boot:spring-boot-starter-security")
     testImplementation("org.springframework.security:spring-security-test")
-
-    // Groovy, Spock Framework
-    compile("org.codehaus.groovy:groovy-all:2.4.15")
-    testCompile("org.spockframework:spock-core:1.1-groovy-2.4")
-    testCompile("org.spockframework:spock-spring:1.1-groovy-2.4")
 }
 
 configurations {
@@ -127,7 +123,7 @@ test {
 
 jacoco {
     // JaCoCo 버전
-    toolVersion = '0.8.5'
+    toolVersion = '0.8.6'
 
 //  테스트결과 리포트를 저장할 경로 변경
 //  default 는 "${project.reporting.baseDir}/jacoco"
@@ -138,7 +134,7 @@ jacocoTestReport {
     reports {
         // 원하는 리포트를 켜고 끌 수 있다.
         xml.enabled true
-        html.enabled false
+        html.enabled true
         csv.enabled false
 
 //      각 리포트 타입 마다 리포트 저장 경로를 설정할 수 있다.

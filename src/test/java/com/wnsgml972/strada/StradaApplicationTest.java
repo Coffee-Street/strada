@@ -1,4 +1,4 @@
-/*
+/**
  * MIT License
  *
  * Copyright (c) 2020 JunHee Kim
@@ -21,21 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.wnsgml972.strada
 
-import org.junit.Test
-import org.springframework.boot.test.context.SpringBootTest
-import spock.lang.Specification
+package com.wnsgml972.strada;
 
-@SpringBootTest
-class StradaApplicationTest extends Specification {
-    void setup() {
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class StradaApplicationTest {
+
+    @BeforeEach
+    void setUp() {
     }
 
-    void cleanup() {
+    @AfterEach
+    void tearDown() {
     }
 
     @Test
-    def "Main"() {
+    void testSample() {
+        // gicen:
+        var testSample = 3;
+
+        // expect
+        assertEquals(testSample, 3);
     }
 }
