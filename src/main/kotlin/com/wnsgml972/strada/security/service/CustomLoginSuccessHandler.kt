@@ -15,6 +15,6 @@ class CustomLoginSuccessHandler : SavedRequestAwareAuthenticationSuccessHandler(
         authentication: Authentication?
     ) {
         SecurityContextHolder.getContext().authentication = authentication
-        response.sendRedirect("/about")
+        response.status = HttpServletResponse.SC_OK
     }
 }

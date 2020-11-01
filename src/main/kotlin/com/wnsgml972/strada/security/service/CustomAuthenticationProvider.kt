@@ -25,13 +25,7 @@ class CustomAuthenticationProvider(
         val userPassword = token.credentials as String
         // UserDetailsService를 통해 DB에서 아이디로 사용자 조회
         val userDetailsDto = userDetailsServiceImpl.loadUserByUsername(username)
-        if(userDetailsDto != null) {
-            if (!passwordEncoder.matches(userPassword, userDetailsDto.password)) {
-                throw BadCredentialsException(userDetailsDto.username.toString() + "Invalid password")
-            }
-            return UsernamePasswordAuthenticationToken(userDetailsDto, userPassword, userDetailsDto.authorities)
-        }
-        throw BadCredentialsException("Invalid password")
+        return UsernamePasswordAuthenticationToken(userDetailsDto, userPassword, userDetailsDto.authorities)
     }
 
     override fun supports(authentication: Class<*>): Boolean {
