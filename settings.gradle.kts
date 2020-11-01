@@ -1,4 +1,4 @@
-rootProject.name = 'Strada'
+rootProject.name = "Strada"
 // sub project 이렇게 하면 포함 시킬 수 있음
 // include 'java'
 // include 'kotlin'

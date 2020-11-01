@@ -22,37 +22,15 @@
 # SOFTWARE.
 #
 
-# .propeties 보다 훨신 가독성도 좋고 효과적인 .yml
-# 공식 레퍼런스 : https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config
-# 참조 레퍼런스 : https://goddaehee.tistory.com/213?category=367461
-
 # Spring 설정
 spring:
   datasource:
-    url: jdbc:mysql://strada_mysql:3306/test_db?useSSL=false
+    url: jdbc:mysql://localhost:3306/test_db?useLegacyDatetimeCode=false&serverTimezone=GMT&useUnicode=true
     username: root
     password:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL5Dialect
-    generate-ddl: true
-    show-sql: true
-
-  mvc:
-    view:
-      prefix: /WEB-INF/view/
-      suffix: .jsp
-
-# Server 설정
-server:
-  # error 설정
-  # TODO: https://goddaehee.tistory.com/214?category=367461
-  error:
-    include-exception: true
-    include-stacktrace: always
-    whitelabel:
-      enabled: true
-#    path: # 오류 응답을 처리할 핸들러(ErrorController)의 path
+application:
+  admin:
+    username: admin
+    password: admin

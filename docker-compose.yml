@@ -1,6 +1,6 @@
 version: "3"
 services:
-  strada_mysql: # MySQL
+  mysql:
     image: mysql:5.7
     restart: on-failure
     environment:
@@ -20,25 +20,25 @@ services:
 # 추후에 Primary - Secondary 구조로 하게 되면?
 #      - "$HOME/mnt/mysql:/var/lib/strada/mysql:ro" #ReadOnly
 #      - "$HOME/mnt/mysql:/var/lib/strada/mysql:rw" #ReadWrite
-  strada_redis: # Redis
+  redis:
     image: redis
     restart: on-failure
     ports:
       - 6379:6379
-  strada_rabbitmq: # RebiitMQ
+  rabbitmq:
     image: rabbitmq:3
     restart: on-failure
     environment:
       RABBITMQ_DEFAULT_VHOST: azar
     ports:
       - 5672:5672
-  strada_application: # strada application, 서버 개발자는 여기 블럭 주석하고 나머지 백엔드 서비스만 띄어놓고, 따로 서버만 개발하면 됨
+  application:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - 8080:8080
-    depends_on: # 서비스간의 종속성 순서를 조절할 수 있음, 아래 서비스들 다 뜨고 application 띄우기
-      - strada_mysql
-      - strada_redis
-      - strada_rabbitmq
+    depends_on: # 서비스간의 종속성 순서 조절
+      - mysql
+      - redis
+      - rabbitmq
