@@ -1,31 +1,43 @@
 package com.wnsgml972.strada.user.controller
 
-import com.wnsgml972.strada.user.service.UserService
 import com.wnsgml972.strada.user.domain.User
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.DeleteMapping
+import com.wnsgml972.strada.user.service.UserRole
+import com.wnsgml972.strada.user.service.UserService
+import com.wnsgml972.strada.user.service.UserSignUpOrLoginRequest
+import mu.KLogging
+import org.springframework.http.ResponseEntity
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.ModelAttribute
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/users")
 class UserController(
+    private var passwordEncoder: BCryptPasswordEncoder,
     private var userService: UserService
 ) {
+    companion object : KLogging()
 
-    @GetMapping("/users")
-    fun allUsers(): List<User> {
-        return userService.findAll()
+    @PostMapping
+    fun signUp(
+        @RequestParam(value = "username", required = true) userSignUpOrLoginRequest: UserSignUpOrLoginRequest
+    ): ResponseEntity<*>? {
+        if (!userService.findByUsername(userSignUpOrLoginRequest.username).isPresent) {
+            val user = User.of(userSignUpOrLoginRequest.username, userSignUpOrLoginRequest.username, UserRole.USER)
+            val userDto = userService.signUp(user)
+            logger.debug("Sign Up Complete $userDto")
+        }
+
+        return ResponseEntity.ok().build<Any>()
     }
 
-    @GetMapping("/users/count")
-    fun count(): Long {
-        return userService.count()
-    }
-
-    @DeleteMapping("/users/{id}")
-    fun delete(@PathVariable id: String) {
-        val userId = id.toLong()
-        userService.deleteById(userId)
+    @GetMapping
+    fun findAll(): ResponseEntity<*>? {
+        return ResponseEntity.ok(userService.findAll())
     }
 }

@@ -48,7 +48,7 @@ class JpaConfig {
         properties.setProperty(AvailableSettings.HBM2DDL_AUTO, "update")
         properties.setProperty(AvailableSettings.SHOW_SQL, "true")
         properties.setProperty(AvailableSettings.FORMAT_SQL, "true")
-        properties.setProperty(AvailableSettings.CONNECTION_PROVIDER_DISABLES_AUTOCOMMIT, "true")
+        properties.setProperty(AvailableSettings.CONNECTION_PROVIDER_DISABLES_AUTOCOMMIT, "false")
         properties.setProperty(AvailableSettings.STORAGE_ENGINE, "innodb")
         return properties
     }

@@ -8,7 +8,9 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-class LocalDateTimeSerializer(f: DateTimeFormatter) : JsonSerializer<LocalDateTime>() {
+class LocalDateTimeSerializer(
+    f: DateTimeFormatter
+): JsonSerializer<LocalDateTime>() {
 
     private val serializer = LocalDateTimeSerializer(f)
 
