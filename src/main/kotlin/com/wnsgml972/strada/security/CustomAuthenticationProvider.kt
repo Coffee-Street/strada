@@ -17,14 +17,14 @@ class CustomAuthenticationProvider(
     override fun authenticate(authentication: Authentication): Authentication {
         val token = authentication as UsernamePasswordAuthenticationToken
         // AuthenticaionFilter에서 생성된 토큰으로부터 아이디와 비밀번호를 조회함
-        val userEmail = token.name
-        val userPw = token.credentials as String
+        val username = token.name
+        val userPassword = token.credentials as String
         // UserDetailsService를 통해 DB에서 아이디로 사용자 조회
-        val userDetails = userDetailsService!!.loadUserByUsername(userEmail)
-        if (!passwordEncoder!!.matches(userPw, userDetails.password)) {
+        val userDetails = userDetailsService.loadUserByUsername(username)
+        if (!passwordEncoder.matches(userPassword, userDetails.password)) {
             throw BadCredentialsException(userDetails.username + "Invalid password")
         }
-        return UsernamePasswordAuthenticationToken(userDetails, userPw, userDetails.authorities)
+        return UsernamePasswordAuthenticationToken(userDetails, userPassword, userDetails.authorities)
     }
 
     override fun supports(authentication: Class<*>): Boolean {

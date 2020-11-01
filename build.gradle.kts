@@ -3,11 +3,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.3.4.RELEASE"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
- //   id("com.github.hierynomus.license") version "0.15.0"
+ //   id("com.github.hierynomus.license") version "0.15.0"  //TODO:
     id("pmd")
     id("jacoco")
     id("idea")
-    id("checkstyle")
+//    id("checkstyle") //TODO:
     kotlin("jvm") version "1.3.71"
     kotlin("kapt") version "1.3.71"
     kotlin("plugin.spring") version "1.3.71"
