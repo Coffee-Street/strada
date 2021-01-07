@@ -1,0 +1,73 @@
+server:
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+  http2:
+    enabled: true
+
+spring:
+  application:
+    name: Example App
+
+  profiles:
+    active: "test"
+
+  codec:
+    max-in-memory-size: 100MB
+
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/test_db?useLegacyDatetimeCode=false&serverTimezone=GMT&useUnicode=true
+      username: root
+      password:
+
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    hibernate.ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _history
+            modified_flag_suffix: _changed
+            store_data_at_delete: true
+
+springdoc:
+  version: '@springdoc.version@'
+
+jwt:
+  header: Authorization
+  headerPrefix: Bearer
+  keyPair[0].public: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoorqcn3Pyka/4+rZdWxabDppqZDeKDmgZjWtb7/yCOc1pp3N7K0Jy3FJ0cIaHJxYOt9ipBtU/TaiAtFSOSoq5RpqeFf+aCPisgxAALWkAEY2BHZkuxXWD1ZcYCZaau0KpTgnmW+vbstQ82PomqyHC1ew3q3Tf0auDXOSHy6XZ8JyV+/tImG3BTT99Zycp6dTheGW0AhmK8D3ad8nMQ02t1GpqhvfefRu+gLKApy4he0R5+Lyr4WL6tVaDpeBlNbHI0tN3Ro5+wwClADlapwQGmvmhIvHUk2kentJmlwIMWpGAClnn09Ugr5eF209jyq9JzyU0Kwo92tD/wx87xRB7QIDAQAB
+  keyPair[0].private: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCiiupyfc/KRr/j6tl1bFpsOmmpkN4oOaBmNa1vv/II5zWmnc3srQnLcUnRwhocnFg632KkG1T9NqIC0VI5KirlGmp4V/5oI+KyDEAAtaQARjYEdmS7FdYPVlxgJlpq7QqlOCeZb69uy1DzY+iarIcLV7DerdN/Rq4Nc5IfLpdnwnJX7+0iYbcFNP31nJynp1OF4ZbQCGYrwPdp3ycxDTa3UamqG9959G76AsoCnLiF7RHn4vKvhYvq1VoOl4GU1scjS03dGjn7DAKUAOVqnBAaa+aEi8dSTaR6e0maXAgxakYAKWefT1SCvl4XbT2PKr0nPJTQrCj3a0P/DHzvFEHtAgMBAAECggEAA+TUDP4aljvvqOQdZYS8/c7AbUF9MPWAdDJg/0ZX5AK19FHfdwYGMAt8uzutKHZOXsqvMEM/W/mNFAgzsg7ijC5/0nY5MAF8EsvcVKgFT8Re0uiLLTgusptdByikDd+z25VmzXQxfbP9Mnd4QQxVB96H7C253ViyHrxgCcMx+VhTYGY7hkRWuRodPVJDXoOcV7E9JTtj4Hx6DTjLjaB+LBsB7svExzX7hvW5jv/YKuiTLekl3emZM4PdA19SjIb+nkRhhJxQldz8TWHwMyEk4DhvE1HSLEeYRNEYBm5eLiTElw0rs5tsfYClSh3wxihU1mbv8wZczcTRaJ/UFJkEwQKBgQDVSfEwpbhuXjOjBa/rNdWZUwZUp+vF63Qk8rxRIIWeCi5vCbHBSL8TT8/rFx9lLgTGziC6NK6yqB0CPQHqsYul/36PyRP+Ex7xfV+SmNf+NK4E6EWv6X0Du5WXF1usdoCkt/QLjNQWS3E6kZearjbAQibAbOK35vo6SRTOOM/V1QKBgQDDF4QhLMkU5C2msBZSvp9dshwExTY1TkPt6HxkLoZTHcfpIUdLCUxkUPcbdYiMneamAeYhJx1vF3/WzUpFDr28Kii96qKS8xV6XQgeJA3FXTZVGGCW52KjSZmTSDyW/+Tx3KEuShBC9OoyZlOyhCgBA8baRBpYlY7ZNe3Iu05PuQKBgQCHrQ6hLHoCsyfTxvVeARPMAbVgOqVPdHSgYEyMqsx0ePOKrLcHRdhOV5HicQYGndxp/otxB7wtZ6V0XAyRF7nGsZz3qChwkgc4BNG79kBHs4kTFBHoUfW1XylMQI6PSZ6RqXaztjTfrcPsRtsSiUnIyQvPkjQyWdrJIt36RMdotQKBgQC4if4KA3sRr+Uez2HOU1IcJuYp/QIR2j6XRFqlyPx2kq0O8NOnPtxr58pWxw6rNJGAZjtxELbe5rOeVAH04MTIwHhZbSDrL9UZMfcDy8ba8hj61VxIYgcDvhLvJl1p2BSQU8qDJrvLGjCODA0Px8KvcwseW10wfgfpnwGV5tdkwQKBgC6TH7n3Nk5uz+DsmM/5nEI/M3NW+x0pzRT3ytiJrnuvwrvunqtflV9NpS/AsgV9oFhQyz7cbPyRLCN3rnyBdMsbvJf0iAUBRHmoFAccXAj4LTYQSGiO+VvYaH3+1jkUb+w3b9IBCsXMoYPkrx5iKof5PzbDhKOkB/d40fQ9gwZs
+
+# https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html
+management:
+  endpoint:
+    metrics.enabled: true
+    prometheus.enabled: true
+    health:
+      show-components: always
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "info, metrics, prometheus"
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      profile: test
+    export:
+      prometheus.enabled: true
+    distribution.percentiles.http: 0.5, 0.9, 0.95, 0.97, 0.99
+    distribution.percentiles-histogram.http: true
+    distribution.slo.http: 100ms, 200ms, 400ms
