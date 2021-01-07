@@ -1,40 +1,38 @@
-package com.wnsgml972.strada.user.service
+package com.wnsgml972.strada.user.domain
 
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-class UserDetailsDto(
-    private val userDto: UserDto,
+class UserDetails(
+    private val user: User,
     private val authorities: Collection<GrantedAuthority>
 ) : UserDetails {
-
-    fun getUserDto() = userDto
 
     override fun getAuthorities(): Collection<GrantedAuthority> {
         return authorities
     }
 
     override fun getPassword(): String {
-        return userDto.password
+        return user.password
     }
 
     override fun getUsername(): String {
-        return userDto.username
+        return user.username
     }
 
     override fun isAccountNonExpired(): Boolean {
-        return userDto.isEnabled
+        return user.isEnabled
     }
 
     override fun isAccountNonLocked(): Boolean {
-        return userDto.isEnabled
+        return user.isEnabled
     }
 
     override fun isCredentialsNonExpired(): Boolean {
-        return userDto.isEnabled
+        return user.isEnabled
     }
 
     override fun isEnabled(): Boolean {
-        return userDto.isEnabled
+        return user.isEnabled
     }
 }

@@ -13,4 +13,6 @@ class JacksonConfig {
         // 이 모듈을 bean으로 등록 안하면 hibernateLazyInitializer 라는 하이버네이트 프록시 객체의 프로퍼티를 직렬화 하려다가 에러남
         return Hibernate5Module()
     }
+
+
 }

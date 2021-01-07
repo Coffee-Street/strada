@@ -1,4 +1,4 @@
-package com.wnsgml972.strada.security.service
+package com.wnsgml972.strada.security
 
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
@@ -8,13 +8,12 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 class CustomLoginSuccessHandler : SavedRequestAwareAuthenticationSuccessHandler() {
-
     @Throws(IOException::class)
     override fun onAuthenticationSuccess(
-        request: HttpServletRequest?, response: HttpServletResponse,
-        authentication: Authentication?
+        request: HttpServletRequest, response: HttpServletResponse,
+        authentication: Authentication
     ) {
         SecurityContextHolder.getContext().authentication = authentication
-        response.status = HttpServletResponse.SC_OK
+        response.sendRedirect("/about")
     }
 }
