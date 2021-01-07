@@ -22,7 +22,7 @@ data class JwtPrincipal(
     override fun isAccountNonExpired(): Boolean = accountNonExpired
     override fun isAccountNonLocked(): Boolean = accountNonLocked
 
-    data class PrincipalPhoneNumber (
+    data class PrincipalPhoneNumber(
         val number: String
     )
 }

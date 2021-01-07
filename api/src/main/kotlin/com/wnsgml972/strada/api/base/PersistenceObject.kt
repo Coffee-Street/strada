@@ -1,6 +1,6 @@
 package com.wnsgml972.strada.api.base
 
-interface PersistenceObject: ValueObject {
+interface PersistenceObject : ValueObject {
 
     var persisted: Boolean
 
@@ -19,7 +19,7 @@ interface PersistenceObject: ValueObject {
     }
 }
 
-abstract class AbstractPersistenceObject: AbstractValueObject(), PersistenceObject {
+abstract class AbstractPersistenceObject : AbstractValueObject(), PersistenceObject {
 
     override var persisted: Boolean = false
 }

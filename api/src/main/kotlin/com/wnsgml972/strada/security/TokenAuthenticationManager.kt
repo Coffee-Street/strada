@@ -5,7 +5,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
 
 @Component
-class TokenAuthenticationManager: AuthenticationManager {
+class TokenAuthenticationManager : AuthenticationManager {
     override fun authenticate(authentication: Authentication?): Authentication? {
         if (authentication is JwtAuthenticationToken) {
             authentication.isAuthenticated = true

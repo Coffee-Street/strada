@@ -6,7 +6,7 @@ import javax.persistence.Id
 import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
-abstract class LongJpaEntity: AbstractJpaEntity<Long>() {
+abstract class LongJpaEntity : AbstractJpaEntity<Long>() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

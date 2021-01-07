@@ -6,7 +6,7 @@ import javax.persistence.MappedSuperclass
 import javax.persistence.PostLoad
 import javax.persistence.PostPersist
 
-interface JpaEntity<TId: Serializable>: PersistenceObject {
+interface JpaEntity<TId : Serializable> : PersistenceObject {
 
     var id: TId?
 
@@ -17,7 +17,7 @@ interface JpaEntity<TId: Serializable>: PersistenceObject {
 }
 
 @MappedSuperclass
-abstract class AbstractJpaEntity<TId: Serializable>: AbstractPersistenceObject(), JpaEntity<TId> {
+abstract class AbstractJpaEntity<TId : Serializable> : AbstractPersistenceObject(), JpaEntity<TId> {
 
     @PostPersist
     override fun onPostPersist() {

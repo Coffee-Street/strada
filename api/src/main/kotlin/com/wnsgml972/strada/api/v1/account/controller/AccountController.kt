@@ -4,7 +4,7 @@ import BASE_URL_V1
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.wnsgml972.strada.api.v1.account.controller.TokenController.Companion.TOKEN_BASE_URL
+import com.wnsgml972.strada.api.v1.account.controller.AccountController.Companion.ACCOUNT_BASE_URL
 import com.wnsgml972.strada.security.user.domain.JwtProperties
 import com.wnsgml972.strada.api.v1.account.service.AccessTokenRequest
 import com.wnsgml972.strada.api.v1.account.service.AccessTokenResponse
@@ -24,12 +24,12 @@ import java.util.Date
 import javax.validation.Valid
 
 @RestController
-@RequestMapping(path = [TOKEN_BASE_URL])
+@RequestMapping(path = [ACCOUNT_BASE_URL])
 @Tag(
     name = "Account",
     description = """유저에게 토큰을 발급해주는 API"""
 )
-class TokenController @Autowired constructor(
+class AccountController @Autowired constructor(
     private val jwtProperties: JwtProperties,
     private val objectMapper: ObjectMapper
 ) {
@@ -63,8 +63,8 @@ class TokenController @Autowired constructor(
     }
 
     companion object : KLogging() {
-        private const val TOKEN_SERVICE_NAME = "account"
-        const val TOKEN_BASE_URL = "$BASE_URL_V1/$TOKEN_SERVICE_NAME"
+        private const val ACCOUNT_SERVICE_NAME = "account"
+        const val ACCOUNT_BASE_URL = "$BASE_URL_V1/$ACCOUNT_SERVICE_NAME"
         const val SECONDS_TO_ADD: Long = 3600
     }
 }

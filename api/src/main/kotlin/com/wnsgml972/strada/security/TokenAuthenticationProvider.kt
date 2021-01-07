@@ -13,6 +13,6 @@ class TokenAuthenticationProvider(
         return tokenAuthenticationManager.authenticate(authentication)
     }
 
-    override fun supports(authentication: Class<*>): Boolean
-        = JwtAuthenticationToken::class.java.isAssignableFrom(authentication)
+    override fun supports(authentication: Class<*>): Boolean =
+        JwtAuthenticationToken::class.java.isAssignableFrom(authentication)
 }

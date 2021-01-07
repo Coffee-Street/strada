@@ -1,14 +1,9 @@
 package com.wnsgml972.strada.api.v1.health
 
 import BASE_URL_V1
-import com.mysql.cj.MysqlConnection
-import com.mysql.cj.jdbc.JdbcConnection
 import com.wnsgml972.strada.api.v1.health.HealthCheckController.Companion.HEALTH_BASE_URL
 import io.swagger.v3.oas.annotations.tags.Tag
 import mu.KLogging
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.actuate.jdbc.DataSourceHealthIndicator
-import org.springframework.data.jpa.repository.support.JpaRepositoryFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.jdbc.core.JdbcTemplate

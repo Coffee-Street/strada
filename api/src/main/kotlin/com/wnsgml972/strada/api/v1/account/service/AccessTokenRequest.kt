@@ -10,7 +10,7 @@ import javax.validation.constraints.Size
  * @property userId Jwt payload 에 들어갈 userId
  * @property segment Jwt payload 에 들어갈 segment
  */
-data class AccessTokenRequest (
+data class AccessTokenRequest(
     val userId: Long,
 
     @field:Size(max = 14)
@@ -24,4 +24,3 @@ data class AccessTokenRequest (
             segment == other.segment
     }
 }
-

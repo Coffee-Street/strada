@@ -6,6 +6,7 @@ import org.springframework.boot.runApplication
 @SpringBootApplication
 class StradaApplication
 
+@SuppressWarnings("SpreadOperator")
 fun main(args: Array<String>) {
     runApplication<StradaApplication>(*args)
 }

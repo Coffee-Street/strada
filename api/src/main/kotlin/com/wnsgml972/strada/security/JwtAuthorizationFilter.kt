@@ -1,6 +1,5 @@
 package com.wnsgml972.strada.security
 
-
 import com.auth0.jwt.exceptions.TokenExpiredException
 import com.auth0.jwt.interfaces.DecodedJWT
 import com.fasterxml.jackson.core.JsonProcessingException
@@ -20,7 +19,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class JwtAuthorizationFilter (
+class JwtAuthorizationFilter(
     authenticationManager: AuthenticationManager,
     private val jwtProperties: JwtProperties,
     private val objectMapper: ObjectMapper
@@ -59,9 +58,9 @@ class JwtAuthorizationFilter (
 
     private fun decodeJWT(token: String): DecodedJWT {
         val decodedJwtList = jwtProperties.decodeJWT(token)
-        return if (decodedJwtList.isNotEmpty())
+        return if (decodedJwtList.isNotEmpty()) {
             decodedJwtList.first()
-        else {
+        } else {
             throw IllegalArgumentException("failed to decode token")
         }
     }

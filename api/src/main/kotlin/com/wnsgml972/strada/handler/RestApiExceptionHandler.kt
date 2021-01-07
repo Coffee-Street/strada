@@ -13,4 +13,3 @@ class RestApiExceptionHandler : ProblemHandling, StradaExceptionHandler {
 
     override fun isCausalChainsEnabled(): Boolean = true
 }
-
