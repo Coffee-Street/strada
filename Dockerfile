@@ -1,7 +1,5 @@
-FROM openjdk:8-jdk
+FROM openjdk:11-jdk
 
-COPY ./ /strada_application
-WORKDIR /strada_application
-
-CMD ["chmod", "+x", "./gradlew"]
-CMD ["./gradlew", "bootRun"]
+COPY api/build/libs/api*.jar /strada/service.jar
+WORKDIR /strada
+ENTRYPOINT java ${JAVA_OPTIONS} -jar service.jar
