@@ -24,7 +24,7 @@
         </root>
     </springProfile>
 
-    <springProfile name="staging">
+    <springProfile name="stage">
         <logger name="org.springframework" level="DEBUG"/>
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
@@ -32,7 +32,7 @@
         </root>
     </springProfile>
 
-    <springProfile name="production">
+    <springProfile name="prod">
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
             <!--            <appender-ref ref="ASYNC_SLACK"/>-->

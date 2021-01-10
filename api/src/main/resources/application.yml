@@ -1,3 +1,4 @@
+# 공통 설정
 server:
   servlet:
     context-path: /
@@ -10,13 +11,7 @@ server:
 
 spring:
   application:
-    name: Example App
-
-  profiles:
-    active: "test"
-
-  codec:
-    max-in-memory-size: 100MB
+    name: Strada
 
   datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -71,3 +66,24 @@ management:
     distribution.percentiles.http: 0.5, 0.9, 0.95, 0.97, 0.99
     distribution.percentiles-histogram.http: true
     distribution.slo.http: 100ms, 200ms, 400ms
+
+
+---
+spring:
+  profiles: default, local, test
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test_db?useLegacyDatetimeCode=false&serverTimezone=GMT&useUnicode=true
+    username: root
+    password:
+
+---
+spring:
+  profiles: feature
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://ec2-3-35-55-47.ap-northeast-2.compute.amazonaws.com:3306/test_db?useLegacyDatetimeCode=false&serverTimezone=GMT&useUnicode=true
+    username: root
+    password:
