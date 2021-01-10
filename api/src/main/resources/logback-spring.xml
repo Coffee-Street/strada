@@ -10,13 +10,13 @@
         </encoder>
     </appender>
 
-    <springProfile name="local">
+    <springProfile name="default, local, feature">
         <root level="DEBUG">
             <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
 
-    <springProfile name="test">
+    <springProfile name="dev, test">
         <logger name="org.springframework" level="DEBUG"/>
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>

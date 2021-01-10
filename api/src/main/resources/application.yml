@@ -13,12 +13,6 @@ spring:
   application:
     name: Strada
 
-  datasource:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/test_db?useLegacyDatetimeCode=false&serverTimezone=GMT&useUnicode=true
-      username: root
-      password:
-
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL57Dialect
