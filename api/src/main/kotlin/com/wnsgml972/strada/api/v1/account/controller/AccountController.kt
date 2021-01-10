@@ -5,7 +5,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.wnsgml972.strada.api.v1.account.controller.AccountController.Companion.ACCOUNT_BASE_URL
-import com.wnsgml972.strada.security.user.domain.JwtProperties
+import com.wnsgml972.strada.security.JwtProperties
 import com.wnsgml972.strada.api.v1.account.service.AccessTokenRequest
 import com.wnsgml972.strada.api.v1.account.service.AccessTokenResponse
 import io.swagger.v3.oas.annotations.Operation
@@ -40,10 +40,9 @@ class AccountController @Autowired constructor(
     fun createToken(
         @Parameter(
             name = "payload",
-            description = "토큰 발급을 위한 userId와 phoneNumber를 입력해 주세요. 유효 시간은 60분입니다.",
+            description = "토큰 발급을 위한 phoneNumber를 입력해 주세요. 유효 시간은 60분입니다.",
             required = true,
             examples = [
-                ExampleObject(name = "userId", value = "123,456,789"),
                 ExampleObject(name = "phoneNumber", value = "010-1111-1111"),
             ]
         )

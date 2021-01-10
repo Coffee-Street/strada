@@ -1,5 +1,5 @@
 package com.wnsgml972.strada.config
-import com.wnsgml972.strada.security.user.domain.JwtProperties
+import com.wnsgml972.strada.security.JwtProperties
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.ComponentScan

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.wnsgml972.strada.api.v1.account.service.AccessTokenRequest
 import com.wnsgml972.strada.exception.UnAuthorizedException
-import com.wnsgml972.strada.security.user.domain.JwtProperties
 import mu.KLogging
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -66,7 +65,6 @@ class JwtAuthorizationFilter(
     }
 
     private fun getPrincipal(accessTokenRequest: AccessTokenRequest): JwtPrincipal = JwtPrincipal(
-        accessTokenRequest.userId,
         JwtPrincipal.PrincipalPhoneNumber(accessTokenRequest.segment),
         "username",
         "",

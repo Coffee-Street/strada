@@ -4,7 +4,6 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 data class JwtPrincipal(
-    val id: Long,
     val phoneNumber: PrincipalPhoneNumber,
     private val username: String,
     private val password: String,

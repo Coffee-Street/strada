@@ -1,4 +1,4 @@
-package com.wnsgml972.strada.security.user.domain
+package com.wnsgml972.strada.security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
