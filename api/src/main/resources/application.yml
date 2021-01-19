@@ -1,4 +1,3 @@
-# 공통 설정
 server:
   servlet:
     context-path: /
@@ -9,9 +8,12 @@ server:
   http2:
     enabled: true
 
+
 spring:
   application:
-    name: Strada
+    name: strada
+  codec:
+    max-in-memory-size: 100MB
 
   jpa:
     database: mysql
@@ -40,31 +42,38 @@ jwt:
 
 # https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html
 management:
+  server:
+    port: 9090
   endpoint:
-    metrics.enabled: true
-    prometheus.enabled: true
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
     health:
+      enabled: true
       show-components: always
       show-details: always
   endpoints:
     web:
       exposure:
-        include: "info, metrics, prometheus"
-
+        include: info, metrics, prometheus, health
   metrics:
     tags:
       application: ${spring.application.name}
-      profile: test
     export:
       prometheus.enabled: true
-    distribution.percentiles.http: 0.5, 0.9, 0.95, 0.97, 0.99
-    distribution.percentiles-histogram.http: true
-    distribution.slo.http: 100ms, 200ms, 400ms
+    distribution:
+      percentiles.http: 0.5, 0.9, 0.95, 0.97, 0.99
+      percentiles-histogram.http: true
+      slo.http: 100ms, 200ms, 400ms
+    web.server.request.autotime.enabled: true
 
 
 ---
 spring:
-  profiles: default, local, test
+  profiles: default, test
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -74,7 +83,7 @@ spring:
 
 ---
 spring:
-  profiles: feature
+  profiles: prod
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

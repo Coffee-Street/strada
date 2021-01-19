@@ -1,59 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
+
     <!-- Configure the Console appender -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <withJansi>true</withJansi>
         <immediateFlush>true</immediateFlush>
         <encoder>
-            <pattern>%d{ISO8601} %highlight(%-5level) [%blue(%t)] %yellow(%logger):%method:%line: %msg%n%throwable</pattern>
+            <pattern>
+                %d{ISO8601} %highlight(%-5level) [%blue(%t)] %yellow(%logger):%method:%line: %msg%n%throwable
+            </pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
 
-    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/strada-log.txt</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- rollover daily -->
-            <fileNamePattern>/strada-log-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <!-- or whenever the file size reaches 100MB -->
-                <maxFileSize>100MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-            <!-- maximum number of archive files to keep, deleting older files. For example, if you specify monthly rollover, and set maxHistory to 6, then 6 months worth of archives files will be kept with files older than 6 months deleted. -->
-            <maxHistory>6</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>
-                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
-            </pattern>
+    <!-- Configure the Json Console appender -->
+    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>true</withJansi>
+        <immediateFlush>true</immediateFlush>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern><pattern>{ "severity": "%level" }</pattern></pattern>
+                <timestamp/><threadName/><message/><loggerName/><logLevel/><stackTrace/><callerData/>
+            </providers>
         </encoder>
     </appender>
 
-    <springProfile name="default, local, feature">
+    <springProfile name="!prod">
         <root level="DEBUG">
             <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
 
-    <springProfile name="feature">
+    <springProfile name="prod">
         <root level="DEBUG">
-            <appender-ref ref="ROLLING"/>
-        </root>
-    </springProfile>
-
-    <springProfile name="dev, test">
-        <logger name="org.springframework" level="DEBUG"/>
-        <root level="INFO">
             <appender-ref ref="CONSOLE"/>
-            <!--            <appender-ref ref="ASYNC_SLACK"/>-->
-        </root>
-    </springProfile>
-
-    <springProfile name="stage, prod">
-        <logger name="org.springframework" level="DEBUG"/>
-        <root level="INFO">
-            <appender-ref ref="CONSOLE"/>
-            <!--            <appender-ref ref="ASYNC_SLACK"/>-->
         </root>
     </springProfile>
 

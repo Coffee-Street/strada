@@ -35,6 +35,7 @@ class SecurityConfig @Autowired constructor(
 //                "/",
 //                IndexController.INDEX_BASE_URL,
                     HealthCheckController.HEALTH_BASE_URL,
+                    "${HealthCheckController.HEALTH_BASE_URL}/**",
                     AccountController.ACCOUNT_BASE_URL).permitAll()
                 .antMatchers(
                 "/v3/api-docs/**",

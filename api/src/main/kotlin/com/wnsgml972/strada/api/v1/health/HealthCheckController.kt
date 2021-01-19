@@ -1,12 +1,13 @@
 package com.wnsgml972.strada.api.v1.health
 
 import BASE_URL_V1
+import com.wnsgml972.strada.api.v1.account.domain.UserRepository
 import com.wnsgml972.strada.api.v1.health.HealthCheckController.Companion.HEALTH_BASE_URL
 import io.swagger.v3.oas.annotations.tags.Tag
 import mu.KLogging
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
@@ -18,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController
 )
 @RestController
 @RequestMapping(path = [HEALTH_BASE_URL])
-class HealthCheckController(
-    val jdbcTemplate: JdbcTemplate
+class HealthCheckController @Autowired constructor(
+    val userRepository: UserRepository
 ) {
 
     @GetMapping
@@ -27,7 +28,7 @@ class HealthCheckController(
 
     @GetMapping("/readness")
     fun readHealthCheck(): ResponseEntity<Nothing> {
-        if (jdbcTemplate.dataSource?.connection?.isClosed == false) {
+        if (userRepository.count() >= 0) {
             return ResponseEntity(HttpStatus.OK)
         }
         return ResponseEntity(HttpStatus.SERVICE_UNAVAILABLE)
