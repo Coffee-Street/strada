@@ -59,6 +59,7 @@ dependencies {
     }
 
     api(Libs.mu_klog)
+    api(Libs.logstash)
 
     // jackson
     implementation(Libs.jackson_annotations)
