@@ -68,6 +68,7 @@ object Versions {
     const val slf4j = "1.7.30"
     const val logback = "1.2.3"
     const val logback_core = "1.2.3"
+    const val logstash = "5.3"
     const val log4j = "2.13.3"
 
     const val metrics = "4.1.13"
@@ -219,6 +220,7 @@ object Libs {
 
     const val logback = "ch.qos.logback:logback-classic:${Versions.logback}"
     const val logback_core = "ch.qos.logback:logback-core:${Versions.logback_core}"
+    const val logstash = "net.logstash.logback:logstash-logback-encoder:${Versions.logstash}"
 
     const val log4j_bom = "org.apache.logging.log4j:log4j-bom:${Versions.log4j}"
     const val log4j_api = "org.apache.logging.log4j:log4j-api"

@@ -273,6 +273,7 @@ subprojects {
 
             dependency(Libs.slf4j_api)
             dependency(Libs.logback)
+            dependency(Libs.logstash)
 
             // Jakarta API
             dependency(Libs.jakarta_activation_api)
@@ -395,6 +396,7 @@ subprojects {
         testImplementation(Libs.kotlin_test_junit5)
 
         api(Libs.slf4j_api)
+        api(Libs.logstash)
         testApi(Libs.logback)
 
         testImplementation(Libs.junit_jupiter)
