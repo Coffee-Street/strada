@@ -1,6 +1,4 @@
 plugins {
-    idea
-    war
     id(Plugins.spring_boot)
     kotlin("plugin.spring")
     kotlin("plugin.jpa")
@@ -54,7 +52,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
     testApi("org.springframework.boot:spring-boot-starter-test") {
         exclude(module = "junit")
