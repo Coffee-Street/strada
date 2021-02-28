@@ -41,7 +41,8 @@ class SecurityConfig @Autowired constructor(
                 "/v3/api-docs/**",
                 "/swagger-ui/**",
                 "/swagger-ui.html",
-                "/webjars/**").permitAll()
+                "/webjars/**",
+                "/**").permitAll()  //API test를 위해 모든 요청에 대해 jwt인증 해제
             .anyRequest().authenticated()
 
         OAuth2SecuritySpec().configure(http)
