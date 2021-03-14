@@ -1,22 +1,19 @@
 package com.wnsgml972.strada.api.v1.account.service
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.wnsgml972.strada.api.base.AbstractValueObject
 import javax.validation.constraints.Size
 
 /**
  * JWT AccessToken 요청 DTO
  *
- * @property segment Jwt payload 에 들어갈 segment
+ * @property phoneNumber Jwt payload 에 들어갈 segment
  */
 data class AccessTokenRequest(
-    @field:Size(max = 14)
-    @get:JsonProperty("phoneNumber")
-    val segment: String
+    @field:Size(max = 14) val phoneNumber: String
 ) : AbstractValueObject() {
 
     override fun equalProperties(other: Any): Boolean {
         return other is AccessTokenRequest &&
-            segment == other.segment
+                phoneNumber == other.phoneNumber
     }
 }

@@ -41,19 +41,21 @@ configurations.forEach {
 
 dependencies {
 
-    api("org.springframework.boot:spring-boot-autoconfigure")
-    kapt("org.springframework.boot:spring-boot-configuration-processor")
-    kaptTest("org.springframework.boot:spring-boot-configuration-processor")
+    api(Libs.springBoot("autoconfigure"))
+    kapt(Libs.springBoot("configuration-processor"))
+    kaptTest(Libs.springBoot("configuration-processor"))
+
+    api(Libs.springBootStarter("data-jpa"))
+    api(Libs.springBootStarter("validation"))
+    api(Libs.springBootStarter("actuator"))
+    api(Libs.springBootStarter("aop"))
+    api(Libs.springBootStarter("oauth2-resource-server"))
+    api(Libs.springBootStarter("web"))
+    api(Libs.springBootStarter("validation"))
 
     implementation("org.springframework.data:spring-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-aop")
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
 
-    testApi("org.springframework.boot:spring-boot-starter-test") {
+    testApi(Libs.springBootStarter("test")) {
         exclude(module = "junit")
         exclude(module = "junit-vintage-engine")
     }
@@ -65,6 +67,16 @@ dependencies {
     implementation(Libs.jackson_annotations)
     implementation(Libs.jackson_datatype_jdk8)
     implementation(Libs.jackson_module_kotlin)
+
+    // Reactor
+    implementation(Libs.reactor_adapter)
+    implementation(Libs.reactor_extra)
+    implementation(Libs.reactor_kotlin_extensions)
+    testImplementation(Libs.reactor_test)
+
+    // Coroutines
+    implementation(Libs.kotlinx_coroutines_jdk8)
+    implementation(Libs.kotlinx_coroutines_reactor)
 
     // Hibernate
     api(Libs.hibernate_core)
@@ -97,10 +109,9 @@ dependencies {
     implementation(Libs.mariadb_java_client)
     optional(Libs.mysql_connector_java)
 
-    testImplementation(Libs.h2)
+    // Test
+    testImplementation(Libs.testcontainers)
     testImplementation(Libs.testcontainers_mysql)
-
-    // 참고: https://dzone.com/articles/spring-boot-unit-test-your-project-architecture-wi
     testImplementation(Libs.archunit_junit5)
 
     /*

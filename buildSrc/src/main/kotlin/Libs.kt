@@ -11,7 +11,7 @@ object Plugins {
         const val jarTest = "1.0.1"
         const val testLogger = "2.1.0"
         const val kotlinx_benchmark = "0.2.0-dev-20"
-        const val spring_boot = "2.3.5.RELEASE"
+        const val spring_boot = "2.4.2"
         const val jacoco = "0.8.6"
     }
 
@@ -25,9 +25,6 @@ object Plugins {
     const val propdeps_maven = "cn.bestwu.propdeps-maven"
 
     const val jooq = "nu.studer.jooq"
-
-    // https://github.com/google/protobuf-gradle-plugin
-    const val protobuf = "com.google.protobuf"
 
     // https://github.com/davidmc24/gradle-avro-plugin
     const val avro = "com.commercehub.gradle.plugin.avro"
@@ -55,7 +52,7 @@ object Versions {
     const val springfox_swagger = "3.0.0"
     const val problem = "0.26.2"
 
-    const val jackson = "2.11.3"
+    const val jackson = "2.12.1"
 
     const val lettuce = "6.0.0.RELEASE"
     const val redisson = "3.13.6"
@@ -78,11 +75,11 @@ object Versions {
     const val junit_jupiter = "5.7.0"
     const val junit_platform = "1.7.0"
     const val assertj_core = "3.17.2"
-    const val mockk = "1.10.3"
+    const val mockk = "1.10.6"
     const val mockito = "3.5.13"
     const val jmh = "1.26"
-    const val testcontainers = "1.15.0"
-    const val archunit = "0.14.1"
+    const val testcontainers = "1.15.2"
+    const val archunit = "0.16.0"
 
     const val sentry_logback = "1.7.30"
 

@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 
 plugins {
     base
+    java
     `maven-publish`
     jacoco
     kotlin("jvm") version Versions.kotlin
@@ -13,8 +14,8 @@ plugins {
     kotlin("plugin.jpa") version Versions.kotlin apply false
     kotlin("kapt") version Versions.kotlin apply false
 
-    id(Plugins.dependency_management) version Plugins.Versions.dependency_management
     id(Plugins.spring_boot) version Plugins.Versions.spring_boot apply false
+    id(Plugins.dependency_management) version Plugins.Versions.dependency_management
 
     id(Plugins.propdeps) version Plugins.Versions.propdeps
     id(Plugins.propdeps_idea) version Plugins.Versions.propdeps

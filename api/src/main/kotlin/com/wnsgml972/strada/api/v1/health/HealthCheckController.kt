@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = [HEALTH_BASE_URL])
 class HealthCheckController @Autowired constructor(
-    val userRepository: UserRepository
+    private val userRepository: UserRepository
 ) {
 
     @GetMapping
@@ -31,6 +31,7 @@ class HealthCheckController @Autowired constructor(
         if (userRepository.count() >= 0) {
             return ResponseEntity(HttpStatus.OK)
         }
+        logger.error("MySQL Health Read Error");
         return ResponseEntity(HttpStatus.SERVICE_UNAVAILABLE)
     }
 
