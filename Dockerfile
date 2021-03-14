@@ -27,7 +27,7 @@ ENTRYPOINT java -jar -Dspring.profiles.active=prod service.jar
 #RUN gradle build -x bootJar -i --stacktrace
 #
 ## Stage 2: Build a project with cached dependencies
-#FROM harbor.dev.hpcnt.com/dockerhub/library/gradle:6.7.1-jdk11 AS builder
+#FROM docker-com AS builder
 #COPY --from=cache /home/gradle/cache /home/gradle/.gradle
 #WORKDIR /home/gradle/project
 #COPY . .
