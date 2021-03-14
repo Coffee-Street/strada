@@ -1,6 +1,8 @@
 package com.wnsgml972.strada.api
 
+import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationWebTest
+import kotlinx.coroutines.runBlocking
 import mu.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
@@ -13,8 +15,13 @@ class IndexControllerIT @Autowired constructor(
     private val client: WebTestClient,
 ) : IntegrationWebTest() {
 
+    private val authHelper = AuthHelper(client)
+
     @Test
-    fun `get root path`() {
+    fun `get root path`() = runBlocking {
+
+        val a = authHelper.getAccessToken()
+
         client.get()
             .uri("/")
             .exchange()

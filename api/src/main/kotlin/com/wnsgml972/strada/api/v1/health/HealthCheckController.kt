@@ -31,7 +31,7 @@ class HealthCheckController @Autowired constructor(
         if (userRepository.count() >= 0) {
             return ResponseEntity(HttpStatus.OK)
         }
-        logger.error("MySQL Health Read Error");
+        logger.error("MySQL Health Read Error")
         return ResponseEntity(HttpStatus.SERVICE_UNAVAILABLE)
     }
 

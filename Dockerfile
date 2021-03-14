@@ -6,7 +6,7 @@ ENTRYPOINT java -jar -Dspring.profiles.active=prod service.jar
 
 #TODO:
 ## Stage 1: Cache build dependencies
-#FROM harbor.dev.hpcnt.com/dockerhub/library/gradle:6.7.1-jdk11 AS cache
+#FROM docker repo url
 #RUN mkdir -p /home/gradle/cache
 #ENV GRADLE_USER_HOME /home/gradle/cache
 #
