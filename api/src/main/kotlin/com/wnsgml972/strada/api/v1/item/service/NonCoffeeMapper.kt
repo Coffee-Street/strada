@@ -1,6 +1,5 @@
 package com.wnsgml972.strada.api.v1.item.service
 
-import com.wnsgml972.strada.api.v1.item.domain.Coffee
 import com.wnsgml972.strada.api.v1.item.domain.NonCoffee
 
 fun NonCoffee.toDto() = NonCoffeeDTO(
@@ -17,4 +16,3 @@ fun NonCoffeeDTO.toEntity() = NonCoffee(
     this.description,
     this.category,
 )
-

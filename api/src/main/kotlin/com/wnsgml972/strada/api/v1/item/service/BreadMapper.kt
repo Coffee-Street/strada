@@ -1,8 +1,6 @@
 package com.wnsgml972.strada.api.v1.item.service
 
 import com.wnsgml972.strada.api.v1.item.domain.Bread
-import com.wnsgml972.strada.api.v1.item.domain.Coffee
-import com.wnsgml972.strada.api.v1.item.domain.NonCoffee
 
 fun Bread.toDto() = BreadDTO(
     this.id,
@@ -18,4 +16,3 @@ fun BreadDTO.toEntity() = Bread(
     this.description,
     this.category,
 )
-

@@ -1,4 +1,8 @@
 server:
+#  error:
+#    include-stacktrace: never
+#    include-exception: false
+#    include-message: never
   servlet:
     context-path: /
   compression:
@@ -18,7 +22,7 @@ spring:
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL57Dialect
-    hibernate.ddl-auto: update
+    hibernate.ddl-auto: create
     properties:
       hibernate:
         format_sql: true

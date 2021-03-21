@@ -29,7 +29,7 @@ class ProblemConfig {
     fun objectMapper(): ObjectMapper {
         logger.info { "Create Jackson ObjectMapper for Problem library." }
         return ObjectMapper()
-            .registerModule(ProblemModule().withStackTraces())
+            .registerModule(ProblemModule().withStackTraces(false))
     }
 
     @Bean
