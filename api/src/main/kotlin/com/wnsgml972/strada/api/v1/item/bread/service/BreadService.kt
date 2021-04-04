@@ -1,6 +1,6 @@
-package com.wnsgml972.strada.api.v1.item.service
+package com.wnsgml972.strada.api.v1.item.bread.service
 
-import com.wnsgml972.strada.api.v1.item.domain.BreadRepository
+import com.wnsgml972.strada.api.v1.item.bread.domain.BreadRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -11,10 +11,8 @@ class BreadService(
 ) {
 
     fun selectAll(): List<BreadDTO> {
-        val it = breadRepository.findAll()
         val breadDTO = ArrayList<BreadDTO>()
-        it.forEach { v -> breadDTO.add(v.toDto()) }
-
+        breadRepository.findAll().forEach { v -> breadDTO.add(v.toDto()) }
         return breadDTO
     }
 
@@ -22,4 +20,10 @@ class BreadService(
 
     @Transactional
     fun insert(breadDTO: BreadDTO) = breadRepository.save(breadDTO.toEntity())
+
+    @Transactional
+    fun update(breadDTO: BreadDTO) = breadRepository.save(breadDTO.toEntity())
+
+    @Transactional
+    fun delete(id: String) = breadRepository.deleteById(id)
 }

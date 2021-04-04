@@ -1,4 +1,4 @@
-package com.wnsgml972.strada.api.v1.item.domain
+package com.wnsgml972.strada.api.v1.item.noncoffee.domain
 
 import org.hibernate.annotations.DynamicInsert
 import org.hibernate.annotations.DynamicUpdate

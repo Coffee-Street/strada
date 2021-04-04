@@ -1,6 +1,6 @@
-package com.wnsgml972.strada.api.v1.item.service
+package com.wnsgml972.strada.api.v1.item.noncoffee.service
 
-import com.wnsgml972.strada.api.v1.item.domain.NonCoffee
+import com.wnsgml972.strada.api.v1.item.noncoffee.domain.NonCoffee
 
 fun NonCoffee.toDto() = NonCoffeeDTO(
     this.id,

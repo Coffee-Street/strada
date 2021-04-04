@@ -1,10 +1,6 @@
 package com.wnsgml972.strada.handler
 
-import com.wnsgml972.strada.exception.NotFoundException
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
-import org.springframework.web.bind.annotation.ExceptionHandler
 import org.zalando.problem.spring.web.advice.ProblemHandling
 
 /**
@@ -16,10 +12,4 @@ import org.zalando.problem.spring.web.advice.ProblemHandling
 class RestApiExceptionHandler : ProblemHandling, StradaExceptionHandler {
 
     override fun isCausalChainsEnabled(): Boolean = true
-
-    @ExceptionHandler(NotFoundException::class)
-    fun handleNotFoundException(e: NotFoundException): ResponseEntity<StradaExceptionHandler.ErrorResponse> {
-        val response = StradaExceptionHandler.ErrorResponse(null, "Data is not found in DB")
-        return ResponseEntity(response, HttpStatus.NOT_FOUND)
-    }
 }

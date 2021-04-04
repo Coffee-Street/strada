@@ -2,7 +2,6 @@ package com.wnsgml972.strada.handler
 
 import com.wnsgml972.strada.exception.BusinessException
 import com.wnsgml972.strada.exception.InvalidArgumentException
-import com.wnsgml972.strada.exception.NotFoundException
 import com.wnsgml972.strada.exception.UnAuthorizedException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -19,17 +18,16 @@ interface StradaExceptionHandler : AdviceTrait {
     }
 
     @ExceptionHandler(InvalidArgumentException::class)
-    fun handleBadRequest(e: UnAuthorizedException): ResponseEntity<ErrorResponse> {
+    fun handleBadRequest(e: InvalidArgumentException): ResponseEntity<ErrorResponse> {
         val response = ErrorResponse(null, e.message)
         return ResponseEntity(response, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(BusinessException::class)
-    fun handleBusinessException(e: UnAuthorizedException): ResponseEntity<ErrorResponse> {
+    fun handleBusinessException(e: BusinessException): ResponseEntity<ErrorResponse> {
         val response = ErrorResponse(null, e.message)
         return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
     }
-
 
     data class ErrorResponse(
         val code: String?,

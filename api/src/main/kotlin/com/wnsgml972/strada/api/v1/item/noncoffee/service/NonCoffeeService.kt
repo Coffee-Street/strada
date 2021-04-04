@@ -1,6 +1,7 @@
-package com.wnsgml972.strada.api.v1.item.service
+package com.wnsgml972.strada.api.v1.item.noncoffee.service
 
-import com.wnsgml972.strada.api.v1.item.domain.NonCoffeeRepository
+import com.wnsgml972.strada.api.v1.item.coffee.service.toEntity
+import com.wnsgml972.strada.api.v1.item.noncoffee.domain.NonCoffeeRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -11,11 +12,8 @@ class NonCoffeeService(
 ) {
 
     fun selectAll(): List<NonCoffeeDTO> {
-        val it = nonCoffeeRepository.findAll()
-
         val nonCoffees = ArrayList<NonCoffeeDTO>()
-        it.forEach { v -> nonCoffees.add(v.toDto()) }
-
+        nonCoffeeRepository.findAll().forEach { v -> nonCoffees.add(v.toDto()) }
         return nonCoffees
     }
 
@@ -23,4 +21,10 @@ class NonCoffeeService(
 
     @Transactional
     fun insert(nonCoffeeDTO: NonCoffeeDTO) = nonCoffeeRepository.save(nonCoffeeDTO.toEntity())
+
+    @Transactional
+    fun update(nonCoffeeDTO: NonCoffeeDTO) = nonCoffeeRepository.save(nonCoffeeDTO.toEntity())
+
+    @Transactional
+    fun delete(id: String) = nonCoffeeRepository.deleteById(id)
 }
