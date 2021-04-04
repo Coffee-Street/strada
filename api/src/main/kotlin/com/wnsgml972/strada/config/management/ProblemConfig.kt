@@ -1,9 +1,7 @@
 package com.wnsgml972.strada.config.management
 
 import mu.KLogging
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.zalando.problem.ProblemModule
@@ -24,13 +22,13 @@ class ProblemConfig {
      *
      * @return
      */
-    @Bean
-    @ConditionalOnMissingBean
-    fun objectMapper(): ObjectMapper {
-        logger.info { "Create Jackson ObjectMapper for Problem library." }
-        return ObjectMapper()
-            .registerModule(ProblemModule().withStackTraces(false))
-    }
+//    @Bean
+//    @ConditionalOnMissingBean
+//    fun objectMapper(): ObjectMapper {
+//        logger.info { "Create Jackson ObjectMapper for Problem library." }
+//        return ObjectMapper()
+//            //.registerModule(ProblemModule().withStackTraces(false))
+//    }
 
     @Bean
     fun problemModule() = ProblemModule()

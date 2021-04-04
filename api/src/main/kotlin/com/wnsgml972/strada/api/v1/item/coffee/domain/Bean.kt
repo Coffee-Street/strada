@@ -1,6 +1,6 @@
-package com.wnsgml972.strada.api.v1.item.domain
+package com.wnsgml972.strada.api.v1.item.coffee.domain
 
-import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.DynamicInsert
 import org.hibernate.annotations.DynamicUpdate
 import org.hibernate.annotations.Immutable
@@ -43,7 +43,6 @@ class Bean(
     val grade: String = "",
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bean", cascade = [CascadeType.ALL])
-    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "bean",)
-    @JsonBackReference(value = "beanCoffeesReference")
-    var beanCoffees: List<BeanCoffee>? = null
+    @JsonIgnore
+    val beanCoffees: List<BeanCoffee>? = null
 )
