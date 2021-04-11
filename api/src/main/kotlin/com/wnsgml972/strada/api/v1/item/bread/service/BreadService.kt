@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional
 class BreadService(
     private val breadRepository: BreadRepository
 ) {
-
+    @Transactional(readOnly = true)
     fun selectAll(): List<BreadDTO> {
-        val breadDTO = ArrayList<BreadDTO>()
-        breadRepository.findAll().forEach { v -> breadDTO.add(v.toDto()) }
-        return breadDTO
+        val breads = ArrayList<BreadDTO>()
+        breadRepository.findAll().forEach { v -> breads.add(v.toDto()) }
+        return breads
     }
 
     fun selectById(id: String): BreadDTO? = breadRepository.findByIdOrNull(id)?.toDto()

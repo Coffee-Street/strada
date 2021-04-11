@@ -10,7 +10,7 @@ class CoffeeService(
     private val coffeeRepository: CoffeeRepository,
 ) {
 
-    @Transactional()
+    @Transactional(readOnly = true)
     fun selectAll(): List<CoffeeDTO> {
         val coffees = ArrayList<CoffeeDTO>()
         coffeeRepository.findAll().forEach { v -> coffees.add(v.toDto()) }

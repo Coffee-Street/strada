@@ -10,9 +10,6 @@ import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.CascadeType
 
-// @DynamicInsert
-// @DynamicUpdate
-// @Immutable
 @Entity
 @IdClass(BeanCoffeeId::class)
 class BeanCoffee(

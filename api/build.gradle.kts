@@ -53,7 +53,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    
     testApi("org.springframework.boot:spring-boot-starter-test") {
         exclude(module = "junit")
         exclude(module = "junit-vintage-engine")

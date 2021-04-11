@@ -1,8 +1,6 @@
 package com.wnsgml972.strada.api.v1.item.coffee.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import org.hibernate.annotations.DynamicInsert
-import org.hibernate.annotations.DynamicUpdate
 import org.hibernate.annotations.Immutable
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -10,15 +8,15 @@ import javax.persistence.Id
 import javax.persistence.CascadeType
 import javax.persistence.FetchType
 import javax.persistence.OneToMany
+import javax.validation.constraints.NotEmpty
 
 @Entity
-@DynamicInsert
-@DynamicUpdate
 @Immutable
 @SuppressWarnings("LongParameterList")
 class Bean(
     @Id
-    @Column(unique = true, length = 15)
+    @Column(length = 25)
+    @NotEmpty
     val id: String = "",
 
     @Column(length = 128)

@@ -4,6 +4,7 @@ import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeDTO
 
 import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeService
+import com.wnsgml972.strada.api.v1.item.coffee.service.toDto
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import mu.KLogging
@@ -24,43 +25,39 @@ import org.springframework.web.bind.annotation.DeleteMapping
 // domain name: item
 // Bread, Coffee, NonCoffee 패키지 나누
 @RestController
-@RequestMapping(path = [CoffeeController.ITEM_BASE_URL], produces = ["application/json"])
+@RequestMapping(path = [CoffeeController.COFFEE_BASE_URL])
 @Tag(
-    name = "item",
+    name = "coffees",
     description = """메뉴를 위한 API"""
 )
 class CoffeeController @Autowired constructor(
     private val coffeeService: CoffeeService
 ) {
 
-    @PostMapping("/coffees")
+    @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "List all coffees")
     fun selectAll() = coffeeService.selectAll()
 
-    @GetMapping("coffees/{id}")
+    @GetMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Find coffee from id")
     fun find(@PathVariable("id") id: String) = coffeeService.selectById(id)
 
-    @PostMapping("/coffees/{id}")
+    @PostMapping("/")
     @ApiResponse(responseCode = "200", description = "Add coffee")
-    fun add(@RequestBody coffeeDTO: CoffeeDTO): ResponseEntity<Any> {
-        coffeeService.insert(coffeeDTO)
-        return ResponseEntity(HttpStatus.OK)
-    }
+    fun add(@RequestBody coffeeDTO: CoffeeDTO): CoffeeDTO =
+        coffeeService.insert(coffeeDTO).toDto()
 
-    @PutMapping("/coffees/{id}")
+    @PutMapping("/")
     @ApiResponse(responseCode = "200", description = "Update coffee")
-    fun update(@RequestBody coffeeDTO: CoffeeDTO): ResponseEntity<Any> {
-        coffeeService.update(coffeeDTO)
-        return ResponseEntity(HttpStatus.OK)
-    }
+    fun update(@RequestBody coffeeDTO: CoffeeDTO): CoffeeDTO =
+        coffeeService.update(coffeeDTO).toDto()
 
-    @DeleteMapping("/coffees/{id}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "delete coffee")
-    fun delete(@PathVariable("id") id: String) = coffeeService.delete(id)
+    fun delete(@PathVariable id: String) = coffeeService.delete(id)
 
     companion object : KLogging() {
-        private const val ACCOUNT_SERVICE_NAME = "items"
-        const val ITEM_BASE_URL = "$BASE_URL_V1/$ACCOUNT_SERVICE_NAME"
+        private const val ACCOUNT_SERVICE_NAME = "coffees/admin"
+        const val COFFEE_BASE_URL = "$BASE_URL_V1/$ACCOUNT_SERVICE_NAME"
     }
 }

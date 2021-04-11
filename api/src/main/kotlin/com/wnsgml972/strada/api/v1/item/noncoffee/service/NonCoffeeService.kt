@@ -11,6 +11,7 @@ class NonCoffeeService(
     private val nonCoffeeRepository: NonCoffeeRepository
 ) {
 
+    @Transactional(readOnly = true)
     fun selectAll(): List<NonCoffeeDTO> {
         val nonCoffees = ArrayList<NonCoffeeDTO>()
         nonCoffeeRepository.findAll().forEach { v -> nonCoffees.add(v.toDto()) }
