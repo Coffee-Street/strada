@@ -6,4 +6,4 @@ import org.springframework.test.context.ActiveProfiles
 
 @ActiveProfiles("test")
 @SpringBootTest(classes = [StradaTestApplication::class], webEnvironment = WebEnvironment.RANDOM_PORT)
-class IntegrationWebTest : AbstractWebTest()
+class StradaUnitTest : AbstractWebTest()

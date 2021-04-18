@@ -1,13 +1,11 @@
 package com.wnsgml972.strada.api.v1.account.controller
 
 import BASE_URL_V1
-import com.auth0.jwt.JWT
-import com.auth0.jwt.algorithms.Algorithm
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.wnsgml972.strada.api.v1.account.controller.AccountController.Companion.ACCOUNT_BASE_URL
-import com.wnsgml972.strada.security.JwtProperties
 import com.wnsgml972.strada.api.v1.account.service.AccessTokenRequest
 import com.wnsgml972.strada.api.v1.account.service.AccessTokenResponse
+import com.wnsgml972.strada.api.v1.account.service.JwtService
+import com.wnsgml972.strada.api.v1.account.service.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.ExampleObject
@@ -19,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.time.Instant
-import java.util.Date
 import javax.validation.Valid
 
 @RestController
@@ -30,14 +26,14 @@ import javax.validation.Valid
     description = """유저에게 토큰을 발급해주는 API"""
 )
 class AccountController @Autowired constructor(
-    private val jwtProperties: JwtProperties,
-    private val objectMapper: ObjectMapper
+    private val userService: UserService,
+    private val jwtService: JwtService
 ) {
 
     @PostMapping
-    @Operation(summary = "토큰 발급")
-    @ApiResponse(responseCode = "200", description = "토큰 값")
-    fun createToken(
+    @Operation(summary = "유저 회원가입 및 토큰 발급")
+    @ApiResponse(responseCode = "200", description = "access token")
+    fun signUp(
         @Parameter(
             name = "payload",
             description = "토큰 발급을 위한 phoneNumber를 입력해 주세요. 유효 시간은 60분입니다.",
@@ -46,24 +42,15 @@ class AccountController @Autowired constructor(
                 ExampleObject(name = "phoneNumber", value = "010-1111-1111"),
             ]
         )
-        @Valid @RequestBody accessTokenResponse: AccessTokenRequest
+        @Valid @RequestBody accessTokenRequest: AccessTokenRequest
     ): AccessTokenResponse {
-        val subject = objectMapper.writeValueAsString(accessTokenResponse)
-        val privateKey = jwtProperties.keyPair[0].privateKey
-        val publicKey = jwtProperties.keyPair[0].publicKey
-        return AccessTokenResponse(
-            JWT.create()
-                .withSubject(subject)
-                .withAudience(JwtProperties.AUDIENCE)
-                .withIssuer(JwtProperties.ISSUER)
-                .withExpiresAt(Date.from(Instant.now().plusSeconds(SECONDS_TO_ADD)))
-                .sign(Algorithm.RSA256(publicKey, privateKey))
-        )
+        val phoneNumber = accessTokenRequest.phoneNumber
+        userService.signUp(phoneNumber)
+        return jwtService.createToken(phoneNumber)
     }
 
     companion object : KLogging() {
         private const val ACCOUNT_SERVICE_NAME = "account"
         const val ACCOUNT_BASE_URL = "$BASE_URL_V1/$ACCOUNT_SERVICE_NAME"
-        const val SECONDS_TO_ADD: Long = 3600
     }
 }

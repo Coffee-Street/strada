@@ -1,5 +1,7 @@
 plugins {
     id(Plugins.spring_boot)
+    id(Plugins.kotlin_noarg)
+
     kotlin("plugin.spring")
     kotlin("plugin.jpa")
     kotlin("kapt")
@@ -7,6 +9,11 @@ plugins {
     // test 코드를 다른 모듈에서 참조할 수 있도록 해줍니다
     // see: https://github.com/hauner/gradle-plugins/tree/master/jartest
     id(Plugins.jarTest) version Plugins.Versions.jarTest
+}
+
+noArg {
+    // @Entity가 붙은 클래스에 한해서만 noArg 플러그인을 적용합니다.
+    annotation("javax.persistence.Entity")
 }
 
 idea {

@@ -1,4 +1,4 @@
-package com.wnsgml972.strada.config
+package com.wnsgml972.strada.api.user
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.wnsgml972.strada.StradaUnitTest
@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
 
-class StradaConfigTest @Autowired constructor(
+class UserServiceTest @Autowired constructor(
     private val context: ApplicationContext
-) {
+) : StradaUnitTest() {
 
     @Test
     fun `context loading`() {

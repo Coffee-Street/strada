@@ -13,6 +13,7 @@ object Plugins {
         const val kotlinx_benchmark = "0.2.0-dev-20"
         const val spring_boot = "2.4.2"
         const val jacoco = "0.8.6"
+        const val kotlin_noarg = "1.4.32"
     }
 
     const val detekt = "io.gitlab.arturbosch.detekt"
@@ -32,6 +33,7 @@ object Plugins {
     const val jarTest = "com.github.hauner.jarTest"
     const val testLogger = "com.adarshr.test-logger"
     const val kotlinx_benchmark = "kotlinx.benchmark"
+    const val kotlin_noarg = "org.jetbrains.kotlin.plugin.noarg"
 }
 
 object Versions {
