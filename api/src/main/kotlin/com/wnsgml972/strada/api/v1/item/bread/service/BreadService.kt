@@ -1,6 +1,7 @@
 package com.wnsgml972.strada.api.v1.item.bread.service
 
 import com.wnsgml972.strada.api.v1.item.bread.domain.BreadRepository
+import com.wnsgml972.strada.exception.NotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -9,14 +10,12 @@ import org.springframework.transaction.annotation.Transactional
 class BreadService(
     private val breadRepository: BreadRepository
 ) {
-    @Transactional(readOnly = true)
-    fun selectAll(): List<BreadDTO> {
-        val breads = ArrayList<BreadDTO>()
-        breadRepository.findAll().forEach { v -> breads.add(v.toDto()) }
-        return breads
-    }
 
-    fun selectById(id: String): BreadDTO? = breadRepository.findByIdOrNull(id)?.toDto()
+    @Transactional(readOnly = true)
+    fun selectAll(): List<BreadDTO> = breadRepository.findAll().map { it.toDto() }
+
+    @Transactional(readOnly = true)
+    fun selectById(id: String): BreadDTO? = breadRepository.findByIdOrNull(id)?.toDto() ?: throw NotFoundException()
 
     @Transactional
     fun insert(breadDTO: BreadDTO) = breadRepository.save(breadDTO.toEntity())

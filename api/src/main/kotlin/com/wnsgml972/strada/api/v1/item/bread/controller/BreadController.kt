@@ -2,6 +2,7 @@ package com.wnsgml972.strada.api.v1.item.bread.controller
 
 import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.item.bread.service.BreadDTO
+import com.wnsgml972.strada.api.v1.item.bread.service.BreadInsertRequest
 import com.wnsgml972.strada.api.v1.item.bread.service.BreadService
 import com.wnsgml972.strada.api.v1.item.bread.service.toDto
 
@@ -9,8 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import mu.KLogging
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.DeleteMapping
+import javax.validation.Valid
 
 // junit5를 기반으로 테스트 짤 계획
 // mock framework
@@ -41,17 +41,17 @@ class BreadController @Autowired constructor() {
 
     @GetMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Find Bread")
-    fun find(@PathVariable("id") id: String) = breadService.selectById(id)
+    fun select(@PathVariable("id") id: String) = breadService.selectById(id)
 
-    @PostMapping("/")
+    @PostMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Add Bread")
-    fun add(@PathVariable breadDTO: BreadDTO): BreadDTO =
-        breadService.insert(breadDTO).toDto()
+    fun insert(@PathVariable id: String, @RequestBody @Valid breadInsertRequest: BreadInsertRequest): BreadDTO =
+        breadService.insert(BreadDTO(id, breadInsertRequest)).toDto()
 
-    @PutMapping("/")
+    @PutMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Update Bread")
-    fun update(@RequestBody breadDTO: BreadDTO): BreadDTO =
-        breadService.update(breadDTO).toDto()
+    fun update(@PathVariable id: String, @RequestBody @Valid breadInsertRequest: BreadInsertRequest): BreadDTO =
+        breadService.update(BreadDTO(id, breadInsertRequest)).toDto()
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Delete Bread")

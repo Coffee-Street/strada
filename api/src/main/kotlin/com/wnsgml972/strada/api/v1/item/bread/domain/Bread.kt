@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty
 @Immutable
 class Bread(
     @Id
-    @Column( length = 25)
+    @Column(length = 25)
     @NotEmpty
     val id: String = "",
 

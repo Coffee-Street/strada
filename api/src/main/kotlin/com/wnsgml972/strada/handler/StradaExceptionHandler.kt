@@ -30,7 +30,7 @@ interface StradaExceptionHandler : AdviceTrait {
         return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
     }
     @ExceptionHandler(NotFoundException::class)
-    fun handleNotFoundException(e: NotFoundException) : ResponseEntity<ErrorResponse>{
+    fun handleNotFoundException(e: NotFoundException): ResponseEntity<ErrorResponse> {
         val response = ErrorResponse(null, e.message)
         return ResponseEntity(response, HttpStatus.NOT_FOUND)
     }

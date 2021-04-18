@@ -6,4 +6,12 @@ data class BreadDTO(
     val price: Int,
     val description: String,
     val category: String,
-)
+) {
+    constructor(id: String, breadInsertRequest: BreadInsertRequest) : this(
+        id,
+        breadInsertRequest.url,
+        breadInsertRequest.price,
+        breadInsertRequest.description,
+        breadInsertRequest.category,
+    )
+}

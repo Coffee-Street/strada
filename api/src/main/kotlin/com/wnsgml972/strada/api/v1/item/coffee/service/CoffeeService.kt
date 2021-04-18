@@ -1,5 +1,6 @@
 package com.wnsgml972.strada.api.v1.item.coffee.service
 
+import com.wnsgml972.strada.api.v1.item.bread.service.toDto
 import com.wnsgml972.strada.api.v1.item.coffee.domain.CoffeeRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -11,12 +12,9 @@ class CoffeeService(
 ) {
 
     @Transactional(readOnly = true)
-    fun selectAll(): List<CoffeeDTO> {
-        val coffees = ArrayList<CoffeeDTO>()
-        coffeeRepository.findAll().forEach { v -> coffees.add(v.toDto()) }
-        return coffees
-    }
+    fun selectAll(): List<CoffeeDTO> = coffeeRepository.findAll().map { it.toDto() }
 
+    @Transactional(readOnly = true)
     fun selectById(id: String): CoffeeDTO? = coffeeRepository.findByIdOrNull(id)?.toDto()
 
     @Transactional
