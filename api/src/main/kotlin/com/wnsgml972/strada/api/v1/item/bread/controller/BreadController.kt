@@ -5,7 +5,6 @@ import com.wnsgml972.strada.api.v1.item.bread.service.BreadDTO
 import com.wnsgml972.strada.api.v1.item.bread.service.BreadInsertRequest
 import com.wnsgml972.strada.api.v1.item.bread.service.BreadService
 import com.wnsgml972.strada.api.v1.item.bread.service.toDto
-
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import mu.KLogging
