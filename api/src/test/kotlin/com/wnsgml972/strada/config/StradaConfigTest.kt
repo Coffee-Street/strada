@@ -1,7 +1,7 @@
 package com.wnsgml972.strada.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.wnsgml972.strada.StradaUnitTest
+import com.wnsgml972.strada.UnitTest
 import io.micrometer.core.aop.CountedAspect
 import io.micrometer.core.aop.TimedAspect
 import io.micrometer.core.instrument.config.MeterFilter
@@ -13,7 +13,7 @@ import org.springframework.context.ApplicationContext
 
 class StradaConfigTest @Autowired constructor(
     private val context: ApplicationContext
-) {
+) : UnitTest() {
 
     @Test
     fun `context loading`() {
