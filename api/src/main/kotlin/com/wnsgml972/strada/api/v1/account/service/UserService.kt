@@ -14,7 +14,7 @@ class UserService(
     fun findAll() = userRepository.findAll().map { it.toDto() }
 
     @Transactional
-    fun signUp(id: String, isEnabled: Boolean = true) = userRepository.save(User(id, isEnabled)).toDto()
+    fun signUp(id: String, isEnabled: Boolean = true) = userRepository.save(User.of(id, isEnabled)).toDto()
 
     @Transactional(readOnly = true)
     fun findById(id: String): UserDto {

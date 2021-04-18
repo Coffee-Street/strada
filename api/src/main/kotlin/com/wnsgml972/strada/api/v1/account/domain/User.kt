@@ -1,10 +1,12 @@
 package com.wnsgml972.strada.api.v1.account.domain
 
 import com.wnsgml972.strada.api.base.AbstractJpaEntity
-import javax.persistence.*
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.Column
 
 @Entity
-class User(
+class User private constructor(
     @Id
     override var id: String?,
 
@@ -16,5 +18,9 @@ class User(
         return other is User &&
                 id == other.id &&
                 isEnabled == other.isEnabled
+    }
+
+    companion object {
+        fun of(id: String, isEnabled: Boolean) = User(id, isEnabled)
     }
 }
