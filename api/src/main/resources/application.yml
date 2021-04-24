@@ -7,18 +7,24 @@ server:
     min-response-size: 1024
   http2:
     enabled: true
-
+  port: 8080
+  # https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/html/spring-boot-features.html#boot-features-graceful-shutdown
+  shutdown: graceful
 
 spring:
   application:
     name: strada
   codec:
     max-in-memory-size: 100MB
+  lifecycle.timeout-per-shutdown-phase: 60s
 
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL57Dialect
-    hibernate.ddl-auto: update
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -42,15 +48,14 @@ jwt:
 
 # https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html
 management:
+  # actuator 정보는 보안을 위해 API 와는 다른 port 를 사용하게 합니다.
+  # http://localhost:9090/actuator
   server:
     port: 9090
   endpoint:
-    info:
-      enabled: true
-    metrics:
-      enabled: true
-    prometheus:
-      enabled: true
+    info.enabled: true
+    metrics.enabled: true
+    prometheus.enabled: true
     health:
       enabled: true
       show-components: always
@@ -58,7 +63,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: info, metrics, prometheus, health
+        include: "info, metrics, prometheus, health"
   metrics:
     tags:
       application: ${spring.application.name}
@@ -69,24 +74,3 @@ management:
       percentiles-histogram.http: true
       slo.http: 100ms, 200ms, 400ms
     web.server.request.autotime.enabled: true
-
-
----
-spring:
-  profiles: default, test
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test_db?useLegacyDatetimeCode=false&serverTimezone=GMT&useUnicode=true
-    username: root
-    password:
-
----
-spring:
-  profiles: prod
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://ec2-3-35-55-47.ap-northeast-2.compute.amazonaws.com:3306/test_db?useLegacyDatetimeCode=false&serverTimezone=GMT&useUnicode=true
-    username: root
-    password:

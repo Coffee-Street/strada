@@ -65,7 +65,7 @@ class JwtAuthorizationFilter(
     }
 
     private fun getPrincipal(accessTokenRequest: AccessTokenRequest): JwtPrincipal = JwtPrincipal(
-        JwtPrincipal.PrincipalPhoneNumber(accessTokenRequest.segment),
+        JwtPrincipal.PrincipalPhoneNumber(accessTokenRequest.phoneNumber),
         "username",
         "",
         true,

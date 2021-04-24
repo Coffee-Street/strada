@@ -1,25 +1,26 @@
 package com.wnsgml972.strada.api.v1.account.domain
 
-import com.wnsgml972.strada.api.base.LongJpaEntity
-import org.hibernate.annotations.DynamicInsert
-import org.hibernate.annotations.DynamicUpdate
-import org.hibernate.annotations.Immutable
-import javax.persistence.Column
+import com.wnsgml972.strada.api.base.AbstractJpaEntity
 import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.Column
 
 @Entity
-@DynamicInsert
-@DynamicUpdate
-@Immutable
-class User : LongJpaEntity() {
-
-    @Column(unique = true, length = 15)
-    val username: String = ""
+class User private constructor(
+    @Id
+    override var id: String?,
 
     @Column
-    var isEnabled: Boolean = true
+    val isEnabled: Boolean,
+) : AbstractJpaEntity<String>() {
 
     override fun equalProperties(other: Any): Boolean {
-        TODO("Not yet implemented")
+        return other is User &&
+                id == other.id &&
+                isEnabled == other.isEnabled
+    }
+
+    companion object {
+        fun of(id: String, isEnabled: Boolean) = User(id, isEnabled)
     }
 }
