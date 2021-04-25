@@ -42,5 +42,5 @@ class Bean(
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bean", cascade = [CascadeType.ALL])
     @JsonIgnore
-    val beanCoffees: List<BeanCoffee>? = null
+    val beanCoffees: List<BeanCoffee> = listOf()
 )

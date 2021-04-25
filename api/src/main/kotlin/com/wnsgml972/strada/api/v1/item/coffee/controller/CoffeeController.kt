@@ -49,7 +49,7 @@ class CoffeeController @Autowired constructor(
     @PutMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Update coffee")
     fun update(@PathVariable id: String, @RequestBody @Valid coffeeInsertRequest: CoffeeInsertRequest): CoffeeDTO =
-        coffeeService.insert(CoffeeDTO(id, coffeeInsertRequest)).toDto()
+        coffeeService.update(CoffeeDTO(id, coffeeInsertRequest)).toDto()
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "delete coffee")

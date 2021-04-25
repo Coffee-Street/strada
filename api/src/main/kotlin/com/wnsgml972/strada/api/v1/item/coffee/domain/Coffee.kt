@@ -33,5 +33,7 @@ class Coffee(
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "coffee", cascade = [CascadeType.ALL, CascadeType.PERSIST])
     @JsonBackReference(value = "beanCoffeesReference")
-    var beanCoffees: List<BeanCoffee>? = null
+    var beanCoffees: List<BeanCoffee> = listOf()
+
+
 )

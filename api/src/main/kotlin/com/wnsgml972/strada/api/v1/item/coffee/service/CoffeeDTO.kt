@@ -8,7 +8,7 @@ data class CoffeeDTO(
     val price: Int,
     val description: String,
     val category: String,
-    val bean: ArrayList<Bean> = ArrayList()
+    val bean: List<Bean?>
 ) {
     constructor(id: String, coffeeInsertRequest: CoffeeInsertRequest) : this(
         id,
