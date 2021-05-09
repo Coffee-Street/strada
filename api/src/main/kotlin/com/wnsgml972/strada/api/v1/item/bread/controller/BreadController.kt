@@ -19,20 +19,15 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.DeleteMapping
 import javax.validation.Valid
 
-// junit5를 기반으로 테스트 짤 계획
-// mock framework
-// domain name: item
-
 @RestController
 @RequestMapping(path = [BreadController.BREAD_BASE_URL])
 @Tag(
     name = "breads",
     description = """아이템을 위한 API, bread 컨트롤"""
 )
-class BreadController @Autowired constructor() {
-
-    @Autowired
-    private lateinit var breadService: BreadService
+class BreadController @Autowired constructor(
+    private var breadService: BreadService
+) {
 
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "List all Bread")

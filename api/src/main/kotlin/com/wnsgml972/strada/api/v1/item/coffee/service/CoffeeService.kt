@@ -1,7 +1,8 @@
 package com.wnsgml972.strada.api.v1.item.coffee.service
 
+import com.wnsgml972.strada.api.v1.item.coffee.domain.Coffee
 import com.wnsgml972.strada.api.v1.item.coffee.domain.CoffeeRepository
-import org.springframework.data.repository.findByIdOrNull
+import com.wnsgml972.strada.exception.NotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -14,10 +15,14 @@ class CoffeeService(
     fun selectAll(): List<CoffeeDTO> = coffeeRepository.findAll().map { it.toDto() }
 
     @Transactional(readOnly = true)
-    fun selectById(id: String): CoffeeDTO? = coffeeRepository.findByIdOrNull(id)?.toDto()
+    fun selectById(id: String): CoffeeDTO? =
+        coffeeRepository.findById(id).orElseThrow { NotFoundException("$id Not Found") }.toDto()
 
     @Transactional
-    fun insert(coffeeDTO: CoffeeDTO) = coffeeRepository.save(coffeeDTO.toEntity())
+    fun insert(coffeeDTO: CoffeeDTO) : Coffee{
+        val insertObj = coffeeDTO.toEntity()
+        return coffeeRepository.save(insertObj)
+    }
 
     @Transactional
     fun update(coffeeDTO: CoffeeDTO) = coffeeRepository.save(coffeeDTO.toEntity())
@@ -25,7 +30,7 @@ class CoffeeService(
     @Transactional
     fun delete(id: String) {
 
-        coffeeRepository.findByIdOrNull(id)?.beanCoffees?.forEach { v ->
+        coffeeRepository.findById(id).orElseThrow { NotFoundException("$id Not Found") }.beanCoffees.forEach { v ->
             v.bean = null
             v.coffee = null
         }

@@ -29,10 +29,9 @@ import javax.validation.Valid
     name = "noncoffees",
     description = """메뉴를 위한 API"""
 )
-class NonCoffeeController @Autowired constructor() {
-
-    @Autowired
-    private lateinit var nonCoffeeService: NonCoffeeService
+class NonCoffeeController @Autowired constructor(
+    private var nonCoffeeService: NonCoffeeService
+) {
 
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "List all NonCoffees")

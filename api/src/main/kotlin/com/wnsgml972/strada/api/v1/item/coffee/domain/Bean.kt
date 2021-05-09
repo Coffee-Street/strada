@@ -5,9 +5,9 @@ import org.hibernate.annotations.Immutable
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
+import javax.persistence.OneToMany
 import javax.persistence.CascadeType
 import javax.persistence.FetchType
-import javax.persistence.OneToMany
 import javax.validation.constraints.NotEmpty
 
 @Entity
@@ -40,7 +40,4 @@ class Bean(
     @Column(length = 128)
     val grade: String = "",
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bean", cascade = [CascadeType.ALL])
-    @JsonIgnore
-    val beanCoffees: List<BeanCoffee> = listOf()
 )

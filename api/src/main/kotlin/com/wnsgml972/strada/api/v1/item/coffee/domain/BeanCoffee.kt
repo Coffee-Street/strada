@@ -1,6 +1,7 @@
 package com.wnsgml972.strada.api.v1.item.coffee.domain
 
 import com.fasterxml.jackson.annotation.JsonManagedReference
+import com.wnsgml972.strada.api.base.AbstractJpaEntity
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -15,7 +16,7 @@ import javax.persistence.CascadeType
 class BeanCoffee(
 
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Int = 0,
+    override var id: Int? = 0,
 
     @Id
     @JoinColumn(name = "coffeeId")
@@ -28,4 +29,17 @@ class BeanCoffee(
     @JsonManagedReference(value = "beanCoffeeReference")
     @ManyToOne(cascade = [CascadeType.ALL])
     var bean: Bean?,
-)
+
+) : AbstractJpaEntity<Int>() {
+
+    override fun equalProperties(other: Any): Boolean {
+        return other is BeanCoffee &&
+                id == other.id &&
+                coffee == other.coffee &&
+                bean == other.bean
+    }
+
+    companion object {
+        fun of(id: Int, coffee: Coffee?, bean: Bean?) = BeanCoffee(id, coffee, bean)
+    }
+}
