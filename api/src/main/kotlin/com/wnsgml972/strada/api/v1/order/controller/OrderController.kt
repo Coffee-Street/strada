@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController
 class OrderController @Autowired constructor(
     private val orderService: OrderService
 ) {
-    @GetMapping("/")
+    @GetMapping
     @ApiResponse(responseCode = "200", description = "List all Order")
     fun findAll() = orderService.selectAll()
 
