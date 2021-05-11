@@ -14,7 +14,7 @@ class OrderService(
     fun selectAll(): List<OrderDTO> = orderRepository.findAll().map { it.toDto() }
 
     @Transactional(readOnly = true)
-    fun selectById(id: Long): OrderDTO? = orderRepository.findByIdOrNull(id)?.toDto() ?: throw NotFoundException()
+    fun selectById(id: Long): OrderDTO? = orderRepository.findByIdOrNull(id)?.toDto() ?: throw NotFoundException("id: $id NotFound")
 
     @Transactional
     fun insert(orderDTO: OrderDTO) = orderRepository.save(orderDTO.toEntity())
