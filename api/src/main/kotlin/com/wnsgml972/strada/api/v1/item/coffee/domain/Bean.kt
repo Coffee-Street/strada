@@ -1,13 +1,9 @@
 package com.wnsgml972.strada.api.v1.item.coffee.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.Immutable
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
-import javax.persistence.OneToMany
-import javax.persistence.CascadeType
-import javax.persistence.FetchType
 import javax.validation.constraints.NotEmpty
 
 @Entity

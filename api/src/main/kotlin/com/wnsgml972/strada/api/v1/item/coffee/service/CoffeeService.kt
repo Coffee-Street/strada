@@ -19,7 +19,7 @@ class CoffeeService(
         coffeeRepository.findById(id).orElseThrow { NotFoundException("$id Not Found") }.toDto()
 
     @Transactional
-    fun insert(coffeeDTO: CoffeeDTO) : Coffee{
+    fun insert(coffeeDTO: CoffeeDTO): Coffee {
         val insertObj = coffeeDTO.toEntity()
         return coffeeRepository.save(insertObj)
     }

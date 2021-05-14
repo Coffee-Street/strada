@@ -14,11 +14,9 @@ data class NonCoffeeInsertRequest(
     @NotNull
     val price: Int,
 
-    @field:Size(max=255, message = "최대 255글자까지 입력가능합니다.")
+    @field:Size(max = 255, message = "최대 255글자까지 입력가능합니다.")
     val description: String,
 
-    @field:Size(max=20, message = "20자 제한입니다.")
+    @field:Size(max = 20, message = "20자 제한입니다.")
     val category: String,
 )
-
-

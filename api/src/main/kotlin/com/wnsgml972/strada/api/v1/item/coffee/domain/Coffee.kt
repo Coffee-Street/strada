@@ -35,5 +35,4 @@ class Coffee(
     @JsonBackReference(value = "beanCoffeesReference")
     var beanCoffees: List<BeanCoffee> = listOf()
 
-
 )

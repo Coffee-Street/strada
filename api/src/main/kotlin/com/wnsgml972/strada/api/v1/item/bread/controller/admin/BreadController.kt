@@ -1,4 +1,4 @@
-package com.wnsgml972.strada.api.v1.item.bread.controller
+package com.wnsgml972.strada.api.v1.item.bread.controller.admin
 
 import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.item.bread.service.BreadDTO

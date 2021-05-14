@@ -1,6 +1,5 @@
 package com.wnsgml972.strada.api.v1.item.coffee.service
 
-
 import com.wnsgml972.strada.api.v1.item.coffee.domain.BeanCoffee
 import com.wnsgml972.strada.api.v1.item.coffee.domain.Coffee
 
@@ -17,7 +16,6 @@ fun Coffee.toDto() = CoffeeDTO(
                 .toList()
         }
 )
-
 
 // 현재 동작하는 방식
 /*
@@ -39,7 +37,7 @@ fun CoffeeDTO.toEntity(): Coffee {
 }
 */
 
-//이렇게 하고싶은데, it(Coffee 클래스)의 beanCoffees에 add가 안된다.
+// 이렇게 하고싶은데, it(Coffee 클래스)의 beanCoffees에 add가 안된다.
 fun CoffeeDTO.toEntity() = Coffee(
     this.id,
     this.url,
@@ -52,7 +50,7 @@ fun CoffeeDTO.toEntity() = Coffee(
 }
 
 //
-//fun CoffeeDTO.toEntity() : Coffee{
+// fun CoffeeDTO.toEntity() : Coffee{
 //
 //    val tt = Coffee(
 //        this.id,
@@ -71,4 +69,4 @@ fun CoffeeDTO.toEntity() = Coffee(
 //
 //    println("mintest2: "+tt.beanCoffees.size)
 //    return tt
-//}
+// }
