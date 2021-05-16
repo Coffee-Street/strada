@@ -15,7 +15,7 @@ jobs:
         image: mysql:5.7
         options: "--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --innodb-use-native-aio=0"
         env:
-          MYSQL_DATABASE: test_db
+          MYSQL_DATABASE: test_integration_db
           MYSQL_USER: root
           MYSQL_PASSWORD: ''
           MYSQL_ROOT_PASSWORD: ''

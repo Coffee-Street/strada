@@ -4,7 +4,7 @@ services:
     image: mysql:5.7
     restart: on-failure
     environment:
-      MYSQL_DATABASE: test_db
+      MYSQL_DATABASE: test_integration_db
       MYSQL_USER: root
       MYSQL_PASSWORD: ''
       MYSQL_ROOT_PASSWORD: ''
