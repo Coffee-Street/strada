@@ -120,6 +120,8 @@ dependencies {
     testImplementation(Libs.testcontainers)
     testImplementation(Libs.testcontainers_mysql)
     testImplementation(Libs.archunit_junit5)
+    testImplementation(Libs.reactor_test)
+    testImplementation(Libs.springBootStarter("webflux"))
 
     /*
     * webapi

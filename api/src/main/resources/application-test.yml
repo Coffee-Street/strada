@@ -1,6 +1,6 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/test_integration_db?useLegacyDatetimeCode=false&serverTimezone=GMT&useUnicode=true
+    url: jdbc:mysql://localhost:3306/test_integration_db?useLegacyDatetimeCode=false&serverTimezone=GMT&useUnicode=true
     username: root
     password:

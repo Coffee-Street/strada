@@ -1,6 +1,5 @@
 package com.wnsgml972.strada.config
 
-import com.wnsgml972.strada.api.IndexController
 import com.wnsgml972.strada.api.v1.health.HealthCheckController
 import com.wnsgml972.strada.api.v1.account.controller.AccountController
 import com.wnsgml972.strada.security.JwtAuthorizationFilter
@@ -34,7 +33,6 @@ class SecurityConfig @Autowired constructor(
             .authorizeRequests()
                 .antMatchers(
                     "/",
-                    IndexController.INDEX_BASE_URL,
                     HealthCheckController.HEALTH_BASE_URL,
                     "${HealthCheckController.HEALTH_BASE_URL}/**",
                     AccountController.ACCOUNT_BASE_URL).permitAll()

@@ -15,5 +15,3 @@ services:
       - "--character-set-server=utf8mb4"
       - "--collation-server=utf8mb4_unicode_ci"
       - "--innodb-use-native-aio=0"
-    volumes:
-      - "$HOME/mnt/mysql:/var/lib/strada/mysql"

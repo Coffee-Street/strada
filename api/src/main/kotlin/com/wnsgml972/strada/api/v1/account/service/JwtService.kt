@@ -16,9 +16,9 @@ class JwtService(
 ) {
 
     fun createToken(
-        accessToken: String
+        phoneNumber: String
     ): AccessTokenResponse {
-        val subject = objectMapper.writeValueAsString(accessToken)
+        val subject = objectMapper.writeValueAsString(AccessTokenRequest(phoneNumber))
         val privateKey = jwtProperties.keyPair[0].privateKey
         val publicKey = jwtProperties.keyPair[0].publicKey
         return AccessTokenResponse(
