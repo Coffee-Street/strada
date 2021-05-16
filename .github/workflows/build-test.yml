@@ -4,15 +4,22 @@
 name: build-test-pipeline
 
 on:
-#  push:  can't push
-#    branches: [ master ]
   pull_request:
     branches: [ master ]
 
 jobs:
-  build:
-
+  build_test:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        options: "--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --innodb-use-native-aio=0"
+        env:
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: root
+          MYSQL_PASSWORD: ''
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
 
     steps:
     - uses: actions/checkout@v2.3.4
@@ -32,6 +39,10 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '11'
+
+    - name: Run docker-test for pr build
+      run: |
+        bash tools/docker-test.sh
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
