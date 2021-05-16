@@ -14,7 +14,6 @@ import org.springframework.context.ApplicationContext
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 
 
-
 class StradaConfigTest @Autowired constructor(
     private val context: ApplicationContext
 ) : IntegrationTest() {

@@ -10,16 +10,16 @@ docker-compose -f $CURRENT_DIR/docker-compose-integration.yml up -d
 
 
 ## Wait until mysql is up
-# TODO: Set MySQL Admin Environment
-# brew install mysql-client
+## TODO: Set MySQL Admin Environment
+## brew install mysql-client
 #while ! mysqladmin ping -h $MYSQL_HOST -P $MYSQL_PORT --silent ; do
 #  echo "."
 #  sleep 3
 #done
 #echo "Mysql is up"
-
+#
 ## Migration mysql
-# TODO: Set MySQL Client Environment
+## TODO: Set MySQL Client Environment
 #for sql_file in $MIGRATION_INITDB/*
 #do
 #  echo $sql_file

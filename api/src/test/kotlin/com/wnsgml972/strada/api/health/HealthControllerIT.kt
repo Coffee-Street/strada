@@ -12,7 +12,7 @@ class HealthControllerIT @Autowired constructor(
 ) : IntegrationTest() {
 
     @Test
-    fun `get reservation by id`() {
+    fun `health check`() {
         client.get()
             .uri(HealthCheckController.HEALTH_BASE_URL)
             .exchange()
