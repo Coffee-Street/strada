@@ -1,13 +1,13 @@
-### hi
-
-STRADA API 명세서
+## STRADA API 명세서
 
 
-Banners API
+
+
+## Banners API
 
 	STRADA 앱의 메인 화면 banner 정보를 API 서버에 요청한다.
-
-API
+ 
+## APIs
 
 1. http://{Server URL}:8080/strada/v1/coffees/banners/{id}
     * coffee의 배너 정보를 서버에 요청
