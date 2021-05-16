@@ -15,13 +15,13 @@
     * Parameter:
     
     ||Parameter|type|Max Size|
-    |---|---|---|
+    |------|---|---|---|
     |id|String|25|
     
     * Response: 200 - success
     
     ||Param|Type|Description|
-    |---|---|---|
+    |------|---|---|---|
     |id|String|요청한 coffee의 이름|
     |url|String|요청한 coffee의 이미지 주소|
     |description|String|요청한 coffee의 설명|
@@ -43,13 +43,13 @@
     * Parameter:
     
     ||Parameter|type|Max Size|
-    |---|---|---|
+    |------|---|---|---|
     |id|String|25|
     
     * Response: 200 - success
     
     ||Param|Type|Description|
-    |---|---|---|
+    |------|---|---|---|
     |id|String|요청한 noncoffees 이름|
     |url|String|요청한 noncoffees 이미지 주소|
     |description|String|요청한 noncoffees 설명|
@@ -71,13 +71,13 @@
     * Parameter:
     
     ||Parameter|type|Max Size|
-    |---|---|---|
+    |------|---|---|---|
     |id|String|25|
     
     * Response: 200 - success
     
     ||Param|Type|Description|
-    |---|---|---|
+    |------|---|---|---|
     |id|String|요청한 bread의 이름|
     |url|String|요청한 bread의 이미지 주소|
     |description|String|요청한 bread의 설명|
