@@ -9,6 +9,11 @@ fun NonCoffee.toDto() = NonCoffeeDTO(
     this.description,
     this.category,
 )
+fun NonCoffee.toBannerDto() = NonCoffeeBannerDTO(
+    this.id,
+    this.url,
+    this.description
+)
 fun NonCoffeeDTO.toEntity() = NonCoffee(
     this.id,
     this.url,

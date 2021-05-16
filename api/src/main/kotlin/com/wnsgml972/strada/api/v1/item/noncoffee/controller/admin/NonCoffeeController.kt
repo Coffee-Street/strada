@@ -1,4 +1,4 @@
-package com.wnsgml972.strada.api.v1.item.noncoffee.controller
+package com.wnsgml972.strada.api.v1.item.noncoffee.controller.admin
 
 import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.item.noncoffee.service.NonCoffeeDTO
@@ -18,10 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.DeleteMapping
 import javax.validation.Valid
-
-// junit5를 기반으로 테스트 짤 계획
-// mock framework
-// domain name: item
 
 @RestController
 @RequestMapping(path = [NonCoffeeController.NONCOFFEE_BASE_URL])

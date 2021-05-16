@@ -9,6 +9,11 @@ fun Bread.toDto() = BreadDTO(
     this.description,
     this.category,
 )
+fun Bread.toBannerDto() = BreadBannerDTO(
+    this.id,
+    this.url,
+    this.description
+)
 fun BreadDTO.toEntity() = Bread(
     this.id,
     this.url,

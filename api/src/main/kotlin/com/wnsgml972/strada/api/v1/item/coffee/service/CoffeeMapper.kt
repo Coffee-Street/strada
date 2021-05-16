@@ -16,6 +16,11 @@ fun Coffee.toDto() = CoffeeDTO(
                 .toList()
         }
 )
+fun Coffee.toBannerDto() = CoffeeBannerDTO(
+    this.id,
+    this.url,
+    this.description
+)
 
 // 현재 동작하는 방식
 /*
