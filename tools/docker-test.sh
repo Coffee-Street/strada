@@ -17,5 +17,10 @@ if [ -z $STRADA_MYSQL_PORT ]; then
   export STRADA_MYSQL_PORT=3306
 fi
 
+
+# Gradle
 chmod +x gradlew
-./gradlew clean build
+
+GRADLE_OPT=""
+GRADLE_OPT="$GRADLE_OPT --stacktrace"
+./gradlew $GRADLE_OPT clean build

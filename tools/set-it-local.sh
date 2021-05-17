@@ -6,8 +6,7 @@ CURRENT_DIR=$(cd $(dirname $0); pwd)
 echo "CURRENT_DIR: $CURRENT_DIR"
 export MIGRATION_INITDB=/api/src/main/resources/db/migration
 
-docker-compose -f $CURRENT_DIR/docker-compose-integration.yml up -d
-
+docker-compose -f $CURRENT_DIR/docker-compose-integration.local.yml up -d
 
 ## Wait until mysql is up
 ## TODO: Set MySQL Admin Environment
