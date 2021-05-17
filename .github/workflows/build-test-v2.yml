@@ -13,7 +13,6 @@ jobs:
     services:
       mysql:
         image: mysql:5.7
-        options: "--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --innodb-use-native-aio=0"
         env:
           MYSQL_DATABASE: test_integration_db
           MYSQL_USER: root
@@ -39,6 +38,14 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '11'
+
+
+    - name: Run docker-test for pr build
+      env:
+        STRADA_MYSQL_HOST: "mysql"
+        STRADA_MYSQL_PORT: "3306"
+      run: |
+        bash tools/docker-test.sh
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
