@@ -3,15 +3,13 @@
 #Setup properties
 set -ex
 
-echo "start"
-
-pwd
-ls
-
-export BASE_DIR="/"
+export BASE_DIR=$(pwd)
 export TOOLS_DIR="$BASE_DIR/tools"
 
-# Determine redis host, port
+echo $BASE_DIR
+echo $TOOLS_DIR
+
+# Determine mysql host, port
 if [ -z $STRADA_MYSQL_HOST ]; then
   export STRADA_MYSQL_HOST=mysql
 fi

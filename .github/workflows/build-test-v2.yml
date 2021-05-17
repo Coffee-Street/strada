@@ -47,12 +47,6 @@ jobs:
       run: |
         bash tools/docker-test.sh
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    
-    - name: Build with Gradle
-      run: ./gradlew clean build
-
     # Runs a single command using the runners shell
     - name: Run a one-line script
       run: echo 'Build Success!'
