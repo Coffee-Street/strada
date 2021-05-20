@@ -19,14 +19,16 @@ done
 echo "Mysql is up"
 
 
-# Migration mysql
-#for sql_file in $MIGRATION_INITDB/*
-#do
-#  echo $sql_file
-#  mysql -h $STRADA_MYSQL_HOST -uroot test_integration_db < $sql_file
-#done
-#echo "Mysql migration is end"
+ Migration mysql
+for sql_file in $MIGRATION_INITDB/*
+do
+  echo $sql_file
+  mysql -h $STRADA_MYSQL_HOST -uroot test_integration_db < $sql_file
+done
+echo "Mysql migration is end"
 
+
+  mysql -h $STRADA_MYSQL_HOST -uroot test_integration_db -e "SHOW TABLES;"
 
 # Gradle
 chmod +x gradlew
