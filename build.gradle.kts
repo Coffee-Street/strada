@@ -156,7 +156,7 @@ subprojects {
                 showExceptions = true
                 showCauses = true
                 showStackTraces = true
-                exceptionFormat = 'full'
+                exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 
                 events("failed")
             }
