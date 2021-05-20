@@ -152,9 +152,11 @@ subprojects {
             useJUnitPlatform()
 
             testLogging {
+                showStandardStreams = true
                 showExceptions = true
                 showCauses = true
                 showStackTraces = true
+                exceptionFormat = 'full'
 
                 events("failed")
             }

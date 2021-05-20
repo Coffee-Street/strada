@@ -28,8 +28,6 @@ done
 echo "Mysql migration is end"
 
 
-mysql -h $STRADA_MYSQL_HOST -uroot test_integration_db -e "SHOW TABLES;"
-
 # Gradle
 chmod +x gradlew
 GRADLE_OPT=""
