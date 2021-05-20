@@ -5,8 +5,6 @@ set -ex
 
 export BASE_DIR=$(pwd)
 export TOOLS_DIR="$BASE_DIR/tools"
-export STRADA_MYSQL_HOST=mysql
-export STRADA_MYSQL_PORT=3306
 export MIGRATION_INITDB=$TOOLS_DIR/migration
 
 echo $BASE_DIR
