@@ -19,7 +19,9 @@ jobs:
           MYSQL_PASSWORD: ''
           MYSQL_ROOT_PASSWORD: ''
           MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
-
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
     - uses: actions/checkout@v2.3.4
     
@@ -41,9 +43,14 @@ jobs:
 
     - name: Run docker-test for pr build
       env:
+        PORT: ${{ job.services.mysql.ports[3306] }}
         STRADA_MYSQL_HOST: "mysql"
         STRADA_MYSQL_PORT: "3306"
       run: |
+        while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
+          echo "."
+          sleep 1
+        done
         bash tools/docker-test.sh
 
     # Runs a single command using the runners shell
