@@ -5,7 +5,9 @@ set -ex
 
 export BASE_DIR=$(pwd)
 export TOOLS_DIR="$BASE_DIR/tools"
-export MIGRATION_INITDB=$TOOLS_DIR/migration
+export MIGRATION_INITDB="$TOOLS_DIR/migration"
+export STRADA_MYSQL_HOST="127.0.0.1"
+export STRADA_MYSQL_PORT="3306"
 
 echo $BASE_DIR
 echo $TOOLS_DIR
@@ -18,8 +20,6 @@ done
 echo "Mysql is up"
 
 # Migration mysql
-mysql -V
-
 for sql_file in $MIGRATION_INITDB/*
 do
   echo $sql_file
