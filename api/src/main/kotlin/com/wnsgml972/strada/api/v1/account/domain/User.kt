@@ -1,13 +1,11 @@
 package com.wnsgml972.strada.api.v1.account.domain
 
 import com.wnsgml972.strada.api.base.AbstractJpaEntity
-import org.hibernate.annotations.DynamicUpdate
 import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.Column
 
 @Entity
-@DynamicUpdate
 class User private constructor(
     @Id
     override var id: String?,

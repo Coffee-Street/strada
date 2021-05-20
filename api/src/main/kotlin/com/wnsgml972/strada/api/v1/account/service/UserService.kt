@@ -2,6 +2,7 @@ package com.wnsgml972.strada.api.v1.account.service
 
 import com.wnsgml972.strada.api.v1.account.domain.UserRepository
 import com.wnsgml972.strada.api.v1.account.domain.User
+import com.wnsgml972.strada.exception.BadRequestException
 import com.wnsgml972.strada.exception.NotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,7 +15,11 @@ class UserService(
     fun findAll() = userRepository.findAll().map { it.toDto() }
 
     @Transactional
-    fun signUp(id: String, isEnabled: Boolean = true) = userRepository.save(User.of(id, isEnabled)).toDto()
+    fun signUp(id: String, isEnabled: Boolean = true) {
+        if (!userRepository.existsById(id)) {
+            userRepository.save(User.of(id, isEnabled)).toDto()
+        }
+    }
 
     @Transactional(readOnly = true)
     fun findById(id: String): UserDto {
