@@ -11,7 +11,7 @@ echo $BASE_DIR
 echo $TOOLS_DIR
 
 ## Wait until mysql is up
-while ! mysqladmin ping -h $STRADA_MYSQL_HOST -P $STRADA_MYSQL_PORT --silent ; do
+while ! mysqladmin ping -h $STRADA_MYSQL_HOST -P 3306 --silent ; do
   echo "."
   sleep 3
 done
