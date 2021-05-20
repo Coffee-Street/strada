@@ -5,12 +5,19 @@ set -ex
 
 export BASE_DIR=$(pwd)
 export TOOLS_DIR="$BASE_DIR/tools"
-export STRADA_MYSQL_HOST="127.0.0.1"
+export STRADA_MYSQL_HOST=mysql
 export STRADA_MYSQL_PORT=3306
 export MIGRATION_INITDB=$TOOLS_DIR/migration
 
 echo $BASE_DIR
 echo $TOOLS_DIR
+
+## Wait until mysql is up
+while ! mysqladmin ping -h $STRADA_MYSQL_HOST -P $STRADA_MYSQL_PORT --silent ; do
+  echo "."
+  sleep 3
+done
+echo "Mysql is up"
 
 # Migration mysql
 mysql -V
