@@ -13,13 +13,12 @@ echo $BASE_DIR
 echo $TOOLS_DIR
 
 # Migration mysql
-sudo apt-get install mysql-client
 mysql -V
 
 for sql_file in $MIGRATION_INITDB/*
 do
   echo $sql_file
-  mysql -h $MYSQL_HOST -uroot test_integration_db < $sql_file
+  mysql -h $STRADA_MYSQL_HOST -uroot test_integration_db < $sql_file
 done
 echo "Mysql migration is end"
 
