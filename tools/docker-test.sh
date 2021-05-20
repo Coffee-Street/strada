@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 #Setup properties
 set -ex
 
@@ -9,8 +10,6 @@ export MIGRATION_INITDB="$TOOLS_DIR/migration"
 export STRADA_MYSQL_HOST="127.0.0.1"
 export STRADA_MYSQL_PORT="3306"
 
-echo $BASE_DIR
-echo $TOOLS_DIR
 
 ## Wait until mysql is up
 while ! mysqladmin ping -h $STRADA_MYSQL_HOST -P $STRADA_MYSQL_PORT --silent ; do
@@ -18,6 +17,7 @@ while ! mysqladmin ping -h $STRADA_MYSQL_HOST -P $STRADA_MYSQL_PORT --silent ; d
   sleep 3
 done
 echo "Mysql is up"
+
 
 # Migration mysql
 for sql_file in $MIGRATION_INITDB/*
@@ -28,10 +28,8 @@ done
 echo "Mysql migration is end"
 
 
-
 # Gradle
 chmod +x gradlew
-
 GRADLE_OPT=""
 GRADLE_OPT="$GRADLE_OPT -Dspring.datasource.url=jdbc:mysql://mysql:3306/test_integration_db?useLegacyDatetimeCode=false&serverTimezone=GMT&useUnicode=true"
 GRADLE_OPT="$GRADLE_OPT --stacktrace"
