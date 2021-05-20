@@ -13,7 +13,7 @@ echo $BASE_DIR
 echo $TOOLS_DIR
 
 # Migration mysql
-apt-get install mysql-client
+sudo apt-get install mysql-client
 mysql -V
 
 for sql_file in $MIGRATION_INITDB/*
