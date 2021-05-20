@@ -44,8 +44,8 @@ jobs:
 
     - name: Run docker-test for pr build
       env:
-        STRADA_MYSQL_HOST: "mysql"
-        STRADA_MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
+        STRADA_MYSQL_HOST: '127.0.0.1'
+        STRADA_MYSQL_PORT: '3306'
       run: |
         bash tools/docker-test.sh
 
