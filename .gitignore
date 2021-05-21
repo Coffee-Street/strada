@@ -105,6 +105,7 @@ modules.xml
 .mtj.tmp/
 
 # Package Files #
+*.jar
 *.war
 *.nar
 *.ear
@@ -121,12 +122,7 @@ target/
 
 ### Gradle ###
 .gradle
-build/classes
-build/generated
-build/kotlin
-build/reports
-build/resources
-build/tmp
+build/
 
 # Ignore Gradle GUI config
 gradle-app.setting

@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController
     description = """ping -> pong"""
 )
 @RestController
-@RequestMapping
+@RequestMapping(path = [IndexController.INDEX_BASE_URL])
 class IndexController {
 
-    @GetMapping(path = [INDEX_BASE_URL])
-    fun ping(): String = INDEX_RESULT_VAL
+    @GetMapping
+    fun ping() = INDEX_RESULT_VAL
 
     companion object : KLogging() {
         const val INDEX_BASE_URL = "/ping"

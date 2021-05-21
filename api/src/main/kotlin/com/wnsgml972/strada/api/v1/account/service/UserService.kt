@@ -2,6 +2,7 @@ package com.wnsgml972.strada.api.v1.account.service
 
 import com.wnsgml972.strada.api.v1.account.domain.UserRepository
 import com.wnsgml972.strada.api.v1.account.domain.User
+import com.wnsgml972.strada.exception.BadRequestException
 import com.wnsgml972.strada.exception.NotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
