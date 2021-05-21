@@ -1,7 +1,6 @@
 #!/bin/bash
 
-
-#Setup properties
+## Setup properties
 set -ex
 
 export BASE_DIR=$(pwd)
@@ -19,16 +18,17 @@ done
 echo "Mysql is up"
 
 
+## it test를 위한 sql을 작성해주세요
 # Migration mysql
-#for sql_file in $MIGRATION_INITDB/*
-#do
-#  echo $sql_file
-#  mysql -h $STRADA_MYSQL_HOST -uroot test_integration_db < $sql_file
-#done
-#echo "Mysql migration is end"
+for sql_file in $MIGRATION_INITDB/*
+do
+  echo $sql_file
+  mysql -h $STRADA_MYSQL_HOST -uroot test_integration_db < $sql_file
+done
+echo "Mysql migration is end"
 
 
-# Gradle
+## Gradle
 chmod +x gradlew
 GRADLE_OPT=""
 GRADLE_OPT="$GRADLE_OPT --debug"
