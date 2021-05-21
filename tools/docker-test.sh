@@ -31,5 +31,4 @@ echo "Mysql migration is end"
 ## Gradle
 chmod +x gradlew
 GRADLE_OPT=""
-GRADLE_OPT="$GRADLE_OPT --debug"
 ./gradlew $GRADLE_OPT clean test
