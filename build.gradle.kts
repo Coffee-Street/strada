@@ -239,6 +239,7 @@ subprojects {
             mavenBom(Libs.metrics_bom)
             mavenBom(Libs.micrometer_bom)
 
+            mavenBom(Libs.reactor_bom)
             mavenBom(Libs.kotlin_bom)
             mavenBom(Libs.kotlinx_coroutines_bom)
         }
@@ -380,9 +381,7 @@ subprojects {
     dependencies {
         val api by configurations
         val testApi by configurations
-        val compile by configurations
         val compileOnly by configurations
-        val testCompile by configurations
         val implementation by configurations
         val testImplementation by configurations
 
