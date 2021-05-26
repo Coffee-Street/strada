@@ -30,8 +30,8 @@ class SpringdocOpenApiConfig {
                         ```
                         """.trimIndent()))
             ).info(Info()
-                .title("Azar Promotion API")
-                .description("APIs for Azar Promotion")
+                .title("Strada API")
+                .description("APIs for Strada")
                 .version(appVersion))
 
     companion object {
