@@ -79,7 +79,7 @@ object Versions {
     const val junit_jupiter = "5.7.2"
     const val junit_platform = "1.7.2"
     const val assertj_core = "3.18.1"
-    const val mockk = "1.11.9"
+    const val mockk = "1.11.0"
     const val mockito = "3.7.0"
     const val jmh = "1.26"
     const val testcontainers = "1.15.2"
