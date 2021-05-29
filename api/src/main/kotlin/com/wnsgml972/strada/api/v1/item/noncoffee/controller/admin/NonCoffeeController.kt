@@ -51,7 +51,7 @@ class NonCoffeeController @Autowired constructor(
         @PathVariable id: String,
         @RequestBody @Valid nonCoffeeInsertRequest: NonCoffeeInsertRequest
     ): NonCoffeeDTO =
-        nonCoffeeService.insert(NonCoffeeDTO(id, nonCoffeeInsertRequest)).toDto()
+        nonCoffeeService.update(NonCoffeeDTO(id, nonCoffeeInsertRequest)).toDto()
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "delete coffee")

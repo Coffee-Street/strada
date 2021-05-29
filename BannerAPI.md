@@ -1,8 +1,5 @@
 ## STRADA API 명세서
 
-
-
-
 ## Banners API
 
 	STRADA 앱의 메인 화면 banner 정보를 API 서버에 요청한다.

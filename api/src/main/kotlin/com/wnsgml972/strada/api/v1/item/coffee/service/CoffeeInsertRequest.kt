@@ -8,8 +8,8 @@ import javax.validation.constraints.Size
 
 data class CoffeeInsertRequest(
 
-    @field:URL(message = "URL형식입니다.")
-    val url: String,
+    @field:URL(message = "imageUrl형식입니다.")
+    val imageUrl: String,
 
     @field:Positive(message = "금액을 입력해 주세요.")
     @NotNull
@@ -21,5 +21,5 @@ data class CoffeeInsertRequest(
     @field:Size(max = 20, message = "20자 제한입니다.")
     val category: String,
 
-    val bean: List<Bean?>
+    val beans: List<BeanDTO>
 )

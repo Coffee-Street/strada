@@ -1,8 +1,4 @@
 server:
-  error:
-    include-stacktrace: never
-    include-exception: false
-    include-message: never
   servlet:
     context-path: /
   compression:

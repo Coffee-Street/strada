@@ -8,7 +8,7 @@ package com.wnsgml972.strada.api.v1.item.coffee.service
  */
 data class CoffeeBannerDTO (
     val id: String,
-    val url: String,
+    val imageUrl: String,
     val description: String,
 )
 
