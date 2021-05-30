@@ -1,24 +1,33 @@
 # This workflow will build a Java project with Gradle
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: build-test-pipeline
+name: build-test-v2
 
 on:
-#  push:  can't push
-#    branches: [ master ]
   pull_request:
     branches: [ master ]
 
 jobs:
-  build:
-
+  build_test:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: 'mysql:5.6.49'
+        env:
+          MYSQL_DATABASE: test_integration_db
+          MYSQL_USER: root
+          MYSQL_PASSWORD: ''
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+        ports:
+          - 3306:3306
+        options: '--health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3'
 
     steps:
     - uses: actions/checkout@v2.3.4
     
     - name: Cache Gradle
-      uses: actions/cache@v2.1.5
+      uses: actions/cache@v2.1.6
       with:
         path: |
           ~/.gradle/caches
@@ -33,11 +42,9 @@ jobs:
         distribution: 'adopt'
         java-version: '11'
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    
-    - name: Build with Gradle
-      run: ./gradlew clean build
+    - name: Run docker-test for pr build
+      run: |
+        bash tools/docker-test.sh
 
     # Runs a single command using the runners shell
     - name: Run a one-line script

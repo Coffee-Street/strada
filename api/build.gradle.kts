@@ -16,6 +16,12 @@ noArg {
     annotation("javax.persistence.Entity")
 }
 
+tasks.getByName<Jar>("jar") {
+    // Spring Boot 2.5.0 이하에서는 bootJar를 통해 jar가 생성되기 때문에 자동으로 disable 상태이지만
+    // 이후부터는 설정하지 않으면 2개의 Job을 통해 2개의 jar가 생성됩니다.
+    enabled = false
+}
+
 idea {
     module {
         val kaptMain = file("$buildDir/generated/source/kapt/main")
@@ -121,6 +127,8 @@ dependencies {
     testImplementation(Libs.testcontainers)
     testImplementation(Libs.testcontainers_mysql)
     testImplementation(Libs.archunit_junit5)
+    testImplementation(Libs.reactor_test)
+    testImplementation(Libs.springBootStarter("webflux"))
 
     /*
     * webapi

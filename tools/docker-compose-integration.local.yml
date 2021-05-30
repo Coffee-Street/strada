@@ -4,7 +4,7 @@ services:
     image: mysql:5.7
     restart: on-failure
     environment:
-      MYSQL_DATABASE: test_db
+      MYSQL_DATABASE: test_integration_db
       MYSQL_USER: root
       MYSQL_PASSWORD: ''
       MYSQL_ROOT_PASSWORD: ''
@@ -15,5 +15,3 @@ services:
       - "--character-set-server=utf8mb4"
       - "--collation-server=utf8mb4_unicode_ci"
       - "--innodb-use-native-aio=0"
-    volumes:
-      - "$HOME/mnt/mysql:/var/lib/strada/mysql"
