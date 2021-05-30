@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 
 plugins {
     base
+    java
     `maven-publish`
     jacoco
     kotlin("jvm") version Versions.kotlin
@@ -13,8 +14,8 @@ plugins {
     kotlin("plugin.jpa") version Versions.kotlin apply false
     kotlin("kapt") version Versions.kotlin apply false
 
-    id(Plugins.dependency_management) version Plugins.Versions.dependency_management
     id(Plugins.spring_boot) version Plugins.Versions.spring_boot apply false
+    id(Plugins.dependency_management) version Plugins.Versions.dependency_management
 
     id(Plugins.propdeps) version Plugins.Versions.propdeps
     id(Plugins.propdeps_idea) version Plugins.Versions.propdeps
@@ -151,9 +152,11 @@ subprojects {
             useJUnitPlatform()
 
             testLogging {
+                showStandardStreams = true
                 showExceptions = true
                 showCauses = true
                 showStackTraces = true
+                exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 
                 events("failed")
             }
@@ -236,6 +239,7 @@ subprojects {
             mavenBom(Libs.metrics_bom)
             mavenBom(Libs.micrometer_bom)
 
+            mavenBom(Libs.reactor_bom)
             mavenBom(Libs.kotlin_bom)
             mavenBom(Libs.kotlinx_coroutines_bom)
         }
@@ -377,9 +381,7 @@ subprojects {
     dependencies {
         val api by configurations
         val testApi by configurations
-        val compile by configurations
         val compileOnly by configurations
-        val testCompile by configurations
         val implementation by configurations
         val testImplementation by configurations
 

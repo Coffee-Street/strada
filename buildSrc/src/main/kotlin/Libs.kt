@@ -11,8 +11,9 @@ object Plugins {
         const val jarTest = "1.0.1"
         const val testLogger = "2.1.0"
         const val kotlinx_benchmark = "0.2.0-dev-20"
-        const val spring_boot = "2.3.5.RELEASE"
+        const val spring_boot = "2.5.0"
         const val jacoco = "0.8.6"
+        const val kotlin_noarg = "1.4.32"
     }
 
     const val detekt = "io.gitlab.arturbosch.detekt"
@@ -26,41 +27,41 @@ object Plugins {
 
     const val jooq = "nu.studer.jooq"
 
-    // https://github.com/google/protobuf-gradle-plugin
-    const val protobuf = "com.google.protobuf"
-
     // https://github.com/davidmc24/gradle-avro-plugin
     const val avro = "com.commercehub.gradle.plugin.avro"
 
     const val jarTest = "com.github.hauner.jarTest"
     const val testLogger = "com.adarshr.test-logger"
     const val kotlinx_benchmark = "kotlinx.benchmark"
+    const val kotlin_noarg = "org.jetbrains.kotlin.plugin.noarg"
 }
 
 object Versions {
+    const val jetbrains_annotations = "20.1.0"
 
-    const val kotlin = "1.4.21"
-    const val atomicfu = "0.14.4"
-    const val kotlinx_coroutines = "1.4.2"
-    const val kotlinx_serialization = "1.0.1"
+    const val kotlin = "1.5.0"
+    const val atomicfu = "0.16.1"
+    const val kotlinx_coroutines = "1.5.0"
+    const val kotlinx_serialization = "1.2.1"
     const val kotlinx_io = "0.1.16"
     const val kotlinx_benchmark = Plugins.Versions.kotlinx_benchmark
-    const val ktor = "1.4.3"
+    const val ktor = "1.5.4"
 
     const val spring_boot = Plugins.Versions.spring_boot
-    const val spring_cloud = "Hoxton.SR9"
+    const val spring_cloud = "2020.0.2"
+    const val reactor_bom = "2020.0.7"
 
     const val swagger = "1.6.2"
-    const val springdoc_openapi = "1.5.0"
+    const val springdoc_openapi = "1.5.8"
     const val springfox_swagger = "3.0.0"
     const val problem = "0.26.2"
 
-    const val jackson = "2.11.3"
+    const val jackson = "2.12.3"
 
-    const val lettuce = "6.0.0.RELEASE"
-    const val redisson = "3.13.6"
+    const val lettuce = "6.0.3.RELEASE"
+    const val redisson = "3.15.2"
 
-    const val hibernate = "5.4.22.Final"
+    const val hibernate = "5.4.31.Final"
     const val hibernate_validator = "6.1.5.Final"
     const val querydsl = "4.4.0"
 
@@ -69,29 +70,28 @@ object Versions {
     const val logback = "1.2.3"
     const val logback_core = "1.2.3"
     const val logstash = "5.3"
-    const val log4j = "2.13.3"
+    const val log4j = "2.14.1"
 
-    const val metrics = "4.1.13"
-    const val prometheus = "0.9.0"
-    const val micrometer = "1.5.5"
+    const val metrics = "4.2.0"
+    const val prometheus = "0.10.0"
+    const val micrometer = "1.7.0"
 
-    const val junit_jupiter = "5.7.0"
-    const val junit_platform = "1.7.0"
-    const val assertj_core = "3.17.2"
-    const val mockk = "1.10.3"
-    const val mockito = "3.5.13"
+    const val junit_jupiter = "5.7.2"
+    const val junit_platform = "1.7.2"
+    const val assertj_core = "3.18.1"
+    const val mockk = "1.11.0"
+    const val mockito = "3.7.0"
     const val jmh = "1.26"
-    const val testcontainers = "1.15.0"
-    const val archunit = "0.14.1"
+    const val testcontainers = "1.15.2"
+    const val archunit = "0.18.0"
 
-    const val sentry_logback = "1.7.30"
+    const val sentry_logback = "4.3.0"
 
     const val auth0_jwt = "3.10.3"
 }
 
 object Libs {
-
-    const val jetbrains_annotations = "org.jetbrains:annotations:20.1.0"
+    const val jetbrains_annotations = "org.jetbrains:annotations:${Versions.jetbrains_annotations}"
 
     // kotlin
     fun kotlin(artifact: String): String = "org.jetbrains.kotlin:kotlin-$artifact:${Versions.kotlin}"
@@ -185,7 +185,7 @@ object Libs {
 
     // Java Money
     const val javax_money_api = "javax.money:money-api:1.1"
-    const val javamoney_moneta = "org.javamoney:moneta:1.4"
+    const val javamoney_moneta = "org.javamoney:moneta:1.4.2"
 
     // Apache Commons
     const val commons_beanutils = "commons-beanutils:commons-beanutils:1.9.4"
@@ -301,6 +301,7 @@ object Libs {
     const val mvel2 = "org.mvel:mvel2:2.4.10.Final"
 
     // Reactor
+    const val reactor_bom = "io.projectreactor:reactor-bom:${Versions.reactor_bom}"
     const val reactor_core = "io.projectreactor:reactor-core"
     const val reactor_adapter = "io.projectreactor.addons:reactor-adapter"
     const val reactor_extra = "io.projectreactor.addons:reactor-extra"
@@ -405,14 +406,14 @@ object Libs {
     const val dbcp2 = "org.apache.commons:commons-dbcp2:2.7.0"
     const val tomcat_jdbc = "org.apache.tomcat:tomcat-jdbc:9.0.36"
 
-    const val mysql_connector_java = "mysql:mysql-connector-java:8.0.20"
-    const val mariadb_java_client = "org.mariadb.jdbc:mariadb-java-client:2.5.4"
+    const val mysql_connector_java = "mysql:mysql-connector-java:8.0.25"
+    const val mariadb_java_client = "org.mariadb.jdbc:mariadb-java-client:2.7.2"
     const val postgresql_driver = "org.postgresql:postgresql:42.2.10"
     const val oracle_ojdbc8 = "com.oracle.ojdbc:ojdbc8:19.3.0.0"
 
     const val h2 = "com.h2database:h2:1.4.197"
-    const val hsqldb = "org.hsqldb:hsqldb:2.5.0"
-    const val flyway_core = "org.flywaydb:flyway-core:6.4.3"
+    const val hsqldb = "org.hsqldb:hsqldb:2.5.1"
+    const val flyway_core = "org.flywaydb:flyway-core:7.5.0"
 
     const val exposed = "org.jetbrains.exposed:exposed:0.17.7"
 
@@ -440,7 +441,7 @@ object Libs {
     const val junit_platform_launcher = "org.junit.platform:junit-platform-launcher:${Versions.junit_platform}"
     const val junit_platform_suite_api = "org.junit.platform:junit-platform-suite-api:${Versions.junit_platform}"
 
-    const val kluent = "org.amshove.kluent:kluent:1.61"
+    const val kluent = "org.amshove.kluent:kluent:1.65"
     const val assertj_core = "org.assertj:assertj-core:${Versions.assertj_core}"
 
     const val mockk = "io.mockk:mockk:${Versions.mockk}"

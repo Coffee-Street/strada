@@ -8,6 +8,7 @@ import com.wnsgml972.strada.api.v1.account.service.AccessTokenRequest
 import com.wnsgml972.strada.exception.UnAuthorizedException
 import mu.KLogging
 import org.springframework.security.authentication.AuthenticationManager
+import com.wnsgml972.strada.exception.IllegalStateException
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
@@ -43,12 +44,15 @@ class JwtAuthorizationFilter(
                 } catch (e: TokenExpiredException) {
                     logger.error("token expired", e)
                     request.setAttribute(RequestDispatcher.ERROR_EXCEPTION, UnAuthorizedException("token expired"))
+                    throw UnAuthorizedException("token expired")
                 } catch (e: JsonProcessingException) {
                     logger.error("error occurred while processing payload", e)
                     request.setAttribute(RequestDispatcher.ERROR_EXCEPTION, IllegalStateException("jwt parse error"))
+                    throw IllegalStateException("jwt parse error")
                 } catch (e: IllegalArgumentException) {
                     logger.error("token is wrong", e)
                     request.setAttribute(RequestDispatcher.ERROR_EXCEPTION, UnAuthorizedException("invalid token"))
+                    throw UnAuthorizedException("invalid token")
                 }
             }
         }
@@ -65,7 +69,7 @@ class JwtAuthorizationFilter(
     }
 
     private fun getPrincipal(accessTokenRequest: AccessTokenRequest): JwtPrincipal = JwtPrincipal(
-        JwtPrincipal.PrincipalPhoneNumber(accessTokenRequest.segment),
+        JwtPrincipal.PrincipalPhoneNumber(accessTokenRequest.phoneNumber),
         "username",
         "",
         true,

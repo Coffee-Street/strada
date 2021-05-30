@@ -1,9 +1,8 @@
 package com.wnsgml972.strada.exception
 
-import java.lang.RuntimeException
-
-@SuppressWarnings("MagicNumber")
-@ErrorCode(401)
-class UnAuthorizedException(
-    message: String
-) : RuntimeException(message)
+open class UnAuthorizedException : AbstractStradaException {
+    constructor() : super()
+    constructor(message: String) : super(message)
+    constructor(message: String, cause: Throwable?) : super(message, cause)
+    constructor(cause: Throwable?) : super(cause)
+}

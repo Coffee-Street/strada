@@ -32,8 +32,7 @@ class SecurityConfig @Autowired constructor(
             .addFilter(jwtAuthorizationFilter)
             .authorizeRequests()
                 .antMatchers(
-//                "/",
-//                IndexController.INDEX_BASE_URL,
+                    "/",
                     HealthCheckController.HEALTH_BASE_URL,
                     "${HealthCheckController.HEALTH_BASE_URL}/**",
                     AccountController.ACCOUNT_BASE_URL).permitAll()
