@@ -17,10 +17,26 @@ class SpringdocOpenApiConfig {
     fun customOpenAPI(@Value("\${springdoc.version}") appVersion: String): OpenAPI =
         OpenAPI()
             .components(Components()
-                .addSecuritySchemes("basicScheme",
-                    SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("basic")))
-            .info(Info()
+                .addSecuritySchemes(OPEN_API_BEARER_KEY,
+                    SecurityScheme()
+                        .type(SecurityScheme.Type.HTTP)
+                        .`in`(SecurityScheme.In.HEADER)
+                        .scheme(OPEN_API_BEARER_SCHEMA)
+                        .bearerFormat(OPEN_API_BEARER_FORMAT)
+                        .description("""
+                        인증이 필요한 API 는 발급받은 토큰을 HTTP Header 에 아래와 같이 추가하여 보내야 합니다.
+                        ```
+                        Authorization: Bearer {YOUR-TOKEN}
+                        ```
+                        """.trimIndent()))
+            ).info(Info()
                 .title("Strada API")
                 .description("APIs for Strada")
                 .version(appVersion))
+
+    companion object {
+        const val OPEN_API_BEARER_KEY = "bearer-key"
+        private const val OPEN_API_BEARER_SCHEMA = "bearer"
+        private const val OPEN_API_BEARER_FORMAT = "JWT"
+    }
 }
