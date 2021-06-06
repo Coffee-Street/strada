@@ -1,11 +1,8 @@
 package com.wnsgml972.strada.api.v1.item.coffee.domain
 
 import com.fasterxml.jackson.annotation.JsonManagedReference
-import com.wnsgml972.strada.api.base.AbstractJpaEntity
 import com.wnsgml972.strada.api.base.LongJpaEntity
 import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
 import javax.persistence.IdClass
 import javax.persistence.Id
 import javax.persistence.JoinColumn

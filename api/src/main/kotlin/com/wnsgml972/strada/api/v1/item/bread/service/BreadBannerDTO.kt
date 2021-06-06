@@ -13,6 +13,5 @@ data class BreadBannerDTO(
     val id: String,
     val url: String,
     val description: String,
-    //val tags: List<Any>
 
 )

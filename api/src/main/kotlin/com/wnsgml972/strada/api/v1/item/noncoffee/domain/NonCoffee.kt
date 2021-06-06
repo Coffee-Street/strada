@@ -1,15 +1,11 @@
 package com.wnsgml972.strada.api.v1.item.noncoffee.domain
 
 import com.wnsgml972.strada.api.base.AbstractJpaEntity
-import com.wnsgml972.strada.api.v1.item.bread.domain.Bread
-import org.hibernate.annotations.Immutable
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
-import javax.validation.constraints.NotEmpty
 
 @Entity
-@Immutable
 class NonCoffee(
 
     @Id
@@ -36,7 +32,6 @@ class NonCoffee(
                 price == other.price &&
                 description == other.description &&
                 category == other.category
-
     }
 
     companion object {

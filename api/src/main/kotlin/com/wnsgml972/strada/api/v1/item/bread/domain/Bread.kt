@@ -1,13 +1,11 @@
 package com.wnsgml972.strada.api.v1.item.bread.domain
 
 import com.wnsgml972.strada.api.base.AbstractJpaEntity
-import org.hibernate.annotations.Immutable
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-@Immutable
 class Bread(
     @Id
     @Column(length = 25)
@@ -25,7 +23,7 @@ class Bread(
     @Column(length = 20)
     val category: String,
 
-    ) : AbstractJpaEntity<String>() {
+) : AbstractJpaEntity<String>() {
 
     override fun equalProperties(other: Any): Boolean {
         return other is Bread &&
@@ -34,7 +32,6 @@ class Bread(
                 price == other.price &&
                 description == other.description &&
                 category == other.category
-
     }
 
     companion object {

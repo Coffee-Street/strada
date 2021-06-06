@@ -31,7 +31,6 @@ fun CoffeeDTO.toEntity() = Coffee(
     this.description,
     this.category,
 ).let { coffee ->
-    coffee.beanCoffees = this.beans.map { v -> BeanCoffee(coffee, v.toEntity())}.toList()
+    coffee.beanCoffees = this.beans.map { v -> BeanCoffee(coffee, v.toEntity()) }.toList()
     coffee
 }
-

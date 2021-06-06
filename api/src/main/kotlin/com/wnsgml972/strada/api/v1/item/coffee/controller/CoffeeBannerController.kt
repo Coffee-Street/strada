@@ -21,7 +21,6 @@ class CoffeeBannerController @Autowired constructor(
     private var coffeeBannerService: CoffeeBannerService
 ) {
 
-
     @GetMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Find Bread for banner")
     fun select(@PathVariable("id") id: String) = coffeeBannerService.selectById(id)

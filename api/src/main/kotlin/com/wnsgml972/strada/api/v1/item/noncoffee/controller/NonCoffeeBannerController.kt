@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 )
 class NonCoffeeBannerController @Autowired constructor(
     private var nonCoffeeBannerService: NonCoffeeBannerService
-){
+) {
 
     @GetMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Find NonCoffees from id")
@@ -30,4 +30,3 @@ class NonCoffeeBannerController @Autowired constructor(
         const val BANNER_BASE_URL = "$BASE_URL_V1/$BANNER_SERVICE_NAME"
     }
 }
-

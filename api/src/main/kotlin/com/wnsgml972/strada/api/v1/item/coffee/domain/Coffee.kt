@@ -2,11 +2,15 @@ package com.wnsgml972.strada.api.v1.item.coffee.domain
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.wnsgml972.strada.api.base.AbstractJpaEntity
-import org.hibernate.annotations.Immutable
-import javax.persistence.*
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.Column
+import javax.persistence.OneToMany
+import javax.persistence.FetchType
+import javax.persistence.CascadeType
 
 @Entity
-@Immutable
+@SuppressWarnings("LongParameterList")
 class Coffee(
 
     @Id
@@ -25,8 +29,7 @@ class Coffee(
     @Column(length = 20)
     val category: String,
 
-    //CascadeType.PERSIST 왜썻는지 확인
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "coffee", cascade = [CascadeType.ALL, CascadeType.PERSIST])
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "coffee", cascade = [CascadeType.ALL])
     @JsonBackReference(value = "beanCoffeesReference")
     var beanCoffees: List<BeanCoffee> = mutableListOf()
 
@@ -40,7 +43,6 @@ class Coffee(
                 description == other.description &&
                 category == other.category &&
                 beanCoffees == other.beanCoffees
-
     }
 
     companion object {

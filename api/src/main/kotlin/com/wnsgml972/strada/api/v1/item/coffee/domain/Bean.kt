@@ -35,7 +35,7 @@ class Bean(
     @Column(length = 128)
     val grade: String,
 
-    ) : AbstractJpaEntity<String>() {
+) : AbstractJpaEntity<String>() {
 
     override fun equalProperties(other: Any): Boolean {
         return other is Bean &&

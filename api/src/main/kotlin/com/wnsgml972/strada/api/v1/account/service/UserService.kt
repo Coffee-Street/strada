@@ -16,6 +16,9 @@ class UserService(
     @Transactional
     fun signUp(id: String, isEnabled: Boolean = true) = userRepository.save(User.of(id, isEnabled)).toDto()
 
+    @Transactional
+    fun signUpdate(id: String, isEnabled: Boolean) = userRepository.save(User.of(id, isEnabled)).toDto()
+
     @Transactional(readOnly = true)
     fun findById(id: String): UserDto {
         return userRepository

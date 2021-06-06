@@ -1,10 +1,14 @@
-package com.wnsgml972.strada.api.item.bread
+package com.wnsgml972.strada.api.item.coffee
 
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
 import com.wnsgml972.strada.api.v1.item.bread.controller.admin.BreadController
 import com.wnsgml972.strada.api.v1.item.bread.service.BreadDTO
 import com.wnsgml972.strada.api.v1.item.bread.service.BreadInsertRequest
+import com.wnsgml972.strada.api.v1.item.coffee.controller.admin.CoffeeController
+import com.wnsgml972.strada.api.v1.item.coffee.service.BeanDTO
+import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeDTO
+import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeInsertRequest
 import mu.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.BeforeAll
@@ -18,7 +22,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
 
 @TestMethodOrder(OrderAnnotation::class)
-class BreadControllerIT @Autowired constructor(
+class CoffeeControllerIT @Autowired constructor(
     private val client: WebTestClient,
 ) : IntegrationTest() {
 
@@ -27,57 +31,73 @@ class BreadControllerIT @Autowired constructor(
 
     @BeforeAll
     fun `insert dummy date before test`() {
-        val breadInsertRequest = BreadInsertRequest("http://breadInsertTest.com", 2000, "insert bread", "bread")
+        val coffeeInsertRequest = CoffeeInsertRequest(
+            "http://coffeeInsertTest.com",
+            2000,
+            "insert coffee",
+            "coffee",
+            listOf(
+                BeanDTO("케냐", "test", "test", "test", "test", "test", "test", "test")
+            )
+        )
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri(BreadController.BREAD_BASE_URL + "/dummy")
+            .uri(CoffeeController.COFFEE_BASE_URL + "/dummy")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(breadInsertRequest)
+            .bodyValue(coffeeInsertRequest)
             .exchange()
 
     }
 
     @Test
     @Order(1)
-    fun `insert Bread using post to BreadController`() {
-        val breadInsertRequest = BreadInsertRequest("http://breadinserttest.com", 1000, "insert test", "breads")
+    fun `insert Conffee using post to CoffeeController`() {
+        val coffeeInsertRequest = CoffeeInsertRequest(
+            "http://coffeeInsertTest.com",
+            3000,
+            "insert coffee",
+            "coffee",
+            listOf(
+                BeanDTO("케냐", "test", "test", "test", "test", "test", "test", "test")
+            )
+        )
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri(BreadController.BREAD_BASE_URL + "/test")
+            .uri(CoffeeController.COFFEE_BASE_URL + "/test")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(breadInsertRequest)
+            .bodyValue(coffeeInsertRequest)
             .exchange()
             .expectStatus().is2xxSuccessful
-            .expectBody<BreadDTO>()
-            .consumeWith { result ->logger.debug { "result=${result.responseBody}" } }
+            .expectBody<CoffeeDTO>()
+            .consumeWith { result -> logger.debug { "result=${result.responseBody}" } }
     }
 
     @Test
     @Order(2)
-    fun `select Bread using get from BreadController`() {
+    fun `select Coffee using get from CoffeeController`() {
         val accessToken = authHelper.getAccessToken()
 
         client.get()
-            .uri(BreadController.BREAD_BASE_URL + "/dummy")
+            .uri(CoffeeController.COFFEE_BASE_URL + "/dummy")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
-            .expectBody<BreadDTO>()
-            .consumeWith { result ->logger.debug { "result=${result.responseBody}" } }
+            .expectBody<CoffeeDTO>()
+            .consumeWith { result -> logger.debug { "result=${result.responseBody}" } }
     }
 
     @Test
     @Order(3)
-    fun `select all Bread using get from BreadController`() {
+    fun `select all Coffee using get from CoffeeController`() {
         val accessToken = authHelper.getAccessToken()
         client.get()
-            .uri(BreadController.BREAD_BASE_URL + "/")
+            .uri(CoffeeController.COFFEE_BASE_URL + "/")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
-            .expectBody<List<BreadDTO>>()
+            .expectBody<List<CoffeeDTO>>()
             .consumeWith { result ->
                 result.responseBody?.forEach { it -> logger.debug { "result=${it}" } }
             }
@@ -85,17 +105,25 @@ class BreadControllerIT @Autowired constructor(
 
     @Test
     @Order(4)
-    fun `update Bread using put to BreadController`() {
-        val breadInsertRequest = BreadInsertRequest("http://breadinserttest.com", 10000, "insert test", "breads")
+    fun `update Coffee using put to CoffeeController`() {
+        val coffeeInsertRequest = CoffeeInsertRequest(
+            "http://coffeeInsertTest.com",
+            10000,
+            "insert coffee",
+            "coffee",
+            listOf(
+                BeanDTO("케냐", "test", "test", "test", "test", "test", "test", "test")
+            )
+        )
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri(BreadController.BREAD_BASE_URL + "/test")
+            .uri(CoffeeController.COFFEE_BASE_URL + "/test")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(breadInsertRequest)
+            .bodyValue(coffeeInsertRequest)
             .exchange()
             .expectStatus().is2xxSuccessful
-            .expectBody<BreadDTO>().consumeWith { result ->
+            .expectBody<CoffeeDTO>().consumeWith { result ->
                 result.responseBody?.price shouldBeEqualTo 10000
                 logger.debug { "result=${result.responseBody}" }
             }
@@ -104,10 +132,10 @@ class BreadControllerIT @Autowired constructor(
 
     @Test
     @Order(5)
-    fun `delete Bread using delete from BreadController`() {
+    fun `delete Coffee using delete from CoffeeController`() {
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri(BreadController.BREAD_BASE_URL + "/test")
+            .uri(CoffeeController.COFFEE_BASE_URL + "/test")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
@@ -115,10 +143,10 @@ class BreadControllerIT @Autowired constructor(
 
     @Test
     @Order(6)
-    fun `delete Non Exist Bread using delete from BreadController`() {
+    fun `delete Non Exist Coffee using delete from CoffeeController`() {
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri(BreadController.BREAD_BASE_URL + "/test")
+            .uri(CoffeeController.COFFEE_BASE_URL + "/test")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().isNotFound()

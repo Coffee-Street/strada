@@ -28,7 +28,3 @@ data class BeanDTO(
     @field:Size(max = 128, message = "128자 제한입니다.")
     val grade: String,
 )
-
-
-
-

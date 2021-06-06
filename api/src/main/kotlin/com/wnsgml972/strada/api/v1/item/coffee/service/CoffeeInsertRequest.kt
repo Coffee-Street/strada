@@ -1,6 +1,5 @@
 package com.wnsgml972.strada.api.v1.item.coffee.service
 
-import com.wnsgml972.strada.api.v1.item.coffee.domain.Bean
 import org.hibernate.validator.constraints.URL
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Positive

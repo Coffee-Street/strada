@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wnsgml972.strada.ArchunitApplicationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-05-13T12:57:56" hostname="mins-Mac.local" time="0.073">
+<testsuite name="com.wnsgml972.strada.ArchunitApplicationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-06-06T12:31:34" hostname="mins-Mac.local" time="0.188">
   <properties/>
-  <testcase name="field injection을 사용하면 안됩니다()" classname="com.wnsgml972.strada.ArchunitApplicationTest" time="0.073"/>
-  <system-out><![CDATA[2021-05-13 21:57:54,380 ?[34mINFO ?[0;39m [?[34mForkJoinPool-1-worker-3?[0;39m] ?[33mcom.tngtech.archunit.core.PluginLoader?[0;39m:get:66: Detected Java version 11.0.5
-]]></system-out>
+  <testcase name="field injection을 사용하면 안됩니다()" classname="com.wnsgml972.strada.ArchunitApplicationTest" time="0.188"/>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

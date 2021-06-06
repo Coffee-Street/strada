@@ -1,6 +1,5 @@
 package com.wnsgml972.strada.api.v1.item.bread.controller
 
-
 import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.item.bread.service.BreadBannerService
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -31,4 +30,3 @@ class BreadBannerController @Autowired constructor(
         const val BANNER_BASE_URL = "$BASE_URL_V1/$BANNER_SERVICE_NAME"
     }
 }
-

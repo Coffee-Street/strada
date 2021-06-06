@@ -12,6 +12,7 @@ class User private constructor(
 
     @Column
     val isEnabled: Boolean,
+
 ) : AbstractJpaEntity<String>() {
 
     override fun equalProperties(other: Any): Boolean {
