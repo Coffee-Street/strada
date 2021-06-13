@@ -25,8 +25,6 @@ class NonCoffeeService(
     fun update(nonCoffeeDTO: NonCoffeeDTO) = nonCoffeeRepository.save(nonCoffeeDTO.toEntity())
 
     @Transactional
-    fun delete(id: String) {
-        nonCoffeeRepository.findByIdOrNull(id)?.toDto() ?: throw NotFoundException("$id is not found")
-        nonCoffeeRepository.deleteById(id)
-    }
+    fun delete(id: String) = nonCoffeeRepository.findById(id).orElseThrow({ NotFoundException("$id is not found") })
+    .run { nonCoffeeRepository.delete(this) }
 }

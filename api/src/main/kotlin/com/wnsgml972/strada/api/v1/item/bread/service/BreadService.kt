@@ -5,10 +5,11 @@ import com.wnsgml972.strada.exception.NotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import mu.KLogging
 
 @Service
 class BreadService(
-    private val breadRepository: BreadRepository
+    private val breadRepository: BreadRepository,
 ) {
 
     @Transactional(readOnly = true)
@@ -24,5 +25,9 @@ class BreadService(
     fun update(breadDTO: BreadDTO) = breadRepository.save(breadDTO.toEntity())
 
     @Transactional
-    fun delete(id: String) = breadRepository.deleteById(id)
+    fun delete(id: String) =
+        breadRepository.findById(id).orElseThrow({ NotFoundException("$id is not found") })
+            .run { breadRepository.delete(this) }
+
+    companion object : KLogging()
 }

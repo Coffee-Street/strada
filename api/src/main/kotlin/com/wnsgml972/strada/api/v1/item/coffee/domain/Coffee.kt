@@ -6,7 +6,6 @@ import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.Column
 import javax.persistence.OneToMany
-import javax.persistence.FetchType
 import javax.persistence.CascadeType
 
 @Entity
@@ -29,7 +28,7 @@ class Coffee(
     @Column(length = 20)
     val category: String,
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "coffee", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "coffee", orphanRemoval = true, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     @JsonBackReference(value = "beanCoffeesReference")
     var beanCoffees: List<BeanCoffee> = mutableListOf()
 

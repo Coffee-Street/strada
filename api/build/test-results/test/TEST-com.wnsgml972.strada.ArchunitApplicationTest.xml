@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wnsgml972.strada.ArchunitApplicationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-06-06T12:31:34" hostname="mins-Mac.local" time="0.188">
-  <properties/>
-  <testcase name="field injection을 사용하면 안됩니다()" classname="com.wnsgml972.strada.ArchunitApplicationTest" time="0.188"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

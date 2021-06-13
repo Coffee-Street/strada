@@ -3,6 +3,7 @@ package com.wnsgml972.strada.api.v1.item.coffee.service
 import com.wnsgml972.strada.api.v1.item.coffee.domain.Coffee
 import com.wnsgml972.strada.api.v1.item.coffee.domain.CoffeeRepository
 import com.wnsgml972.strada.exception.NotFoundException
+import mu.KLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -20,20 +21,16 @@ class CoffeeService(
         coffeeRepository.findById(id).orElseThrow { NotFoundException("$id Not Found") }.toDto()
 
     @Transactional
-    fun insert(coffeeDTO: CoffeeDTO): Coffee =
-        coffeeRepository.save(coffeeDTO.toEntity())
+    fun insert(coffeeDTO: CoffeeDTO): Coffee = coffeeRepository.save(coffeeDTO.toEntity())
 
     @Transactional
     fun update(coffeeDTO: CoffeeDTO) =
         coffeeRepository.save(coffeeDTO.toEntity())
 
     @Transactional
-    fun delete(id: String) {
+    fun delete(id: String) =
+        coffeeRepository.findById(id).orElseThrow { NotFoundException("$id Not Found") }
+            .run { coffeeRepository.delete(this) }
 
-        coffeeRepository.findById(id).orElseThrow { NotFoundException("$id Not Found") }.beanCoffees.forEach { v ->
-            v.bean = null
-            v.coffee = null
-        }
-        coffeeRepository.deleteById(id)
-    }
+    companion object : KLogging()
 }

@@ -14,13 +14,15 @@ fun Bean.toDto() = BeanDTO(
     this.grade
 )
 
-fun BeanDTO.toEntity() = Bean(
-    this.id,
-    this.origin,
-    this.farm,
-    this.description,
-    this.processing,
-    this.roasting,
-    this.kind,
-    this.grade
-)
+fun BeanDTO.toEntity() = this.id?.let {
+    Bean(
+        it,
+        this.origin,
+        this.farm,
+        this.description,
+        this.processing,
+        this.roasting,
+        this.kind,
+        this.grade
+    )
+}
