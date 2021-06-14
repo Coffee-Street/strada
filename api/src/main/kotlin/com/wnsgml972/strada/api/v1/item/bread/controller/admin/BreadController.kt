@@ -32,7 +32,7 @@ class BreadController @Autowired constructor(
     private var breadService: BreadService
 ) {
 
-    @GetMapping("/")
+    @GetMapping
     @ApiResponse(responseCode = "200", description = "List all Bread")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun selectAll() = breadService.selectAll()
