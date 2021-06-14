@@ -52,6 +52,7 @@ configurations.forEach {
     }
 }
 
+
 dependencies {
 
     api(Libs.springBoot("autoconfigure"))
