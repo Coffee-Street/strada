@@ -1,6 +1,5 @@
 package com.wnsgml972.strada.api.v1.ordering.service
 
-import com.wnsgml972.strada.api.v1.ordering.domain.Ordering
 import com.wnsgml972.strada.api.v1.option.bean.service.BeanOptionDTO
 import com.wnsgml972.strada.api.v1.option.bread.service.BreadOptionDTO
 import com.wnsgml972.strada.api.v1.option.drink.service.DrinkOptionDTO
@@ -15,12 +14,4 @@ data class OrderingDetailDTO(
     val drinkOption: DrinkOptionDTO?,
     val breadOption: BreadOptionDTO?,
     val beanOption: BeanOptionDTO?,
-) {
-    constructor(id: Long?, ordering: OrderingDTO, drinkOption: DrinkOptionDTO?, breadOption: BreadOptionDTO?,  beanOption: BeanOptionDTO?) : this(
-        id ?: 0,
-        ordering,
-        drinkOption,
-        breadOption,
-        beanOption
-    )
-}
+)

@@ -11,17 +11,31 @@ class OrderingService(
     private val orderingRepository: OrderingRepository
 ) {
     @Transactional(readOnly = true)
-    fun selectAll(): List<OrderingDTO> = orderingRepository.findAll().map { it.toDto() }
+    fun selectAll(): List<OrderingDTO> {
+        return orderingRepository.findAll().map { it.toDto() }
+    }
 
     @Transactional(readOnly = true)
-    fun selectById(id: Long): OrderingDTO? = orderingRepository.findByIdOrNull(id)?.toDto() ?: throw NotFoundException()
+    fun selectById(id: Long): OrderingDTO {
+        return orderingRepository.findByIdOrNull(id)?.toDto() ?: throw NotFoundException("$id is not found")
+    }
 
     @Transactional
-    fun insert(orderingDTO: OrderingDTO) = orderingRepository.save(orderingDTO.toEntity())
+    fun insert(orderingDTO: OrderingDTO): OrderingDTO {
+        return orderingRepository.save(orderingDTO.toEntity()).toDto()
+    }
 
     @Transactional
-    fun update(orderingDTO: OrderingDTO) = orderingRepository.save(orderingDTO.toEntity())
+    fun update(orderingDTO: OrderingDTO): OrderingDTO {
+        return orderingRepository.findById(orderingDTO.id)
+            .orElseThrow { NotFoundException("${orderingDTO.id} is not found") }
+            .let { orderingRepository.save(orderingDTO.toEntity()).toDto() }
+    }
 
     @Transactional
-    fun delete(id: Long) = orderingRepository.findById(id).orElseThrow { NotFoundException("$id is not found") }.run { orderingRepository.delete(this) }
+    fun delete(id: Long) {
+        orderingRepository.findById(id)
+            .orElseThrow { NotFoundException("$id is not found") }
+            .run { orderingRepository.delete(this) }
+    }
 }

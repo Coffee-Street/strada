@@ -2,11 +2,8 @@ package com.wnsgml972.strada.api.v1.ordering.domain
 
 import com.wnsgml972.strada.api.base.LongJpaEntity
 import com.wnsgml972.strada.api.v1.option.bean.domain.BeanOption
-import com.wnsgml972.strada.api.v1.option.bean.service.BeanOptionDTO
 import com.wnsgml972.strada.api.v1.option.bread.domain.BreadOption
-import com.wnsgml972.strada.api.v1.option.bread.service.BreadOptionDTO
 import com.wnsgml972.strada.api.v1.option.drink.domain.DrinkOption
-import com.wnsgml972.strada.api.v1.option.drink.service.DrinkOptionDTO
 import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.OneToOne
@@ -25,7 +22,7 @@ import javax.persistence.ManyToOne
  */
 @Entity
 class OrderingDetail private constructor(
-    @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    @ManyToOne(cascade = [CascadeType.ALL])
     val ordering: Ordering,
 
 //    val coffee : Coffee?,
