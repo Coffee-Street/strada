@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDateTime
 import javax.validation.Valid
 
 /**
@@ -37,34 +38,49 @@ class OrderingController @Autowired constructor(
 ) {
 
     @GetMapping
-    @Operation(summary = "모든 주문 가져오기 for test", security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
+    @Operation(
+        summary = "모든 주문 가져오기 for test",
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
+    )
     @ApiResponse(responseCode = "200", description = "List all Ordering")
     fun findAll() = orderingService.selectAll()
 
     @GetMapping("/{id}")
-    @Operation(summary = "특정 주문 가져오기 for test", security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
+    @Operation(
+        summary = "특정 주문 가져오기 for test",
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
+    )
     @ApiResponse(responseCode = "200", description = "Find Ordering")
     fun find(@PathVariable("id") id: Long) = orderingService.selectById(id)
 
     @PostMapping
-    @Operation(summary = "주문하기 for test", security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    @ApiResponse(responseCode = "201", description = "Create Ordering")
+    @Operation(
+        summary = "주문하기 for test",
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
+    )
+    @ApiResponse(responseCode = "200", description = "Create Ordering")
     fun insert(@RequestBody @Valid orderingRequest: OrderingRequest) =
-        orderingService.insert(OrderingDTO(null, orderingRequest)).toDto()
+        orderingService.insert(orderingRequest.toDto())
 
     @PutMapping("/{id}")
-    @Operation(summary = "주문 갱신하기 for test", security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    @ApiResponse(responseCode = "201", description = "Update Order")
+    @Operation(
+        summary = "주문 갱신하기 for test",
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
+    )
+    @ApiResponse(responseCode = "200", description = "Update Order")
     fun update(@PathVariable("id") id: Long, @RequestBody @Valid orderingRequest: OrderingRequest) =
-        orderingService.update(OrderingDTO(id, orderingRequest)).toDto()
+        orderingService.update(orderingRequest.toDto(id))
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "주문 삭제하기 for test", security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    @ApiResponse(responseCode = "204", description = "Delete Order")
+    @Operation(
+        summary = "주문 삭제하기 for test",
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
+    )
+    @ApiResponse(responseCode = "200", description = "Delete Order")
     fun delete(@PathVariable("id") id: Long) = orderingService.delete(id)
 
     companion object : KLogging() {
-        private const val ORDERING_SERVICE_NAME = "order"
+        private const val ORDERING_SERVICE_NAME = "orders"
         const val ORDERING_BASE_URL = "$BASE_URL_V1/$ORDERING_SERVICE_NAME"
     }
 }
