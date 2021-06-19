@@ -5,9 +5,3 @@ enum class CupType {
     DISPOSABLE,
     TUMBLER,
 }
-
-enum class CupSizeType {
-    TALL,
-    GRANDE,
-    VENTI
-}

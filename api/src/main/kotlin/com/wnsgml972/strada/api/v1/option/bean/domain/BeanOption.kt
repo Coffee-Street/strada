@@ -21,7 +21,7 @@ class BeanOption private constructor(
     }
 
     companion object {
-        fun of(grindType: GrindType) =
-            BeanOption(grindType)
+        fun of(grindType: GrindType, id: Long?) =
+            BeanOption(grindType, id)
     }
 }

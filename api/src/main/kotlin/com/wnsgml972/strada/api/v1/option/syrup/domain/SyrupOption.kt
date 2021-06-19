@@ -3,6 +3,7 @@ package com.wnsgml972.strada.api.v1.option.syrup.domain
 import com.wnsgml972.strada.api.base.LongJpaEntity
 import com.wnsgml972.strada.api.v1.option.drink.domain.DrinkOption
 import com.wnsgml972.strada.api.v1.option.syrup.service.SyrupType
+import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
@@ -10,7 +11,7 @@ import javax.persistence.ManyToOne
 
 @Entity
 class SyrupOption private constructor(
-    @ManyToOne
+    @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     val drinkOption: DrinkOption,
 
     @Enumerated(EnumType.STRING)
@@ -29,7 +30,7 @@ class SyrupOption private constructor(
     }
 
     companion object {
-        fun of(drinkOption: DrinkOption, syrupType: SyrupType, syrupCount: Int) =
-            SyrupOption(drinkOption, syrupType, syrupCount)
+        fun of(drinkOption: DrinkOption, syrupType: SyrupType, syrupCount: Int, id: Long?) =
+            SyrupOption(drinkOption, syrupType, syrupCount, id)
     }
 }

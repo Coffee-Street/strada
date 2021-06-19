@@ -23,7 +23,7 @@ class BreadOption private constructor(
     }
 
     companion object {
-        fun of(hereOrToGo: HereOrToGo, forkCount: Int) =
-            BreadOption(hereOrToGo, forkCount)
+        fun of(hereOrToGo: HereOrToGo, forkCount: Int, id: Long?) =
+            BreadOption(hereOrToGo, forkCount, id)
     }
 }

@@ -3,6 +3,7 @@ package com.wnsgml972.strada.api.v1.option.drizzle.domain
 import com.wnsgml972.strada.api.base.LongJpaEntity
 import com.wnsgml972.strada.api.v1.option.drink.domain.DrinkOption
 import com.wnsgml972.strada.api.v1.option.drizzle.service.DrizzleType
+import javax.persistence.CascadeType
 
 import javax.persistence.Entity
 import javax.persistence.EnumType
@@ -11,7 +12,7 @@ import javax.persistence.ManyToOne
 
 @Entity
 class DrizzleOption private constructor(
-    @ManyToOne
+    @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     val drinkOption: DrinkOption,
 
     @Enumerated(EnumType.STRING)
@@ -30,7 +31,7 @@ class DrizzleOption private constructor(
     }
 
     companion object {
-        fun of(drinkOption: DrinkOption, drizzleType: DrizzleType, drizzleCount: Int) =
-            DrizzleOption(drinkOption, drizzleType, drizzleCount)
+        fun of(drinkOption: DrinkOption, drizzleType: DrizzleType, drizzleCount: Int, id: Long?) =
+            DrizzleOption(drinkOption, drizzleType, drizzleCount, id)
     }
 }

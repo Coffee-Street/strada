@@ -31,38 +31,39 @@ class DrinkOption private constructor(
     val cupSizeType: CupSizeType,
 
     @Enumerated(EnumType.STRING)
-    val waterType: WaterType?,
+    val waterType: WaterType,
 
     @Enumerated(EnumType.STRING)
-    val milkType: MilkType?,
+    val milkType: MilkType,
 
     @Enumerated(EnumType.STRING)
-    val icedOnlyType: IcedOnlyType?,
+    val icedOnlyType: IcedOnlyType,
 
     @Enumerated(EnumType.STRING)
-    val hotOnlyType: HotOnlyType?,
+    val hotOnlyType: HotOnlyType,
 
     @Enumerated(EnumType.STRING)
-    val creamType: CreamType?,
+    val creamType: CreamType,
 
     @Enumerated(EnumType.STRING)
     val memoType: MemoType,
 
-    val memo: String? = null,
+    val memo: String = "",
 
     val shotCount: Int,
 
     @OneToMany
-    val syrupOptions: List<SyrupOption>?,
+    val syrupOptions: List<SyrupOption>,
 
     @OneToMany
-    val drizzleOptions: List<DrizzleOption>?,
+    val drizzleOptions: List<DrizzleOption>,
 
     override var id: Long? = null,
 ) : LongJpaEntity() {
     override fun equalProperties(other: Any): Boolean {
         return other is DrinkOption &&
                 id == other.id &&
+                hotOrIced == other.hotOrIced &&
                 cupType == other.cupType &&
                 cupSizeType == other.cupSizeType &&
                 waterType == other.waterType &&
@@ -82,16 +83,17 @@ class DrinkOption private constructor(
             hotOrIcedType: HotOrIcedType,
             cupType: CupType,
             cupSizeType: CupSizeType,
-            waterType: WaterType?,
-            milkType: MilkType?,
-            icedOnlyType: IcedOnlyType?,
-            hotOnlyType: HotOnlyType?,
-            creamType: CreamType?,
+            waterType: WaterType,
+            milkType: MilkType,
+            icedOnlyType: IcedOnlyType,
+            hotOnlyType: HotOnlyType,
+            creamType: CreamType,
             memoType: MemoType,
-            memo: String?,
+            memo: String,
             shotCount: Int,
-            syrupOptions: List<SyrupOption>?,
-            drizzleOptions: List<DrizzleOption>?,
+            syrupOptions: List<SyrupOption>,
+            drizzleOptions: List<DrizzleOption>,
+            id: Long?
         ) =
             DrinkOption(
                 hotOrIcedType,
@@ -106,7 +108,8 @@ class DrinkOption private constructor(
                 memo,
                 shotCount,
                 syrupOptions,
-                drizzleOptions
+                drizzleOptions,
+                id
             )
     }
 }

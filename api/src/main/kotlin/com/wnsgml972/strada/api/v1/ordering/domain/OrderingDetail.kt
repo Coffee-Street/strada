@@ -1,9 +1,13 @@
-package com.wnsgml972.strada.api.v1.order.domain
+package com.wnsgml972.strada.api.v1.ordering.domain
 
 import com.wnsgml972.strada.api.base.LongJpaEntity
 import com.wnsgml972.strada.api.v1.option.bean.domain.BeanOption
+import com.wnsgml972.strada.api.v1.option.bean.service.BeanOptionDTO
 import com.wnsgml972.strada.api.v1.option.bread.domain.BreadOption
+import com.wnsgml972.strada.api.v1.option.bread.service.BreadOptionDTO
 import com.wnsgml972.strada.api.v1.option.drink.domain.DrinkOption
+import com.wnsgml972.strada.api.v1.option.drink.service.DrinkOptionDTO
+import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.OneToOne
 import javax.persistence.ManyToOne
@@ -13,16 +17,16 @@ import javax.persistence.ManyToOne
  *
  * Order 의 하위 객체로 가변적인 주문의 내용을 관리하는 Entity
  *
- * @property order
+ * @property ordering
  * @property drinkOption drinkOption
  * @property breadOption breadOption
  * @property beanOption beanOption
  *
  */
 @Entity
-class OrderDetail private constructor(
-    @ManyToOne
-    val order: Order,
+class OrderingDetail private constructor(
+    @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    val ordering: Ordering,
 
 //    val coffee : Coffee?,
 //
@@ -43,18 +47,18 @@ class OrderDetail private constructor(
 
     override var id: Long? = null,
 
-) : LongJpaEntity() {
+    ) : LongJpaEntity() {
     override fun equalProperties(other: Any): Boolean {
-        return other is OrderDetail &&
+        return other is OrderingDetail &&
                 id == other.id &&
-                order == other.order &&
+                ordering == other.ordering &&
                 drinkOption == other.drinkOption &&
                 breadOption == other.breadOption &&
                 beanOption == other.beanOption
     }
 
     companion object {
-        fun of(order: Order, drinkOption: DrinkOption?, breadOption: BreadOption?, beanOption: BeanOption?) =
-            OrderDetail(order, drinkOption, breadOption, beanOption)
+        fun of(ordering: Ordering, drinkOption: DrinkOption?, breadOption: BreadOption?, beanOption: BeanOption?, id: Long?) =
+            OrderingDetail(ordering, drinkOption, breadOption, beanOption, id)
     }
 }
