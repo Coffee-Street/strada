@@ -12,15 +12,15 @@ import com.wnsgml972.strada.exception.BadRequestException
 fun OrderingDetail.toDto() = OrderingDetailDTO(
     this.id ?: throw BadRequestException("$id must not null"),
     this.ordering.toDto(),
-    this.drinkOption?.toDto(),
-    this.breadOption?.toDto(),
-    this.beanOption?.toDto()
+//    this.drinkOption?.toDto(),
+//    this.breadOption?.toDto(),
+//    this.beanOption?.toDto()
 )
 
 fun OrderingDetailDTO.toEntity() = OrderingDetail.of(
     this.ordering.toEntity(),
-    this.drinkOption?.toEntity(),
-    this.breadOption?.toEntity(),
-    this.beanOption?.toEntity(),
+//    this.drinkOption?.toEntity(),
+//    this.breadOption?.toEntity(),
+//    this.beanOption?.toEntity(),
     this.id,
 )

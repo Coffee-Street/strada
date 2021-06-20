@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne
 
 @Entity
 class DrizzleOption private constructor(
-    @ManyToOne(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    @ManyToOne(cascade = [CascadeType.ALL])
     val drinkOption: DrinkOption,
 
     @Enumerated(EnumType.STRING)

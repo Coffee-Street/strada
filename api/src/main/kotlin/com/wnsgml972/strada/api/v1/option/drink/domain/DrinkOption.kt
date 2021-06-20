@@ -10,17 +10,19 @@ import com.wnsgml972.strada.api.v1.option.drink.service.IcedOnlyType
 import com.wnsgml972.strada.api.v1.option.drink.service.HotOnlyType
 import com.wnsgml972.strada.api.v1.option.drink.service.CreamType
 import com.wnsgml972.strada.api.v1.option.drink.service.MemoType
-import com.wnsgml972.strada.api.v1.option.drizzle.domain.DrizzleOption
-import com.wnsgml972.strada.api.v1.option.syrup.domain.SyrupOption
+import com.wnsgml972.strada.api.v1.ordering.domain.OrderingDetail
 
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
-import javax.persistence.OneToMany
+import javax.persistence.OneToOne
 
 @Entity
 @SuppressWarnings("LongParameterList")
 class DrinkOption private constructor(
+    @OneToOne
+    val orderingDetail: OrderingDetail,
+
     @Enumerated(EnumType.STRING)
     val hotOrIced: HotOrIcedType,
 
@@ -52,17 +54,12 @@ class DrinkOption private constructor(
 
     val shotCount: Int,
 
-    @OneToMany
-    val syrupOptions: List<SyrupOption>,
-
-    @OneToMany
-    val drizzleOptions: List<DrizzleOption>,
-
     override var id: Long? = null,
 ) : LongJpaEntity() {
     override fun equalProperties(other: Any): Boolean {
         return other is DrinkOption &&
                 id == other.id &&
+                orderingDetail == other.orderingDetail &&
                 hotOrIced == other.hotOrIced &&
                 cupType == other.cupType &&
                 cupSizeType == other.cupSizeType &&
@@ -73,13 +70,12 @@ class DrinkOption private constructor(
                 creamType == other.creamType &&
                 memoType == other.memoType &&
                 memo == other.memo &&
-                shotCount == other.shotCount &&
-                syrupOptions == other.syrupOptions &&
-                drizzleOptions == other.drizzleOptions
+                shotCount == other.shotCount
     }
 
     companion object {
         fun of(
+            orderingDetail: OrderingDetail,
             hotOrIcedType: HotOrIcedType,
             cupType: CupType,
             cupSizeType: CupSizeType,
@@ -91,11 +87,10 @@ class DrinkOption private constructor(
             memoType: MemoType,
             memo: String,
             shotCount: Int,
-            syrupOptions: List<SyrupOption>,
-            drizzleOptions: List<DrizzleOption>,
             id: Long?
         ) =
             DrinkOption(
+                orderingDetail,
                 hotOrIcedType,
                 cupType,
                 cupSizeType,
@@ -107,8 +102,6 @@ class DrinkOption private constructor(
                 memoType,
                 memo,
                 shotCount,
-                syrupOptions,
-                drizzleOptions,
                 id
             )
     }

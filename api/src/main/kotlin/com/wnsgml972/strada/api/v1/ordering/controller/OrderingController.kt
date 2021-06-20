@@ -1,7 +1,6 @@
 package com.wnsgml972.strada.api.v1.ordering.controller
 
 import BASE_URL_V1
-import com.wnsgml972.strada.api.v1.ordering.service.OrderingDTO
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingService
 import com.wnsgml972.strada.api.v1.ordering.controller.OrderingController.Companion.ORDERING_BASE_URL
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingRequest
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import java.time.LocalDateTime
 import javax.validation.Valid
 
 /**
@@ -80,7 +78,7 @@ class OrderingController @Autowired constructor(
     fun delete(@PathVariable("id") id: Long) = orderingService.delete(id)
 
     companion object : KLogging() {
-        private const val ORDERING_SERVICE_NAME = "orders"
+        private const val ORDERING_SERVICE_NAME = "ordering"
         const val ORDERING_BASE_URL = "$BASE_URL_V1/$ORDERING_SERVICE_NAME"
     }
 }
