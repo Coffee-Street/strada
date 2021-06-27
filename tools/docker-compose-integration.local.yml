@@ -1,6 +1,6 @@
 version: "3"
 services:
-  mysql:
+  primary-mysql:
     image: mysql:5.7
     restart: on-failure
     environment:
@@ -10,8 +10,29 @@ services:
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
     ports:
-      - 3306:3306
+      - target: 3306
+        published: 3306
     command:
       - "--character-set-server=utf8mb4"
       - "--collation-server=utf8mb4_unicode_ci"
       - "--innodb-use-native-aio=0"
+  secondary-mysql:
+    image: mysql:5.7
+    restart: on-failure
+    environment:
+      MYSQL_DATABASE: test_integration_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ''
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+    ports:
+      - target: 3306
+        published: 3306
+    command:
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+      - "--innodb-use-native-aio=0"
+    links:
+      - primary-mysql
+    depends_on:
+      - primary-mysql
