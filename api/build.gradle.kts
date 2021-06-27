@@ -59,6 +59,7 @@ dependencies {
     kapt(Libs.springBoot("configuration-processor"))
     kaptTest(Libs.springBoot("configuration-processor"))
 
+    api(Libs.springData("jpa"))
     api(Libs.springBootStarter("data-jpa"))
     api(Libs.springBootStarter("validation"))
     api(Libs.springBootStarter("actuator"))

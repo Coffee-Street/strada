@@ -2,9 +2,6 @@ package com.wnsgml972.strada.api.item.coffee
 
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
-import com.wnsgml972.strada.api.v1.item.bread.controller.admin.BreadController
-import com.wnsgml972.strada.api.v1.item.bread.service.BreadDTO
-import com.wnsgml972.strada.api.v1.item.bread.service.BreadInsertRequest
 import com.wnsgml972.strada.api.v1.item.coffee.controller.admin.CoffeeController
 import com.wnsgml972.strada.api.v1.item.coffee.service.BeanDTO
 import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeDTO
@@ -27,7 +24,6 @@ class CoffeeControllerIT @Autowired constructor(
 ) : IntegrationTest() {
 
     val authHelper = AuthHelper(client)
-
 
     @BeforeAll
     fun `insert dummy date before test`() {

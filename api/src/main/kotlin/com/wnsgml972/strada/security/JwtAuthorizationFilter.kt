@@ -5,10 +5,10 @@ import com.auth0.jwt.interfaces.DecodedJWT
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.wnsgml972.strada.api.v1.account.service.AccessTokenRequest
-import com.wnsgml972.strada.exception.UnAuthorizedException
+import com.wnsgml972.strada.exception.StradaUnAuthorizedException
 import mu.KLogging
 import org.springframework.security.authentication.AuthenticationManager
-import com.wnsgml972.strada.exception.IllegalStateException
+import com.wnsgml972.strada.exception.StradaIllegalStateException
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
@@ -43,16 +43,19 @@ class JwtAuthorizationFilter(
                     SecurityContextHolder.getContext().authentication = auth
                 } catch (e: TokenExpiredException) {
                     logger.error("token expired", e)
-                    request.setAttribute(RequestDispatcher.ERROR_EXCEPTION, UnAuthorizedException("token expired"))
-                    throw UnAuthorizedException("token expired")
+                    request.setAttribute(RequestDispatcher.ERROR_EXCEPTION,
+                        StradaUnAuthorizedException("token expired"))
+                    throw StradaUnAuthorizedException("token expired")
                 } catch (e: JsonProcessingException) {
                     logger.error("error occurred while processing payload", e)
-                    request.setAttribute(RequestDispatcher.ERROR_EXCEPTION, IllegalStateException("jwt parse error"))
-                    throw IllegalStateException("jwt parse error")
+                    request.setAttribute(RequestDispatcher.ERROR_EXCEPTION,
+                        StradaIllegalStateException("jwt parse error"))
+                    throw StradaIllegalStateException("jwt parse error")
                 } catch (e: IllegalArgumentException) {
                     logger.error("token is wrong", e)
-                    request.setAttribute(RequestDispatcher.ERROR_EXCEPTION, UnAuthorizedException("invalid token"))
-                    throw UnAuthorizedException("invalid token")
+                    request.setAttribute(RequestDispatcher.ERROR_EXCEPTION,
+                        StradaUnAuthorizedException("invalid token"))
+                    throw StradaUnAuthorizedException("invalid token")
                 }
             }
         }

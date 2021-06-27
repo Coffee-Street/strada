@@ -2,7 +2,7 @@ package com.wnsgml972.strada.api.item.bread
 
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
-import com.wnsgml972.strada.api.v1.item.bread.controller.admin.BreadController
+import com.wnsgml972.strada.api.v1.item.bread.controller.admin.AdminBreadController
 import com.wnsgml972.strada.api.v1.item.bread.service.BreadDTO
 import com.wnsgml972.strada.api.v1.item.bread.service.BreadInsertRequest
 import mu.KLogging
@@ -21,16 +21,14 @@ import org.springframework.test.web.reactive.server.expectBody
 class BreadControllerIT @Autowired constructor(
     private val client: WebTestClient,
 ) : IntegrationTest() {
-
     val authHelper = AuthHelper(client)
-
 
     @BeforeAll
     fun `insert dummy date before test`() {
         val breadInsertRequest = BreadInsertRequest("http://breadInsertTest.com", 2000, "insert bread", "bread")
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri(BreadController.BREAD_BASE_URL + "/dummy")
+            .uri(AdminBreadController.ADMIN_BREAD_BASE_URL + "/dummy")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(breadInsertRequest)
@@ -44,7 +42,7 @@ class BreadControllerIT @Autowired constructor(
         val breadInsertRequest = BreadInsertRequest("http://breadinserttest.com", 1000, "insert test", "breads")
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri(BreadController.BREAD_BASE_URL + "/test")
+            .uri(AdminBreadController.ADMIN_BREAD_BASE_URL + "/test")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(breadInsertRequest)
@@ -60,7 +58,7 @@ class BreadControllerIT @Autowired constructor(
         val accessToken = authHelper.getAccessToken()
 
         client.get()
-            .uri(BreadController.BREAD_BASE_URL + "/dummy")
+            .uri(AdminBreadController.ADMIN_BREAD_BASE_URL + "/dummy")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
@@ -73,7 +71,7 @@ class BreadControllerIT @Autowired constructor(
     fun `select all Bread using get from BreadController`() {
         val accessToken = authHelper.getAccessToken()
         client.get()
-            .uri(BreadController.BREAD_BASE_URL + "/")
+            .uri(AdminBreadController.ADMIN_BREAD_BASE_URL + "/")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
@@ -89,7 +87,7 @@ class BreadControllerIT @Autowired constructor(
         val breadInsertRequest = BreadInsertRequest("http://breadinserttest.com", 10000, "insert test", "breads")
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri(BreadController.BREAD_BASE_URL + "/test")
+            .uri(AdminBreadController.ADMIN_BREAD_BASE_URL + "/test")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(breadInsertRequest)
@@ -107,10 +105,11 @@ class BreadControllerIT @Autowired constructor(
     fun `delete Bread using delete from BreadController`() {
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri(BreadController.BREAD_BASE_URL + "/test")
+            .uri(AdminBreadController.ADMIN_BREAD_BASE_URL + "/test")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
-            .expectStatus().is2xxSuccessful
+            .expectStatus()
+            .is2xxSuccessful
     }
 
     @Test
@@ -118,10 +117,11 @@ class BreadControllerIT @Autowired constructor(
     fun `delete Non Exist Bread using delete from BreadController`() {
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri(BreadController.BREAD_BASE_URL + "/test")
+            .uri(AdminBreadController.ADMIN_BREAD_BASE_URL + "/test")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
-            .expectStatus().isNotFound()
+            .expectStatus()
+            .isNotFound
     }
 
     companion object : KLogging()

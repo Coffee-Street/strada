@@ -1,8 +1,7 @@
 package com.wnsgml972.strada.api.v1.item.noncoffee.service
 
-import com.wnsgml972.strada.api.v1.item.bread.service.toDto
 import com.wnsgml972.strada.api.v1.item.noncoffee.domain.NonCoffeeRepository
-import com.wnsgml972.strada.exception.NotFoundException
+import com.wnsgml972.strada.exception.StradaNotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -25,6 +24,8 @@ class NonCoffeeService(
     fun update(nonCoffeeDTO: NonCoffeeDTO) = nonCoffeeRepository.save(nonCoffeeDTO.toEntity())
 
     @Transactional
-    fun delete(id: String) = nonCoffeeRepository.findById(id).orElseThrow({ NotFoundException("$id is not found") })
-    .run { nonCoffeeRepository.delete(this) }
+    fun delete(id: String) = nonCoffeeRepository
+        .findById(id)
+        .orElseThrow { StradaNotFoundException("$id is not found") }
+        .run { nonCoffeeRepository.delete(this) }
 }

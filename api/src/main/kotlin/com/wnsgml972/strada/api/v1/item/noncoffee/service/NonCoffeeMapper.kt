@@ -1,17 +1,17 @@
 package com.wnsgml972.strada.api.v1.item.noncoffee.service
 
 import com.wnsgml972.strada.api.v1.item.noncoffee.domain.NonCoffee
-import com.wnsgml972.strada.exception.BadRequestException
+import com.wnsgml972.strada.exception.StradaBadRequestException
 
 fun NonCoffee.toDto() = NonCoffeeDTO(
-    this.id ?: throw BadRequestException("$id is not null"),
+    this.id ?: throw StradaBadRequestException("$id is not null"),
     this.imageUrl,
     this.price,
     this.description,
     this.category,
 )
 fun NonCoffee.toBannerDto() = NonCoffeeBannerDTO(
-    this.id ?: throw BadRequestException("$id is not null"),
+    this.id ?: throw StradaBadRequestException("$id is not null"),
     this.imageUrl,
     this.description
 )

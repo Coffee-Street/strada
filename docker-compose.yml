@@ -1,6 +1,6 @@
 version: "3"
 services:
-  mysql:
+  primary-mysql:
     image: mysql:5.7
     restart: on-failure
     environment:
@@ -10,10 +10,33 @@ services:
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
     ports:
-      - 3306:3306
+      - target: 3306
+        published: 3306
     command:
       - "--character-set-server=utf8mb4"
       - "--collation-server=utf8mb4_unicode_ci"
       - "--innodb-use-native-aio=0"
     volumes:
-      - "$HOME/mnt/mysql:/var/lib/strada/mysql"
+      - "$HOME/mnt/strada/primary-mysql:/var/lib/strada/primary-mysql"
+  secondary-mysql:
+    image: mysql:5.7
+    restart: on-failure
+    environment:
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ''
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+    ports:
+      - target: 3306
+        published: 3307
+    command:
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+      - "--innodb-use-native-aio=0"
+    volumes:
+      - "$HOME/mnt/strada/secondary-mysql:/var/lib/strada/secondary-mysql"
+    links:
+      - primary-mysql
+    depends_on:
+      - primary-mysql

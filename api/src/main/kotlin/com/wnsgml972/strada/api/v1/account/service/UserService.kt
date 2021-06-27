@@ -2,7 +2,7 @@ package com.wnsgml972.strada.api.v1.account.service
 
 import com.wnsgml972.strada.api.v1.account.domain.UserRepository
 import com.wnsgml972.strada.api.v1.account.domain.User
-import com.wnsgml972.strada.exception.NotFoundException
+import com.wnsgml972.strada.exception.StradaNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -23,7 +23,7 @@ class UserService(
     fun findById(id: String): UserDto {
         return userRepository
             .findById(id)
-            .orElseThrow { NotFoundException("$id Not Found") }
+            .orElseThrow { StradaNotFoundException("$id Not Found") }
             .toDto()
     }
 }

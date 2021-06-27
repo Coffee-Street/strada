@@ -23,7 +23,6 @@ class NonCoffeeControllerIT@Autowired constructor(
 ) : IntegrationTest() {
     val authHelper = AuthHelper(client)
 
-
     @BeforeAll
     fun `insert dummy date before test`() {
         val nonCoffeeInsertRequest = NonCoffeeInsertRequest("http://NonCoffeeInsertTest.com", 2000, "insert NonCoffee", "NonCoffee")
