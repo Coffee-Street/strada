@@ -61,13 +61,14 @@ class DataSourceConfiguration {
         @Qualifier(SECONDARY_DATASOURCE) secondaryDataSource: DataSource
     ): DataSource {
         val routingDataSource = RoutingDataSource()
-        // TODO: infra 구성 끝나면! 라우팅 설정 primary, secondary 해놓기
+        // TODO infra 구성 끝나면! 라우팅 설정 primary, secondary 해놓기
         // routing 은 잘되는 거 확인했고, 설정도 다 확인했음, 인프라적으로 mysql bin log 이용해서 비동기로 replication 되는 구성만 하면 될 듯
         //  mysql replication example
         //  https://github.com/nitinacquia/mysql-replication-docker-compose/blob/master/master/conf.d/master.cnf
         val dataSources = mapOf<Any, Any>(
             "primary-mysql" to primaryDataSource,
-            // TODO: infra 구성 끝나면 아래 지우고 주석을 푸세욤 // "secondary-mysql" to secondaryDataSource
+            // TODO infra 구성 끝나면 이거 지우고 아래 주석을 푸세욤
+            // TODO "secondary-mysql" to secondaryDataSource
             "secondary-mysql" to primaryDataSource,
         )
         routingDataSource.setTargetDataSources(dataSources)
