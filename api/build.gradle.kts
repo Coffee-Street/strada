@@ -59,14 +59,14 @@ dependencies {
     kapt(Libs.springBoot("configuration-processor"))
     kaptTest(Libs.springBoot("configuration-processor"))
 
-    api(Libs.springData("jpa"))
-    api(Libs.springBootStarter("data-jpa"))
     api(Libs.springBootStarter("validation"))
     api(Libs.springBootStarter("actuator"))
     api(Libs.springBootStarter("aop"))
     api(Libs.springBootStarter("oauth2-resource-server"))
     api(Libs.springBootStarter("web"))
     api(Libs.springBootStarter("validation"))
+
+    api(Libs.springData("jpa"))
 
     implementation("org.springframework.data:spring-data-jpa")
 
