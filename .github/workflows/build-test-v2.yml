@@ -11,7 +11,7 @@ jobs:
   build_test:
     runs-on: ubuntu-latest
     services:
-      mysql-primary:
+      primary-mysql:
         image: 'mysql:5.6.49'
         env:
           MYSQL_DATABASE: test_integration_db
@@ -22,7 +22,7 @@ jobs:
         ports:
           - 3306:3306
         options: '--health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3'
-      mysql-secondary:
+      secondary-mysql:
         image: 'mysql:5.6.49'
         env:
           MYSQL_DATABASE: test_integration_db
