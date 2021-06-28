@@ -11,7 +11,7 @@ jobs:
   build_test:
     runs-on: ubuntu-latest
     services:
-      primary-mysql:
+      mysql:
         image: 'mysql:5.6.49'
         env:
           MYSQL_DATABASE: test_integration_db
@@ -22,18 +22,7 @@ jobs:
         ports:
           - 3306:3306
         options: '--health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3'
-      secondary-mysql:
-        image: 'mysql:5.6.49'
-        env:
-          MYSQL_DATABASE: test_integration_db
-          MYSQL_USER: root
-          MYSQL_PASSWORD: ''
-          MYSQL_ROOT_PASSWORD: ''
-          MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
-        ports:
-          - 3307:3306
-        options: '--health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3'
-
+      
     steps:
     - uses: actions/checkout@v2.3.4
     
