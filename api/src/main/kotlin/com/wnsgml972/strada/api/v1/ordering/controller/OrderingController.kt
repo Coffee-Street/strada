@@ -4,6 +4,7 @@ import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingService
 import com.wnsgml972.strada.api.v1.ordering.controller.OrderingController.Companion.ORDERING_BASE_URL
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingRequest
+import com.wnsgml972.strada.api.v1.ordering.service.OrderingResponse
 import com.wnsgml972.strada.api.v1.ordering.service.toDto
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
@@ -34,7 +35,6 @@ import javax.validation.Valid
 class OrderingController @Autowired constructor(
     private val orderingService: OrderingService
 ) {
-
     @GetMapping
     @Operation(
         summary = "모든 주문 가져오기 for test",
@@ -57,8 +57,8 @@ class OrderingController @Autowired constructor(
         security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
     )
     @ApiResponse(responseCode = "200", description = "Create Ordering")
-    fun insert(@RequestBody @Valid orderingRequest: OrderingRequest) =
-        orderingService.insert(orderingRequest.toDto())
+    fun insert(@RequestBody @Valid orderingRequest: OrderingRequest): OrderingResponse =
+        orderingService.insert(orderingRequest)
 
     @PutMapping("/{id}")
     @Operation(

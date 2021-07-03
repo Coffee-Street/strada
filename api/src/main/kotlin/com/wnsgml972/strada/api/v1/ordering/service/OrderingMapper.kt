@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 fun Ordering.toDto() = OrderingDTO(
     this.id ?: throw BadRequestException("$id must not null"),
     this.status,
-    this.createdAt,
+    this.createdAt
 )
 
 fun OrderingDTO.toEntity() = Ordering.of(
@@ -19,5 +19,5 @@ fun OrderingDTO.toEntity() = Ordering.of(
 fun OrderingRequest.toDto(id: Long = 0) = OrderingDTO(
     id,
     status,
-    LocalDateTime.now(),
+    LocalDateTime.now()
 )

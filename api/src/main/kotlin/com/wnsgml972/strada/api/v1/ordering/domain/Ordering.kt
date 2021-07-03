@@ -21,7 +21,6 @@ import javax.persistence.Enumerated
 @Entity
 @SuppressWarnings("LongParameterList")
 class Ordering private constructor(
-
     @Enumerated(EnumType.STRING)
     val status: OrderingStatus,
 

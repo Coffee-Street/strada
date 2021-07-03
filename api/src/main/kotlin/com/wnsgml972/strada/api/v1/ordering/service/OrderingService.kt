@@ -8,7 +8,8 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class OrderingService(
-    private val orderingRepository: OrderingRepository
+    private val orderingRepository: OrderingRepository,
+    private val orderingDetailService: OrderingDetailService
 ) {
     @Transactional(readOnly = true)
     fun selectAll(): List<OrderingDTO> {
@@ -21,8 +22,16 @@ class OrderingService(
     }
 
     @Transactional
-    fun insert(orderingDTO: OrderingDTO): OrderingDTO {
-        return orderingRepository.save(orderingDTO.toEntity()).toDto()
+    fun insert(orderingRequest: OrderingRequest): OrderingResponse {
+        val orderingDTO = orderingRepository.save(orderingRequest.toDto().toEntity()).toDto()
+
+        val orderingDetailDTOs: MutableList<OrderingDetailDTO> = mutableListOf()
+        for (orderingDetailRequest in orderingRequest.orderingDetailRequests) {
+            val orderingDetailDTO = orderingDetailService.insert(orderingDetailRequest.toDto(orderingDTO))
+            orderingDetailDTOs.add(orderingDetailDTO)
+        }
+
+        return OrderingResponse(orderingDTO, orderingDetailDTOs)
     }
 
     @Transactional

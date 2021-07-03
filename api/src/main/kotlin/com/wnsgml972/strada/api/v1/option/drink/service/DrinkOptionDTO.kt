@@ -1,10 +1,10 @@
 package com.wnsgml972.strada.api.v1.option.drink.service
 
-import com.wnsgml972.strada.api.v1.ordering.service.OrderingDetailDTO
+import com.wnsgml972.strada.api.v1.option.drizzle.service.DrizzleOptionDTO
+import com.wnsgml972.strada.api.v1.option.syrup.service.SyrupOptionDTO
 
 data class DrinkOptionDTO(
     val id: Long,
-    val orderingDetail: OrderingDetailDTO,
     val hotOrIced: HotOrIcedType,
     val cupType: CupType,
     val cupSizeType: CupSizeType,
@@ -15,11 +15,12 @@ data class DrinkOptionDTO(
     val creamType: CreamType,
     val memoType: MemoType,
     val memo: String,
-    val shotCount: Int
+    val shotCount: Int,
+    val syrupOptions: List<SyrupOptionDTO>,
+    val drizzleOptions: List<DrizzleOptionDTO>
 ) {
     constructor(
         id: Long?,
-        orderingDetail: OrderingDetailDTO,
         hotOrIced: HotOrIcedType,
         cupType: CupType,
         cupSizeType: CupSizeType,
@@ -30,10 +31,11 @@ data class DrinkOptionDTO(
         creamType: CreamType,
         memoType: MemoType,
         memo: String,
-        shotCount: Int
+        shotCount: Int,
+        syrupOptions: List<SyrupOptionDTO>,
+        drizzleOptions: List<DrizzleOptionDTO>
     ) : this(
-        id ?: 0,
-        orderingDetail,
+        id ?: -1,
         hotOrIced,
         cupType,
         cupSizeType,
@@ -44,6 +46,8 @@ data class DrinkOptionDTO(
         creamType,
         memoType,
         memo,
-        shotCount
+        shotCount,
+        syrupOptions,
+        drizzleOptions
     )
 }
