@@ -66,7 +66,10 @@ class OrderingController @Autowired constructor(
         security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
     )
     @ApiResponse(responseCode = "200", description = "Update Order")
-    fun update(@PathVariable("id") id: Long, @RequestBody @Valid orderingRequest: OrderingRequest) =
+    fun update(
+        @PathVariable("id") id: Long,
+        @RequestBody @Valid orderingRequest: OrderingRequest
+    ) =
         orderingService.update(orderingRequest.toDto(id))
 
     @DeleteMapping("/{id}")

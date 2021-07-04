@@ -21,7 +21,7 @@ import javax.persistence.JoinColumn
 import javax.persistence.OneToMany
 
 @Entity
-@SuppressWarnings("LongParameterList")
+@SuppressWarnings("LongParameterList", "ComplexMethod")
 class DrinkOption private constructor(
     @Enumerated(EnumType.STRING)
     val hotOrIced: HotOrIcedType,
