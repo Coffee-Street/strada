@@ -16,13 +16,13 @@ class BeanCoffee(
 
     @Id
     @JoinColumn(name = "coffeeId")
-    @JsonManagedReference(value = "beanCoffeeReference")
+    //@JsonManagedReference(value = "beanCoffeeReference")
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     var coffee: Coffee?,
 
     @Id
     @JoinColumn(name = "beanId")
-    @JsonManagedReference(value = "beanCoffeeReference")
+    //@JsonManagedReference(value = "beanCoffeeReference")
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     var bean: Bean?,
 

@@ -29,7 +29,7 @@ class Coffee(
     val category: String,
 
     @OneToMany(mappedBy = "coffee", orphanRemoval = true, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
-    @JsonBackReference(value = "beanCoffeesReference")
+    //@JsonBackReference(value = "beanCoffeesReference")
     var beanCoffees: List<BeanCoffee> = mutableListOf()
 
 ) : AbstractJpaEntity<String>() {

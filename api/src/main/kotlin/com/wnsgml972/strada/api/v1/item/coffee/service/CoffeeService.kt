@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class CoffeeService(
     private val coffeeRepository: CoffeeRepository,
+    private val beanCoffeeRepository: CoffeeRepository,
+    private val beanRepository: CoffeeRepository
 ) {
 
     @Transactional(readOnly = true)
@@ -20,9 +22,13 @@ class CoffeeService(
     fun selectById(id: String): CoffeeDTO? =
         coffeeRepository.findById(id).orElseThrow { NotFoundException("$id Not Found") }.toDto()
 
-    @Transactional
-    fun insert(coffeeDTO: CoffeeDTO): Coffee = coffeeRepository.save(coffeeDTO.toEntity())
+//    @Transactional
+//    fun insert(coffeeDTO: CoffeeDTO): Coffee = coffeeRepository.save(coffeeDTO.toEntity())
 
+    @Transactional
+    fun insert(coffeeDTO: CoffeeDTO): Coffee{
+
+    }
     @Transactional
     fun update(coffeeDTO: CoffeeDTO) =
         coffeeRepository.save(coffeeDTO.toEntity())
