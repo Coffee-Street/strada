@@ -29,7 +29,7 @@ class NonCoffeeControllerIT@Autowired constructor(
         val nonCoffeeInsertRequest = NonCoffeeInsertRequest("http://NonCoffeeInsertTest.com", 2000, "insert NonCoffee", "NonCoffee")
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri(NonCoffeeController.NONCOFFEE_BASE_URL + "/dummy")
+            .uri("${NonCoffeeController.NONCOFFEE_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(nonCoffeeInsertRequest)
@@ -43,7 +43,7 @@ class NonCoffeeControllerIT@Autowired constructor(
         val nonCoffeeInsertRequest = NonCoffeeInsertRequest("http://NonCoffeeInsertTest.com", 2000, "insert NonCoffee", "NonCoffee")
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri(NonCoffeeController.NONCOFFEE_BASE_URL + "/test")
+            .uri("${NonCoffeeController.NONCOFFEE_BASE_URL}/test")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(nonCoffeeInsertRequest)
@@ -59,7 +59,7 @@ class NonCoffeeControllerIT@Autowired constructor(
         val accessToken = authHelper.getAccessToken()
 
         client.get()
-            .uri(NonCoffeeController.NONCOFFEE_BASE_URL + "/dummy")
+            .uri("${NonCoffeeController.NONCOFFEE_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
@@ -72,7 +72,7 @@ class NonCoffeeControllerIT@Autowired constructor(
     fun `select all NonCoffee using get from NonCoffeeController`() {
         val accessToken = authHelper.getAccessToken()
         client.get()
-            .uri(NonCoffeeController.NONCOFFEE_BASE_URL + "/")
+            .uri("${NonCoffeeController.NONCOFFEE_BASE_URL}")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
@@ -88,7 +88,7 @@ class NonCoffeeControllerIT@Autowired constructor(
         val nonCoffeeInsertRequest = NonCoffeeInsertRequest("http://NonCoffeeInsertTest.com", 10000, "insert NonCoffee", "NonCoffee")
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri(NonCoffeeController.NONCOFFEE_BASE_URL + "/test")
+            .uri("${NonCoffeeController.NONCOFFEE_BASE_URL}/test")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(nonCoffeeInsertRequest)
@@ -106,7 +106,7 @@ class NonCoffeeControllerIT@Autowired constructor(
     fun `delete NonCoffee using delete from NonCoffeeController`() {
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri(NonCoffeeController.NONCOFFEE_BASE_URL + "/test")
+            .uri("${NonCoffeeController.NONCOFFEE_BASE_URL}/test")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
@@ -117,7 +117,7 @@ class NonCoffeeControllerIT@Autowired constructor(
     fun `delete Non Exist NonCoffee using delete from NonCoffeeController`() {
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri(NonCoffeeController.NONCOFFEE_BASE_URL + "/test")
+            .uri("${NonCoffeeController.NONCOFFEE_BASE_URL}/test")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().isNotFound()

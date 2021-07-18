@@ -1,10 +1,7 @@
 package com.wnsgml972.strada.api.v1.item.coffee.controller.admin
 
 import BASE_URL_V1
-import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeDTO
-import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeInsertRequest
-import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeService
-import com.wnsgml972.strada.api.v1.item.coffee.service.toDto
+import com.wnsgml972.strada.api.v1.item.coffee.service.*
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -29,10 +26,11 @@ import javax.validation.Valid
     description = """메뉴를 위한 API"""
 )
 class CoffeeController @Autowired constructor(
-    private val coffeeService: CoffeeService
+    private val coffeeService: CoffeeService,
+    private val beanService: BeanService
 ) {
 
-    @GetMapping("/")
+    @GetMapping
     @ApiResponse(responseCode = "200", description = "List all coffees")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun selectAll() = coffeeService.selectAll()
@@ -58,6 +56,11 @@ class CoffeeController @Autowired constructor(
     @ApiResponse(responseCode = "200", description = "delete coffee")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun delete(@PathVariable id: String) = coffeeService.delete(id)
+
+    @DeleteMapping("/bean/{id}")
+    @ApiResponse(responseCode = "200", description = "delete bean")
+    @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
+    fun deleteBean(@PathVariable id: String) = beanService.delete(id)
 
     companion object : KLogging() {
         private const val ACCOUNT_SERVICE_NAME = "coffees/admin"

@@ -2,9 +2,6 @@ package com.wnsgml972.strada.api.item.coffee
 
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
-import com.wnsgml972.strada.api.v1.item.bread.controller.admin.BreadController
-import com.wnsgml972.strada.api.v1.item.bread.service.BreadDTO
-import com.wnsgml972.strada.api.v1.item.bread.service.BreadInsertRequest
 import com.wnsgml972.strada.api.v1.item.coffee.controller.admin.CoffeeController
 import com.wnsgml972.strada.api.v1.item.coffee.service.BeanDTO
 import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeDTO
@@ -16,6 +13,7 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
+import org.junit.jupiter.api.AfterAll
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -42,11 +40,30 @@ class CoffeeControllerIT @Autowired constructor(
         )
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri(CoffeeController.COFFEE_BASE_URL + "/dummy")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(coffeeInsertRequest)
             .exchange()
+
+    }
+
+    @AfterAll
+    fun `delete all after test`(){
+        val accessToken = authHelper.getAccessToken()
+
+        client.delete()
+            .uri("${CoffeeController.COFFEE_BASE_URL}/dummy")
+            .header("Authorization", "Bearer $accessToken")
+            .exchange()
+            .expectStatus().is2xxSuccessful
+
+        client.delete()
+            .uri("${CoffeeController.COFFEE_BASE_URL}/bean/케냐")
+            .header("Authorization", "Bearer $accessToken")
+            .exchange()
+            .expectStatus().is2xxSuccessful
+
 
     }
 
@@ -64,7 +81,7 @@ class CoffeeControllerIT @Autowired constructor(
         )
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri(CoffeeController.COFFEE_BASE_URL + "/test")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/test")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(coffeeInsertRequest)
@@ -80,7 +97,7 @@ class CoffeeControllerIT @Autowired constructor(
         val accessToken = authHelper.getAccessToken()
 
         client.get()
-            .uri(CoffeeController.COFFEE_BASE_URL + "/dummy")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
@@ -93,7 +110,7 @@ class CoffeeControllerIT @Autowired constructor(
     fun `select all Coffee using get from CoffeeController`() {
         val accessToken = authHelper.getAccessToken()
         client.get()
-            .uri(CoffeeController.COFFEE_BASE_URL + "/")
+            .uri("${CoffeeController.COFFEE_BASE_URL}")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
@@ -117,7 +134,7 @@ class CoffeeControllerIT @Autowired constructor(
         )
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri(CoffeeController.COFFEE_BASE_URL + "/test")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/test")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(coffeeInsertRequest)
@@ -135,7 +152,7 @@ class CoffeeControllerIT @Autowired constructor(
     fun `delete Coffee using delete from CoffeeController`() {
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri(CoffeeController.COFFEE_BASE_URL + "/test")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/test")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
@@ -146,11 +163,13 @@ class CoffeeControllerIT @Autowired constructor(
     fun `delete Non Exist Coffee using delete from CoffeeController`() {
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri(CoffeeController.COFFEE_BASE_URL + "/test")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/test")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().isNotFound()
     }
+
+
 
     companion object : KLogging()
 }

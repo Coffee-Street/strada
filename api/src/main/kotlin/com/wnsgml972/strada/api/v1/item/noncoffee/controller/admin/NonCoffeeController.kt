@@ -32,7 +32,7 @@ class NonCoffeeController @Autowired constructor(
     private var nonCoffeeService: NonCoffeeService
 ) {
 
-    @GetMapping("/")
+    @GetMapping
     @ApiResponse(responseCode = "200", description = "List all NonCoffees")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun selectAll() = nonCoffeeService.selectAll()

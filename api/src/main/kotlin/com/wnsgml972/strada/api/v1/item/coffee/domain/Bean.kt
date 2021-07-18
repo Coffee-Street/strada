@@ -7,32 +7,25 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-@Immutable
 @SuppressWarnings("LongParameterList")
 class Bean(
+
     @Id
     @Column(length = 25)
     override var id: String?,
 
-    @Column(length = 128)
     val origin: String,
 
-    @Column(length = 128)
     val farm: String,
 
-    @Column(length = 128)
     val description: String,
 
-    @Column(length = 128)
     val processing: String,
 
-    @Column(length = 128)
     val roasting: String,
 
-    @Column(length = 128)
     val kind: String,
 
-    @Column(length = 128)
     val grade: String,
 
 ) : AbstractJpaEntity<String>() {
