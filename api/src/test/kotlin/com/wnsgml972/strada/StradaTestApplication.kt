@@ -5,4 +5,4 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 @Testcontainers
 @SpringBootApplication
-class StradaTestApplication { }
+class StradaTestApplication

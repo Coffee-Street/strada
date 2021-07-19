@@ -40,7 +40,8 @@ class SecurityConfig @Autowired constructor(
                 "/v3/api-docs/**",
                 "/swagger-ui/**",
                 "/swagger-ui.html",
-                "/webjars/**").permitAll()
+                "/webjars/**",
+            ).permitAll()
             .anyRequest().authenticated()
 
         OAuth2SecuritySpec().configure(http)
