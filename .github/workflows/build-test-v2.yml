@@ -51,7 +51,7 @@ jobs:
       run: echo 'Build Success!'
           
     - name: Report Codecov
-      uses: codecov/codecov-action@v1.5.2
+      uses: codecov/codecov-action@v2.0.1
       with:
         # User defined upload name. Visible in Codecov UI
         name: codecov-strada # optional
