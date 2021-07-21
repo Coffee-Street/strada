@@ -4,7 +4,6 @@ import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingService
 import com.wnsgml972.strada.api.v1.ordering.controller.OrderingController.Companion.ORDERING_BASE_URL
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingRequest
-import com.wnsgml972.strada.api.v1.ordering.service.OrderingResponse
 import com.wnsgml972.strada.api.v1.ordering.service.toDto
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
@@ -49,7 +48,10 @@ class OrderingController @Autowired constructor(
         security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
     )
     @ApiResponse(responseCode = "200", description = "Find Ordering")
-    fun find(@PathVariable("id") id: Long) = orderingService.selectById(id)
+    fun find(
+        @PathVariable("id") id: Long
+    ) =
+        orderingService.selectById(id)
 
     @PostMapping
     @Operation(
@@ -57,8 +59,10 @@ class OrderingController @Autowired constructor(
         security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
     )
     @ApiResponse(responseCode = "200", description = "Create Ordering")
-    fun insert(@RequestBody @Valid orderingRequest: OrderingRequest): OrderingResponse =
-        orderingService.insert(orderingRequest)
+    fun insert(
+        @RequestBody @Valid orderingRequest: OrderingRequest
+    ) =
+        orderingService.insert(orderingRequest.toDto())
 
     @PutMapping("/{id}")
     @Operation(
@@ -78,7 +82,10 @@ class OrderingController @Autowired constructor(
         security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
     )
     @ApiResponse(responseCode = "200", description = "Delete Order")
-    fun delete(@PathVariable("id") id: Long) = orderingService.delete(id)
+    fun delete(
+        @PathVariable("id") id: Long
+    ) =
+        orderingService.delete(id)
 
     companion object : KLogging() {
         private const val ORDERING_SERVICE_NAME = "ordering"

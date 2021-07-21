@@ -19,9 +19,9 @@ import com.wnsgml972.strada.api.v1.option.drink.service.WaterType
 import com.wnsgml972.strada.api.v1.option.drizzle.service.DrizzleOptionDTO
 import com.wnsgml972.strada.api.v1.option.syrup.service.SyrupOptionDTO
 import com.wnsgml972.strada.api.v1.ordering.controller.OrderingController
+import com.wnsgml972.strada.api.v1.ordering.service.OrderingDTO
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingDetailRequest
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingRequest
-import com.wnsgml972.strada.api.v1.ordering.service.OrderingResponse
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingStatus
 import mu.KLogging
 import org.junit.jupiter.api.Test
@@ -39,28 +39,32 @@ class OrderingControllerIT @Autowired constructor(
     @Test
     fun `아이스 아메리카노 5샷 벤티 사이즈 재사용 컵으로 한잔이요`() {
         val accessToken = authHelper.getAccessToken()
-        val orderingRequest = OrderingRequest(OrderingStatus.REQUEST, listOf<OrderingDetailRequest>(
-            OrderingDetailRequest(
-                DrinkOptionDTO(
-                    0,
-                    HotOrIcedType.ICED,
-                    CupType.MULTI_USE,
-                    CupSizeType.VENTI,
-                    WaterType.DEFAULT,
-                    MilkType.NONE,
-                    IcedOnlyType.DEFAULT,
-                    HotOnlyType.NONE,
-                    CreamType.NONE,
-                    MemoType.DEFAULT,
-                    "진하게 타주세요",
-                    5,
-                    listOf<SyrupOptionDTO>(),
-                    listOf<DrizzleOptionDTO>()
-                ),
-                null,
-                null
+        val orderingRequest =
+            OrderingRequest(
+                OrderingStatus.REQUEST,
+                listOf<OrderingDetailRequest>(
+                    OrderingDetailRequest(
+                        DrinkOptionDTO(
+                            0,
+                            HotOrIcedType.ICED,
+                            CupType.MULTI_USE,
+                            CupSizeType.VENTI,
+                            WaterType.DEFAULT,
+                            MilkType.NONE,
+                            IcedOnlyType.DEFAULT,
+                            HotOnlyType.NONE,
+                            CreamType.NONE,
+                            MemoType.DEFAULT,
+                            "진하게 타주세요",
+                            5,
+                            listOf<SyrupOptionDTO>(),
+                            listOf<DrizzleOptionDTO>()
+                        ),
+                        null,
+                        null
+                    )
+                )
             )
-        ))
 
         client.post()
             .uri(OrderingController.ORDERING_BASE_URL)
@@ -69,7 +73,7 @@ class OrderingControllerIT @Autowired constructor(
             .bodyValue(orderingRequest)
             .exchange()
             .expectStatus().is2xxSuccessful
-            .expectBody<OrderingResponse>()
+            .expectBody<OrderingDTO>()
     }
 
     @Test
@@ -94,7 +98,7 @@ class OrderingControllerIT @Autowired constructor(
             .bodyValue(orderingRequest)
             .exchange()
             .expectStatus().is2xxSuccessful
-            .expectBody<OrderingResponse>()
+            .expectBody<OrderingDTO>()
     }
 
     @Test
@@ -118,7 +122,7 @@ class OrderingControllerIT @Autowired constructor(
             .bodyValue(orderingRequest)
             .exchange()
             .expectStatus().is2xxSuccessful
-            .expectBody<OrderingResponse>()
+            .expectBody<OrderingDTO>()
     }
 
     companion object : KLogging()

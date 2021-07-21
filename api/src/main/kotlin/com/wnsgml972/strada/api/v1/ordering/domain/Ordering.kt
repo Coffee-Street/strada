@@ -3,9 +3,12 @@ package com.wnsgml972.strada.api.v1.ordering.domain
 import com.wnsgml972.strada.api.base.LongJpaEntity
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingStatus
 import java.time.LocalDateTime
+import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.JoinColumn
+import javax.persistence.OneToMany
 
 /**
  * Order
@@ -26,6 +29,10 @@ class Ordering private constructor(
 
     val createdAt: LocalDateTime,
 
+    @OneToMany(cascade = [CascadeType.ALL])
+    @JoinColumn(name = "ordering_id")
+    val orderingDetails: List<OrderingDetail>,
+
     override var id: Long? = null,
 
 ) : LongJpaEntity() {
@@ -33,15 +40,17 @@ class Ordering private constructor(
         return other is Ordering &&
                 id == other.id &&
                 status == other.status &&
-                createdAt == other.createdAt
+                createdAt == other.createdAt &&
+                orderingDetails == other.orderingDetails
     }
 
     companion object {
         fun of(
             status: OrderingStatus,
             createdAt: LocalDateTime,
+            orderingDetails: List<OrderingDetail>,
             id: Long?
         ) =
-            Ordering(status, createdAt, id)
+            Ordering(status, createdAt, orderingDetails, id)
     }
 }

@@ -6,7 +6,6 @@ import com.wnsgml972.strada.api.v1.option.drink.service.DrinkOptionDTO
 
 data class OrderingDetailDTO(
     val id: Long,
-    val ordering: OrderingDTO,
 //    val coffee : Coffee,
 //    val nonCoffee : NonCoffee,
 //    val bread : Bread,

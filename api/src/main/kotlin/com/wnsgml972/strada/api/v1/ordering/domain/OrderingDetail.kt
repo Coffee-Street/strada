@@ -6,7 +6,6 @@ import com.wnsgml972.strada.api.v1.option.bread.domain.BreadOption
 import com.wnsgml972.strada.api.v1.option.drink.domain.DrinkOption
 import javax.persistence.CascadeType
 import javax.persistence.Entity
-import javax.persistence.ManyToOne
 import javax.persistence.OneToOne
 
 /**
@@ -15,14 +14,10 @@ import javax.persistence.OneToOne
  * Order 의 하위 객체로 가변적인 주문의 내용을 관리하는 Entity
  *
  * @property id
- * @property ordering
  *
  */
 @Entity
 class OrderingDetail private constructor(
-    @ManyToOne(cascade = [CascadeType.ALL])
-    val ordering: Ordering,
-
 //    val coffee : Coffee?,
 //
 //    val nonCoffee : NonCoffee?,
@@ -53,12 +48,11 @@ class OrderingDetail private constructor(
 
     companion object {
         fun of(
-            ordering: Ordering,
             drinkOption: DrinkOption?,
             breadOption: BreadOption?,
             beanOption: BeanOption?,
             id: Long?
         ) =
-            OrderingDetail(ordering, drinkOption, breadOption, beanOption, id)
+            OrderingDetail(drinkOption, breadOption, beanOption, id)
     }
 }
