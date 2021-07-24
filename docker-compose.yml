@@ -36,7 +36,5 @@ services:
       - "--innodb-use-native-aio=0"
     volumes:
       - "$HOME/mnt/strada/secondary-mysql:/var/lib/strada/secondary-mysql"
-    links:
-      - primary-mysql
     depends_on:
       - primary-mysql
