@@ -15,3 +15,7 @@ docker-compose up
 
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwnsgml972%2Fstrada.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwnsgml972%2Fstrada?ref=badge_large)
+
+## Security
+
+[![GitGuardian scan](https://github.com/Coffee-Street/strada/actions/workflows/gg-shield-action.yml/badge.svg)](https://github.com/Coffee-Street/strada/actions/workflows/gg-shield-action.yml)
