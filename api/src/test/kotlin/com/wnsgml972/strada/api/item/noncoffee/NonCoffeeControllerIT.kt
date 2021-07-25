@@ -20,9 +20,8 @@ import org.springframework.test.web.reactive.server.expectBody
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class NonCoffeeControllerIT@Autowired constructor(
     private val client: WebTestClient,
+    private val authHelper: AuthHelper,
 ) : IntegrationTest() {
-    val authHelper = AuthHelper(client)
-
 
     @BeforeAll
     fun `insert dummy date before test`() {
