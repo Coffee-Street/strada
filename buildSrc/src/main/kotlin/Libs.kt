@@ -11,7 +11,7 @@ object Plugins {
         const val jarTest = "1.0.1"
         const val testLogger = "2.1.0"
         const val kotlinx_benchmark = "0.2.0-dev-20"
-        const val spring_boot = "2.5.2"
+        const val spring_boot = "2.5.3"
         const val jacoco = "0.8.6"
         const val kotlin_noarg = "1.4.32"
     }
