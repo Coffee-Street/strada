@@ -11,9 +11,8 @@ import org.springframework.test.web.reactive.server.expectBody
 
 class IndexControllerIT @Autowired constructor(
     private val client: WebTestClient,
+    private val authHelper: AuthHelper,
 ) : IntegrationTest() {
-
-    val authHelper = AuthHelper(client)
 
     @Test
     fun `get ping auth fail, forbidden`() {
