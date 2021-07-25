@@ -32,9 +32,8 @@ import org.springframework.test.web.reactive.server.expectBody
 
 class OrderingControllerIT @Autowired constructor(
     private val client: WebTestClient,
+    private val authHelper: AuthHelper,
 ) : IntegrationTest() {
-
-    val authHelper = AuthHelper(client)
 
     @Test
     fun `아이스 아메리카노 5샷 벤티 사이즈 재사용 컵으로 한잔이요`() {
