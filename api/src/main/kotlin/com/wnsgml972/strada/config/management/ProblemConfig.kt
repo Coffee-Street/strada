@@ -1,7 +1,7 @@
 package com.wnsgml972.strada.config.management
 
-import mu.KLogging
 import com.fasterxml.jackson.databind.ObjectMapper
+import mu.KLogging
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
