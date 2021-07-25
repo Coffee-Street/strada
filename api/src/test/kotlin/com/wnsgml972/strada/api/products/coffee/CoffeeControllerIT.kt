@@ -1,10 +1,10 @@
-package com.wnsgml972.strada.api.item.coffee
+package com.wnsgml972.strada.api.products.coffee
 
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
-import com.wnsgml972.strada.api.v1.product.coffee.controller.admin.BeanController
+import com.wnsgml972.strada.api.v1.product.bean.controller.admin.BeanController
 import com.wnsgml972.strada.api.v1.product.coffee.controller.admin.CoffeeController
-import com.wnsgml972.strada.api.v1.product.coffee.service.BeanDTO
+import com.wnsgml972.strada.api.v1.product.bean.service.BeanDTO
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeDTO
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeInsertRequest
 import mu.KLogging

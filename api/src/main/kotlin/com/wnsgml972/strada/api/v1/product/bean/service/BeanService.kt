@@ -1,7 +1,7 @@
-package com.wnsgml972.strada.api.v1.product.coffee.service
+package com.wnsgml972.strada.api.v1.product.bean.service
 
 import com.wnsgml972.strada.api.v1.product.coffee.domain.BeanCoffeeRepository
-import com.wnsgml972.strada.api.v1.product.coffee.domain.BeanRepository
+import com.wnsgml972.strada.api.v1.product.bean.domain.BeanRepository
 import com.wnsgml972.strada.exception.NotFoundException
 import mu.KLogging
 import org.springframework.stereotype.Service

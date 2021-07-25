@@ -1,5 +1,7 @@
 package com.wnsgml972.strada.api.v1.product.coffee.service
 
+import com.wnsgml972.strada.api.v1.product.bean.service.BeanDTO
+
 data class CoffeeDTO(
     val name: String,
     val imageUrl: String,

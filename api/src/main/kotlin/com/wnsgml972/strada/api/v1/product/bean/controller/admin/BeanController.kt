@@ -1,7 +1,10 @@
-package com.wnsgml972.strada.api.v1.product.coffee.controller.admin
+package com.wnsgml972.strada.api.v1.product.bean.controller.admin
 
 import BASE_URL_V1
-import com.wnsgml972.strada.api.v1.product.coffee.service.*
+import com.wnsgml972.strada.api.v1.product.bean.service.BeanDTO
+import com.wnsgml972.strada.api.v1.product.bean.service.BeanInsertRequest
+import com.wnsgml972.strada.api.v1.product.bean.service.BeanService
+import com.wnsgml972.strada.api.v1.product.bean.service.toDto
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -15,8 +18,8 @@ import javax.validation.Valid
 @RestController
 @RequestMapping(path = [BeanController.BEAN_BASE_URL])
 @Tag(
-    name = "coffees",
-    description = """메뉴를 위한 API"""
+    name = "beans",
+    description = """Bean을 위한 API"""
 )
 class BeanController@Autowired constructor(
     private val beanService: BeanService

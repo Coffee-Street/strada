@@ -1,6 +1,6 @@
-package com.wnsgml972.strada.api.v1.product.coffee.service
+package com.wnsgml972.strada.api.v1.product.bean.service
 
-import com.wnsgml972.strada.api.v1.product.coffee.domain.Bean
+import com.wnsgml972.strada.api.v1.product.bean.domain.Bean
 import com.wnsgml972.strada.exception.BadRequestException
 
 fun Bean.toDto() = BeanDTO(

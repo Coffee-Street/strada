@@ -1,6 +1,7 @@
 package com.wnsgml972.strada.api.v1.product.coffee.controller.admin
 
 import BASE_URL_V1
+import com.wnsgml972.strada.api.v1.product.bean.service.BeanService
 import com.wnsgml972.strada.api.v1.product.coffee.service.*
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation

@@ -1,6 +1,7 @@
 package com.wnsgml972.strada.api.v1.product.coffee.domain
 
 import com.wnsgml972.strada.api.base.LongJpaEntity
+import com.wnsgml972.strada.api.v1.product.bean.domain.Bean
 import javax.persistence.ManyToOne
 import javax.persistence.Entity
 import javax.persistence.IdClass
@@ -22,7 +23,7 @@ class BeanCoffee(
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     var bean: Bean?,
 
-) : LongJpaEntity() {
+    ) : LongJpaEntity() {
 
     override fun equalProperties(other: Any): Boolean {
         return other is BeanCoffee &&

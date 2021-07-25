@@ -1,4 +1,4 @@
-package com.wnsgml972.strada.api.v1.product.coffee.service
+package com.wnsgml972.strada.api.v1.product.bean.service
 
 data class BeanDTO(
     val id: String?,
