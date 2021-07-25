@@ -2,9 +2,9 @@ package com.wnsgml972.strada.api.item.bread
 
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
-import com.wnsgml972.strada.api.v1.item.bread.controller.admin.BreadController
-import com.wnsgml972.strada.api.v1.item.bread.service.BreadDTO
-import com.wnsgml972.strada.api.v1.item.bread.service.BreadInsertRequest
+import com.wnsgml972.strada.api.v1.product.bread.controller.admin.BreadController
+import com.wnsgml972.strada.api.v1.product.bread.service.BreadDTO
+import com.wnsgml972.strada.api.v1.product.bread.service.BreadInsertRequest
 import mu.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.BeforeAll

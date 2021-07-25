@@ -2,10 +2,11 @@ package com.wnsgml972.strada.api.item.coffee
 
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
-import com.wnsgml972.strada.api.v1.item.coffee.controller.admin.CoffeeController
-import com.wnsgml972.strada.api.v1.item.coffee.service.BeanDTO
-import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeDTO
-import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeInsertRequest
+import com.wnsgml972.strada.api.v1.product.coffee.controller.admin.BeanController
+import com.wnsgml972.strada.api.v1.product.coffee.controller.admin.CoffeeController
+import com.wnsgml972.strada.api.v1.product.coffee.service.BeanDTO
+import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeDTO
+import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeInsertRequest
 import mu.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.BeforeAll
@@ -59,7 +60,7 @@ class CoffeeControllerIT @Autowired constructor(
             .expectStatus().is2xxSuccessful
 
         client.delete()
-            .uri("${CoffeeController.COFFEE_BASE_URL}/bean/케냐")
+            .uri("${BeanController.BEAN_BASE_URL}/bean/케냐")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
@@ -133,7 +134,7 @@ class CoffeeControllerIT @Autowired constructor(
             )
         )
         val accessToken = authHelper.getAccessToken()
-        client.post()
+        client.put()
             .uri("${CoffeeController.COFFEE_BASE_URL}/test")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)

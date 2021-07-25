@@ -2,7 +2,6 @@ package com.wnsgml972.strada.api.health
 
 import com.wnsgml972.strada.IntegrationTest
 import com.wnsgml972.strada.api.v1.health.HealthCheckController
-import com.wnsgml972.strada.api.v1.item.bread.service.BreadDTO
 import mu.KLogging
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
