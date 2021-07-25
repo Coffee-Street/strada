@@ -13,14 +13,12 @@ import javax.persistence.CascadeType
 @IdClass(BeanCoffeeId::class)
 class BeanCoffee(
 
-
     @JoinColumn(name = "coffeeId")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     var coffee: Coffee?,
 
-
     @JoinColumn(name = "beanId")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     var bean: Bean?,
 
     ) : LongJpaEntity() {

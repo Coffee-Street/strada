@@ -28,6 +28,7 @@ class BeanService(
     fun update(beanDTO: BeanDTO) =
         beanRepository.save(beanDTO.toEntity())
 
+    //TODO: 수정 필요
     @Transactional
     fun delete(id: String) =
         beanCoffeeRepository.findByBeanId(id).orElseThrow { NotFoundException("$id Not Found") }
