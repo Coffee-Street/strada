@@ -41,7 +41,6 @@ class BeanControllerIT@Autowired constructor(
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(beanInsertRequest)
             .exchange()
-
     }
 
     @AfterAll

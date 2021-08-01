@@ -165,7 +165,7 @@ class CoffeeControllerIT @Autowired constructor(
             .uri("${CoffeeController.COFFEE_BASE_URL}/test")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
-            .expectStatus().isNotFound()
+            .expectStatus().isNotFound
     }
 
 
