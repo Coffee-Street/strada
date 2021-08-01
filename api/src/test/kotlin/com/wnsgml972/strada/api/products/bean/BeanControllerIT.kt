@@ -36,7 +36,7 @@ class BeanControllerIT@Autowired constructor(
         )
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri("${BeanController.BEAN_BASE_URL}/dummy")
+            .uri("${BeanController.BEAN_BASE_URL}/dummybean")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(beanInsertRequest)
@@ -49,16 +49,16 @@ class BeanControllerIT@Autowired constructor(
         val accessToken = authHelper.getAccessToken()
 
         client.delete()
-            .uri("${BeanController.BEAN_BASE_URL}/dummy")
+            .uri("${BeanController.BEAN_BASE_URL}/dummybean")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
 
         client.delete()
-            .uri("${BeanController.BEAN_BASE_URL}/케냐")
+            .uri("${BeanController.BEAN_BASE_URL}/test_bean")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
-            .expectStatus().is2xxSuccessful
+            .expectStatus().is4xxClientError
 
     }
 
@@ -76,7 +76,7 @@ class BeanControllerIT@Autowired constructor(
         )
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri("${BeanController.BEAN_BASE_URL}/케냐")
+            .uri("${BeanController.BEAN_BASE_URL}/test_bean")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(beanInsertRequest)
@@ -92,7 +92,7 @@ class BeanControllerIT@Autowired constructor(
         val accessToken = authHelper.getAccessToken()
 
         client.get()
-            .uri("${BeanController.BEAN_BASE_URL}/dummy")
+            .uri("${BeanController.BEAN_BASE_URL}/test_bean")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
@@ -129,7 +129,7 @@ class BeanControllerIT@Autowired constructor(
         )
         val accessToken = authHelper.getAccessToken()
         client.put()
-            .uri("${BeanController.BEAN_BASE_URL}/test")
+            .uri("${BeanController.BEAN_BASE_URL}/test_bean")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(beanInsertRequest)
@@ -147,7 +147,7 @@ class BeanControllerIT@Autowired constructor(
     fun `delete Bean using delete from BeanController`() {
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri("${BeanController.BEAN_BASE_URL}/test")
+            .uri("${BeanController.BEAN_BASE_URL}/test_bean")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
