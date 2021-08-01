@@ -4,7 +4,6 @@ import com.wnsgml972.strada.api.v1.product.bean.service.toDto
 import com.wnsgml972.strada.api.v1.product.bean.service.toEntity
 import com.wnsgml972.strada.api.v1.product.coffee.domain.BeanCoffee
 import com.wnsgml972.strada.api.v1.product.coffee.domain.Coffee
-import com.wnsgml972.strada.exception.BadRequestException
 
 fun Coffee.toDto() = CoffeeDTO(
     this.name,
