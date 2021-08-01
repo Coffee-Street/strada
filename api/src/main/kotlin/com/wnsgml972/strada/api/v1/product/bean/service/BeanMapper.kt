@@ -14,7 +14,6 @@ fun Bean.toDto() = BeanDTO(
     this.grade
 )
 
-
 fun BeanDTO.toEntity() =
     Bean(
         this.id,
@@ -28,7 +27,7 @@ fun BeanDTO.toEntity() =
     )
 
 //
-//fun BeanDTO.toEntity() = this.id?.let {
+// fun BeanDTO.toEntity() = this.id?.let {
 //    Bean(
 //        it,
 //        this.origin,
@@ -39,4 +38,4 @@ fun BeanDTO.toEntity() =
 //        this.kind,
 //        this.grade
 //    )
-//}
+// }

@@ -12,7 +12,14 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import mu.KLogging
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
 @RestController
@@ -39,7 +46,7 @@ class BeanController@Autowired constructor(
     @ApiResponse(responseCode = "200", description = "Add coffee")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun insert(@PathVariable id: String, @RequestBody @Valid beanInsertRequest: BeanInsertRequest): BeanDTO =
-        beanService.insert(BeanDTO(id,beanInsertRequest)).toDto()
+        beanService.insert(BeanDTO(id, beanInsertRequest)).toDto()
 
     @PutMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Update coffee")
@@ -47,7 +54,7 @@ class BeanController@Autowired constructor(
     fun update(@PathVariable id: String, @RequestBody @Valid beanInsertRequest: BeanInsertRequest): BeanDTO =
         beanService.update(BeanDTO(id, beanInsertRequest)).toDto()
 
-    @DeleteMapping("/bean/{id}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "delete bean")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun delete(@PathVariable id: String) = beanService.delete(id)

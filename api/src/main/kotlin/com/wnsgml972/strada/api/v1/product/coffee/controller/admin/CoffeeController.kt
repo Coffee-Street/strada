@@ -1,8 +1,10 @@
 package com.wnsgml972.strada.api.v1.product.coffee.controller.admin
 
 import BASE_URL_V1
-import com.wnsgml972.strada.api.v1.product.bean.service.BeanService
-import com.wnsgml972.strada.api.v1.product.coffee.service.*
+import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeDTO
+import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeInsertRequest
+import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeService
+import com.wnsgml972.strada.api.v1.product.coffee.service.toDto
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -28,7 +30,6 @@ import javax.validation.Valid
 )
 class CoffeeController @Autowired constructor(
     private val coffeeService: CoffeeService,
-    private val beanService: BeanService
 ) {
 
     @GetMapping

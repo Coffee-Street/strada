@@ -58,7 +58,7 @@ class CoffeeControllerIT @Autowired constructor(
             .expectStatus().is2xxSuccessful
 
         client.delete()
-            .uri("${BeanController.BEAN_BASE_URL}/bean/케냐")
+            .uri("${BeanController.BEAN_BASE_URL}/케냐")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful

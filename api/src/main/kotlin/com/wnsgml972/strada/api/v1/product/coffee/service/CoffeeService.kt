@@ -14,32 +14,37 @@ class CoffeeService(
 
     @Transactional(readOnly = true)
     fun selectAll(): List<CoffeeDTO> =
-        coffeeRepository.findAll().map { it.toDto() }
+        coffeeRepository
+            .findAll()
+            .map { it.toDto() }
 
     @Transactional(readOnly = true)
     fun select(name: String): CoffeeDTO? =
-        coffeeRepository.findByName(name).orElseThrow { NotFoundException("$name Not Found") }.toDto()
+        coffeeRepository
+            .findByName(name)
+            .orElseThrow { NotFoundException("$name Not Found") }
+            .toDto()
 
     @Transactional
-    fun insert(coffeeDTO: CoffeeDTO): Coffee = coffeeRepository.save(coffeeDTO.toEntity())
-
-//    @Transactional
-//    fun update(coffeeDTO: CoffeeDTO) =
-//        coffeeRepository.findByName(coffeeDTO.name).orElseThrow { NotFoundException("${coffeeDTO.name} Not Found") }
-//            .id?.let {
-//                result = coffeeRepository.save(coffeeDTO.toEntity(it))
-//            }
+    fun insert(coffeeDTO: CoffeeDTO): Coffee =
+        coffeeRepository
+            .save(coffeeDTO.toEntity())
 
     @Transactional
     fun update(coffeeDTO: CoffeeDTO) =
-        coffeeRepository.findByName(coffeeDTO.name).orElseThrow { NotFoundException("${coffeeDTO.name} Not Found") }
+        coffeeRepository
+            .findByName(coffeeDTO.name)
+            .orElseThrow { NotFoundException("${coffeeDTO.name} Not Found") }
             .id?.let {
-                coffeeRepository.save(coffeeDTO.toEntity(it))
+                coffeeRepository
+                    .save(coffeeDTO.toEntity(it))
             }
 
     @Transactional
     fun delete(name: String) =
-        coffeeRepository.findByName(name).orElseThrow { NotFoundException("$name Not Found") }
+        coffeeRepository
+            .findByName(name)
+            .orElseThrow { NotFoundException("$name Not Found") }
             .run { coffeeRepository.delete(this) }
 
     companion object : KLogging()
