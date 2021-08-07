@@ -127,6 +127,25 @@ class CoffeeControllerIT @Autowired constructor(
     @Test
     @Order(4)
     fun `update Coffee using put to CoffeeController`() {
+        val coffeeDTO = CoffeeDTO(
+            "test_coffee",
+            "http://coffeeInsertTest.com",
+            2000,
+            "insert coffee",
+            "coffee",
+            listOf(
+                BeanDTO("케냐",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test")
+            )
+        )
+        productHelper.insertCoffee(coffeeDTO)
+
 
         val coffeeInsertRequest = CoffeeInsertRequest(
             "http://coffeeInsertTest.com",
@@ -146,7 +165,7 @@ class CoffeeControllerIT @Autowired constructor(
         )
         val accessToken = authHelper.getAccessToken()
         client.put()
-            .uri("${CoffeeController.COFFEE_BASE_URL}/dummy")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/test_coffee")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(coffeeInsertRequest)
@@ -158,6 +177,8 @@ class CoffeeControllerIT @Autowired constructor(
                     logger.debug { "result=${result.responseBody}"
                 }
             }
+
+        productHelper.deleteCoffee("test_coffee")
 
     }
 
@@ -192,6 +213,7 @@ class CoffeeControllerIT @Autowired constructor(
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
+
     }
 
     @Test
