@@ -168,7 +168,7 @@ class CoffeeControllerIT @Autowired constructor(
     fun `delete Coffee using delete from CoffeeController`() {
 
         val coffeeDTO = CoffeeDTO(
-            "test_coffee",
+            "test_coffee2",
             "http://coffeeInsertTest.com",
             2000,
             "insert coffee",
@@ -190,7 +190,7 @@ class CoffeeControllerIT @Autowired constructor(
 
 
         client.delete()
-            .uri("${CoffeeController.COFFEE_BASE_URL}/test_coffee")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/test_coffee2")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
