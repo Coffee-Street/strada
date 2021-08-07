@@ -108,7 +108,7 @@ class CoffeeControllerIT @Autowired constructor(
     @Order(4)
     fun `update Coffee using put to CoffeeController`() {
         val coffeeDTO = CoffeeDTO(
-            "test_coffee",
+            "test_coffee1",
             "http://coffeeInsertTest.com",
             2000,
             "insert coffee",
@@ -145,7 +145,7 @@ class CoffeeControllerIT @Autowired constructor(
         )
         val accessToken = authHelper.getAccessToken()
         client.put()
-            .uri("${CoffeeController.COFFEE_BASE_URL}/test_coffee")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/test_coffee1")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(coffeeInsertRequest)
@@ -158,7 +158,7 @@ class CoffeeControllerIT @Autowired constructor(
                 }
             }
 
-        productHelper.deleteCoffee("test_coffee")
+        productHelper.deleteCoffee("test_coffee1")
         productHelper.deleteBean("케냐")
 
     }
