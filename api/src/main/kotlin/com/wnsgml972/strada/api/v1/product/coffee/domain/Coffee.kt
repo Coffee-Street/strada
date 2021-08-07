@@ -26,7 +26,7 @@ class Coffee(
 
     val category: String,
 
-    @OneToMany(mappedBy = "coffee", orphanRemoval = true, cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "coffee", orphanRemoval = true, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     var beanCoffees: List<BeanCoffee> = mutableListOf()
 
 ) : LongJpaEntity() {
