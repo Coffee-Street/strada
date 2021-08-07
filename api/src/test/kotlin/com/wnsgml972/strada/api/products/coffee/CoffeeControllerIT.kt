@@ -32,33 +32,12 @@ class CoffeeControllerIT @Autowired constructor(
 
     @BeforeEach
     fun `insert dummy date before each test`() {
-
-        val coffeeDTO = CoffeeDTO(
-            "dummy",
-            "http://coffeeInsertTest.com",
-            2000,
-            "insert coffee",
-            "coffee",
-            listOf(
-                BeanDTO("케냐",
-                    "test",
-                    "test",
-                    "test",
-                    "test",
-                    "test",
-                    "test",
-                    "test")
-            )
-        )
-        productHelper.insertCoffee(coffeeDTO)
-
+        productHelper.insertDummyCoffee()
     }
 
     @AfterEach
     fun `delete after each test`(){
-
-        productHelper.deleteCoffee("dummy")
-        productHelper.deleteBean("케냐")
+        productHelper.deleteDummyCoffee()
     }
 
     @Test
@@ -92,6 +71,7 @@ class CoffeeControllerIT @Autowired constructor(
             .consumeWith { result -> logger.debug { "result=${result.responseBody}" } }
 
         productHelper.deleteCoffee("test")
+        productHelper.deleteBean("케냐")
 
     }
 
@@ -179,6 +159,7 @@ class CoffeeControllerIT @Autowired constructor(
             }
 
         productHelper.deleteCoffee("test_coffee")
+        productHelper.deleteBean("케냐")
 
     }
 
@@ -214,6 +195,7 @@ class CoffeeControllerIT @Autowired constructor(
             .exchange()
             .expectStatus().is2xxSuccessful
 
+        productHelper.deleteBean("케냐")
     }
 
     @Test
