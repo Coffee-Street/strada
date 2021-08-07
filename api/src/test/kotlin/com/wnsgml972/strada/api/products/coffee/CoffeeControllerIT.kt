@@ -30,15 +30,15 @@ class CoffeeControllerIT @Autowired constructor(
     private val productHelper: ProductHelper
 ) : IntegrationTest() {
 
-    @BeforeEach
-    fun `insert dummy date before each test`() {
-        productHelper.insertDummyCoffee()
-    }
-
-    @AfterEach
-    fun `delete after each test`(){
-        productHelper.deleteDummyCoffee()
-    }
+//    @BeforeEach
+//    fun `insert dummy date before each test`() {
+//        productHelper.insertDummyCoffee()
+//    }
+//
+//    @AfterEach
+//    fun `delete after each test`(){
+//        productHelper.deleteDummyCoffee()
+//    }
 
     @Test
     @Order(1)
@@ -78,6 +78,9 @@ class CoffeeControllerIT @Autowired constructor(
     @Test
     @Order(2)
     fun `select Coffee using get from CoffeeController`() {
+
+        productHelper.insertDummyCoffee()
+
         val accessToken = authHelper.getAccessToken()
 
         client.get()
@@ -86,12 +89,19 @@ class CoffeeControllerIT @Autowired constructor(
             .exchange()
             .expectStatus().is2xxSuccessful
             .expectBody<CoffeeDTO>()
-            .consumeWith { result -> logger.debug { "result=${result.responseBody}" } }
+            .consumeWith {
+                    result -> logger.debug { "result=${result.responseBody}" }
+            }
+
+        productHelper.deleteDummyCoffee()
     }
 
     @Test
     @Order(3)
     fun `select all Coffee using get from CoffeeController`() {
+
+        productHelper.insertDummyCoffee()
+
         val accessToken = authHelper.getAccessToken()
         client.get()
             .uri("${CoffeeController.COFFEE_BASE_URL}")
@@ -102,30 +112,15 @@ class CoffeeControllerIT @Autowired constructor(
             .consumeWith { result ->
                 result.responseBody?.forEach { it -> logger.debug { "result=${it}" } }
             }
+
+        productHelper.deleteDummyCoffee()
     }
 
     @Test
     @Order(4)
     fun `update Coffee using put to CoffeeController`() {
-        val coffeeDTO = CoffeeDTO(
-            "test_coffee1",
-            "http://coffeeInsertTest.com",
-            2000,
-            "insert coffee",
-            "coffee",
-            listOf(
-                BeanDTO("케냐",
-                    "test",
-                    "test",
-                    "test",
-                    "test",
-                    "test",
-                    "test",
-                    "test")
-            )
-        )
-        productHelper.insertCoffee(coffeeDTO)
 
+        productHelper.insertDummyCoffee()
 
         val coffeeInsertRequest = CoffeeInsertRequest(
             "http://coffeeInsertTest.com",
@@ -133,7 +128,7 @@ class CoffeeControllerIT @Autowired constructor(
             "insert coffee",
             "coffee",
             listOf(
-                BeanDTO("케냐",
+                BeanDTO("dummybean",
                     "test",
                     "test",
                     "test",
@@ -145,7 +140,7 @@ class CoffeeControllerIT @Autowired constructor(
         )
         val accessToken = authHelper.getAccessToken()
         client.put()
-            .uri("${CoffeeController.COFFEE_BASE_URL}/test_coffee1")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(coffeeInsertRequest)
@@ -158,8 +153,7 @@ class CoffeeControllerIT @Autowired constructor(
                 }
             }
 
-        productHelper.deleteCoffee("test_coffee1")
-        productHelper.deleteBean("케냐")
+        productHelper.deleteDummyCoffee()
 
     }
 
@@ -167,35 +161,19 @@ class CoffeeControllerIT @Autowired constructor(
     @Order(5)
     fun `delete Coffee using delete from CoffeeController`() {
 
-        val coffeeDTO = CoffeeDTO(
-            "test_coffee2",
-            "http://coffeeInsertTest.com",
-            2000,
-            "insert coffee",
-            "coffee",
-            listOf(
-                BeanDTO("케냐",
-                    "test",
-                    "test",
-                    "test",
-                    "test",
-                    "test",
-                    "test",
-                    "test")
-            )
-        )
-        productHelper.insertCoffee(coffeeDTO)
+
+        productHelper.insertDummyCoffee()
 
         val accessToken = authHelper.getAccessToken()
 
 
         client.delete()
-            .uri("${CoffeeController.COFFEE_BASE_URL}/test_coffee2")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
 
-        productHelper.deleteBean("케냐")
+        productHelper.deleteBean("dummybean")
     }
 
     @Test
