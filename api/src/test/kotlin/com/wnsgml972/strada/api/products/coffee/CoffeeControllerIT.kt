@@ -2,6 +2,7 @@ package com.wnsgml972.strada.api.products.coffee
 
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
+import com.wnsgml972.strada.api.products.ProductHelper
 import com.wnsgml972.strada.api.v1.product.bean.controller.admin.BeanController
 import com.wnsgml972.strada.api.v1.product.coffee.controller.admin.CoffeeController
 import com.wnsgml972.strada.api.v1.product.bean.service.BeanDTO
@@ -15,6 +16,8 @@ import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
 import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -24,46 +27,38 @@ import org.springframework.test.web.reactive.server.expectBody
 class CoffeeControllerIT @Autowired constructor(
     private val client: WebTestClient,
     private val authHelper: AuthHelper,
+    private val productHelper: ProductHelper
 ) : IntegrationTest() {
 
-    @BeforeAll
-    fun `insert dummy date before test`() {
-        val coffeeInsertRequest = CoffeeInsertRequest(
+    @BeforeEach
+    fun `insert dummy date before each test`() {
+
+        val coffeeDTO = CoffeeDTO(
+            "dummy",
             "http://coffeeInsertTest.com",
             2000,
             "insert coffee",
             "coffee",
             listOf(
-                BeanDTO("케냐", "test", "test", "test", "test", "test", "test", "test")
+                BeanDTO("케냐",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test")
             )
         )
-        val accessToken = authHelper.getAccessToken()
-        client.post()
-            .uri("${CoffeeController.COFFEE_BASE_URL}/dummy")
-            .header("Authorization", "Bearer $accessToken")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(coffeeInsertRequest)
-            .exchange()
+        productHelper.insertCoffee(coffeeDTO)
 
     }
 
-    @AfterAll
-    fun `delete all after test`(){
-        val accessToken = authHelper.getAccessToken()
+    @AfterEach
+    fun `delete after each test`(){
 
-        client.delete()
-            .uri("${CoffeeController.COFFEE_BASE_URL}/dummy")
-            .header("Authorization", "Bearer $accessToken")
-            .exchange()
-            .expectStatus().is2xxSuccessful
-
-        client.delete()
-            .uri("${BeanController.BEAN_BASE_URL}/케냐")
-            .header("Authorization", "Bearer $accessToken")
-            .exchange()
-            .expectStatus().is2xxSuccessful
-
-
+        productHelper.deleteCoffee("dummy")
+        productHelper.deleteBean("케냐")
     }
 
     @Test
@@ -75,7 +70,14 @@ class CoffeeControllerIT @Autowired constructor(
             "insert coffee",
             "coffee",
             listOf(
-                BeanDTO("케냐", "test", "test", "test", "test", "test", "test", "test")
+                BeanDTO("케냐",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test")
             )
         )
         val accessToken = authHelper.getAccessToken()
@@ -88,6 +90,9 @@ class CoffeeControllerIT @Autowired constructor(
             .expectStatus().is2xxSuccessful
             .expectBody<CoffeeDTO>()
             .consumeWith { result -> logger.debug { "result=${result.responseBody}" } }
+
+        productHelper.deleteCoffee("test")
+
     }
 
     @Test
@@ -122,26 +127,36 @@ class CoffeeControllerIT @Autowired constructor(
     @Test
     @Order(4)
     fun `update Coffee using put to CoffeeController`() {
+
         val coffeeInsertRequest = CoffeeInsertRequest(
             "http://coffeeInsertTest.com",
             10000,
             "insert coffee",
             "coffee",
             listOf(
-                BeanDTO("케냐", "test", "test", "test", "test", "test", "test", "test")
+                BeanDTO("케냐",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test")
             )
         )
         val accessToken = authHelper.getAccessToken()
         client.put()
-            .uri("${CoffeeController.COFFEE_BASE_URL}/test")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(coffeeInsertRequest)
             .exchange()
             .expectStatus().is2xxSuccessful
-            .expectBody<CoffeeDTO>().consumeWith { result ->
-                result.responseBody?.price shouldBeEqualTo 10000
-                logger.debug { "result=${result.responseBody}" }
+            .expectBody<CoffeeDTO>()
+            .consumeWith {
+                    result -> result.responseBody?.price shouldBeEqualTo 10000
+                    logger.debug { "result=${result.responseBody}"
+                }
             }
 
     }
@@ -149,9 +164,31 @@ class CoffeeControllerIT @Autowired constructor(
     @Test
     @Order(5)
     fun `delete Coffee using delete from CoffeeController`() {
+
+        val coffeeDTO = CoffeeDTO(
+            "test_coffee",
+            "http://coffeeInsertTest.com",
+            2000,
+            "insert coffee",
+            "coffee",
+            listOf(
+                BeanDTO("케냐",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test")
+            )
+        )
+        productHelper.insertCoffee(coffeeDTO)
+
         val accessToken = authHelper.getAccessToken()
+
+
         client.delete()
-            .uri("${CoffeeController.COFFEE_BASE_URL}/test")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/test_coffee")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful

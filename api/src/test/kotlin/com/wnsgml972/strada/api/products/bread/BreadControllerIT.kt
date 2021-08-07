@@ -2,12 +2,14 @@ package com.wnsgml972.strada.api.products.bread
 
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
+import com.wnsgml972.strada.api.products.ProductHelper
 import com.wnsgml972.strada.api.v1.product.bread.controller.admin.BreadController
 import com.wnsgml972.strada.api.v1.product.bread.service.BreadDTO
 import com.wnsgml972.strada.api.v1.product.bread.service.BreadInsertRequest
 import mu.KLogging
 import org.amshove.kluent.shouldBeEqualTo
-import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
@@ -21,25 +23,35 @@ import org.springframework.test.web.reactive.server.expectBody
 class BreadControllerIT @Autowired constructor(
     private val client: WebTestClient,
     private val authHelper: AuthHelper,
+    private val productHelper: ProductHelper
 ) : IntegrationTest() {
 
-    @BeforeAll
-    fun `insert dummy date before test`() {
-        val breadInsertRequest = BreadInsertRequest("http://breadInsertTest.com", 2000, "insert bread", "bread")
-        val accessToken = authHelper.getAccessToken()
-        client.post()
-            .uri("${BreadController.BREAD_BASE_URL}/dummy")
-            .header("Authorization", "Bearer $accessToken")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(breadInsertRequest)
-            .exchange()
+    @BeforeEach
+    fun `insert dummy date before each test`() {
 
+        val breadDTO = BreadDTO(
+            "dummy",
+            "http://breadInsertTest.com",
+            2000,
+            "insert bread",
+            "bread")
+
+        productHelper.insertBread(breadDTO)
+    }
+
+    @AfterEach
+    fun `delete after each test`(){
+        productHelper.clearBread()
     }
 
     @Test
     @Order(1)
     fun `insert Bread using post to BreadController`() {
-        val breadInsertRequest = BreadInsertRequest("http://breadinserttest.com", 1000, "insert test", "breads")
+        val breadInsertRequest = BreadInsertRequest(
+            "http://breadinserttest.com",
+            1000,
+            "insert test",
+            "breads")
         val accessToken = authHelper.getAccessToken()
         client.post()
             .uri("${BreadController.BREAD_BASE_URL}/test")
@@ -87,7 +99,7 @@ class BreadControllerIT @Autowired constructor(
         val breadInsertRequest = BreadInsertRequest("http://breadinserttest.com", 10000, "insert test", "breads")
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri("${BreadController.BREAD_BASE_URL}/test")
+            .uri("${BreadController.BREAD_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(breadInsertRequest)
@@ -105,7 +117,7 @@ class BreadControllerIT @Autowired constructor(
     fun `delete Bread using delete from BreadController`() {
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri("${BreadController.BREAD_BASE_URL}/test")
+            .uri("${BreadController.BREAD_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful

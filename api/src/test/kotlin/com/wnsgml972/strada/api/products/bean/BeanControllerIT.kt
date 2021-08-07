@@ -2,6 +2,7 @@ package com.wnsgml972.strada.api.products.bean
 
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
+import com.wnsgml972.strada.api.products.ProductHelper
 import com.wnsgml972.strada.api.products.coffee.CoffeeControllerIT
 import com.wnsgml972.strada.api.v1.product.bean.controller.admin.BeanController
 import com.wnsgml972.strada.api.v1.product.bean.service.BeanDTO
@@ -21,11 +22,13 @@ import org.springframework.test.web.reactive.server.expectBody
 class BeanControllerIT@Autowired constructor(
     private val client: WebTestClient,
     private val authHelper: AuthHelper,
+    private val productHelper: ProductHelper
 ) : IntegrationTest(){
 
-    @BeforeAll
-    fun `insert dummy Bean before test`() {
-        val beanInsertRequest = BeanInsertRequest(
+    @BeforeEach
+    fun `insert dummy Bean before each test`() {
+        val beanDTO = BeanDTO(
+            "dummy",
             "test",
             "test",
             "test",
@@ -34,32 +37,15 @@ class BeanControllerIT@Autowired constructor(
             "test",
             "test",
         )
-        val accessToken = authHelper.getAccessToken()
-        client.post()
-            .uri("${BeanController.BEAN_BASE_URL}/dummybean")
-            .header("Authorization", "Bearer $accessToken")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(beanInsertRequest)
-            .exchange()
+
+        productHelper.insertBean(beanDTO)
     }
 
-    @AfterAll
-    fun `delete all Beans after test`(){
-        val accessToken = authHelper.getAccessToken()
-
-        client.delete()
-            .uri("${BeanController.BEAN_BASE_URL}/dummybean")
-            .header("Authorization", "Bearer $accessToken")
-            .exchange()
-            .expectStatus().is2xxSuccessful
-
-        client.delete()
-            .uri("${BeanController.BEAN_BASE_URL}/test_bean")
-            .header("Authorization", "Bearer $accessToken")
-            .exchange()
-            .expectStatus().is4xxClientError
-
+    @AfterEach
+    fun `delete after each test`(){
+        productHelper.deleteBean("dummy")
     }
+
 
     @Test
     @Order(1)
@@ -83,6 +69,8 @@ class BeanControllerIT@Autowired constructor(
             .expectStatus().is2xxSuccessful
             .expectBody<BeanDTO>()
             .consumeWith { result -> BeanControllerIT.logger.debug { "result=${result.responseBody}" } }
+
+        productHelper.deleteBean("test_bean")
     }
 
     @Test
@@ -91,7 +79,7 @@ class BeanControllerIT@Autowired constructor(
         val accessToken = authHelper.getAccessToken()
 
         client.get()
-            .uri("${BeanController.BEAN_BASE_URL}/test_bean")
+            .uri("${BeanController.BEAN_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
@@ -128,7 +116,7 @@ class BeanControllerIT@Autowired constructor(
         )
         val accessToken = authHelper.getAccessToken()
         client.put()
-            .uri("${BeanController.BEAN_BASE_URL}/test_bean")
+            .uri("${BeanController.BEAN_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(beanInsertRequest)
@@ -144,6 +132,19 @@ class BeanControllerIT@Autowired constructor(
     @Test
     @Order(5)
     fun `delete Bean using delete from BeanController`() {
+
+        val beanDTO = BeanDTO(
+            "test_bean",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+        )
+        productHelper.insertBean(beanDTO)
+
         val accessToken = authHelper.getAccessToken()
         client.delete()
             .uri("${BeanController.BEAN_BASE_URL}/test_bean")
