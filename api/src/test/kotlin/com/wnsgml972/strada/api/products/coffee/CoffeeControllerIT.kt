@@ -181,7 +181,6 @@ class CoffeeControllerIT @Autowired constructor(
             .exchange()
             .expectStatus().is2xxSuccessful
 
-        productHelper.deleteCoffee("test_coffee")
         productHelper.deleteBean("test_bean")
     }
 
