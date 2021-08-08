@@ -6,7 +6,4 @@ import org.springframework.stereotype.Repository
 import java.util.Optional
 
 @Repository
-interface BeanRepository : JpaRepository<Bean, String> {
-
-    fun findById(id: List<String>): Optional<List<Bean>>
-}
+interface BeanRepository : JpaRepository<Bean, String>
