@@ -8,6 +8,5 @@ import java.util.Optional
 @Repository
 interface BeanRepository : JpaRepository<Bean, String> {
 
-    @Query("SELECT e FROM Bean e WHERE e.id IN (:id)")
-    fun findbyId(id: List<String>): Optional<List<Bean>>
+    fun findById(id: List<String>): Optional<List<Bean>>
 }
