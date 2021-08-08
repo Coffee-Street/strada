@@ -1,12 +1,14 @@
 package com.wnsgml972.strada.api.v1.banner.domain
 
 import com.wnsgml972.strada.api.base.LongJpaEntity
+import com.wnsgml972.strada.api.v1.banner.service.BackgroundColor
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.Id
 
 @Entity
-@SuppressWarnings("LongParameterList")
 class Banner(
 
     @Id
@@ -20,7 +22,14 @@ class Banner(
 
     val imageUrl: String,
 
-    val bottomLatters: String
+    val bottomLatters: String,
+
+//    @Enumerated(EnumType.STRING)
+//    val backgroundColor: BackgroundColor,
+//
+//    @Enumerated(EnumType.STRING)
+//    val latterFont: LatterFont,
+
 
 ) : LongJpaEntity() {
     override fun equalProperties(other: Any): Boolean {
