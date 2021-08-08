@@ -1,11 +1,7 @@
 package com.wnsgml972.strada.api.v1.item.coffee.domain
 
 import com.fasterxml.jackson.annotation.JsonManagedReference
-<<<<<<< Updated upstream
 import com.wnsgml972.strada.api.base.AbstractValueObject
-=======
-import com.wnsgml972.strada.api.base.AbstractJpaEntity
->>>>>>> Stashed changes
 import javax.persistence.ManyToOne
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -30,11 +26,7 @@ class BeanCoffee(
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     var bean: Bean?,
 
-<<<<<<< Updated upstream
-) : AbstractValueObject() {
-=======
-) : AbstractJpaEntity(String) {
->>>>>>> Stashed changes
+    ) : AbstractValueObject() {
 
     override fun equalProperties(other: Any): Boolean {
         return other is BeanCoffee &&
