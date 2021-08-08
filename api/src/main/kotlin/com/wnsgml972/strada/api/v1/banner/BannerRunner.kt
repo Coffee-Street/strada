@@ -7,7 +7,6 @@ import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.stereotype.Component
 
-
 @Component
 class BannerRunner @Autowired constructor(
     private val bannerService: BannerService
@@ -37,6 +36,5 @@ class BannerRunner @Autowired constructor(
         bannerService.insert(bannerDTO1)
         bannerService.insert(bannerDTO2)
         bannerService.insert(bannerDTO3)
-
     }
 }

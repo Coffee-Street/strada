@@ -1,12 +1,9 @@
 package com.wnsgml972.strada.api.v1.banner.domain
 
 import com.wnsgml972.strada.api.base.LongJpaEntity
-import com.wnsgml972.strada.api.v1.item.coffee.domain.BeanCoffee
-import com.wnsgml972.strada.api.v1.item.coffee.domain.Coffee
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
-
 
 @Entity
 @SuppressWarnings("LongParameterList")
@@ -25,8 +22,7 @@ class Banner(
 
     val bottomLatters: String
 
-
-): LongJpaEntity(){
+) : LongJpaEntity() {
     override fun equalProperties(other: Any): Boolean {
         return other is Banner &&
                 id == other.id &&

@@ -66,7 +66,6 @@ class BannerController @Autowired constructor(
         bannerService
             .delete(evalOrder)
 
-
     companion object : KLogging() {
         private const val BANNER_SERVICE_NAME = "/banners"
         const val BANNER_BASE_URL = "$BASE_URL_V1/$BANNER_SERVICE_NAME"
