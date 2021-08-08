@@ -1,15 +1,8 @@
 package com.wnsgml972.strada.api.v1.option.drink.domain
 
 import com.wnsgml972.strada.api.base.LongJpaEntity
-import com.wnsgml972.strada.api.v1.option.drink.service.HotOrIcedType
 import com.wnsgml972.strada.api.v1.option.drink.service.CupType
-import com.wnsgml972.strada.api.v1.option.drink.service.CupSizeType
-import com.wnsgml972.strada.api.v1.option.drink.service.WaterType
-import com.wnsgml972.strada.api.v1.option.drink.service.MilkType
-import com.wnsgml972.strada.api.v1.option.drink.service.IcedOnlyType
-import com.wnsgml972.strada.api.v1.option.drink.service.HotOnlyType
-import com.wnsgml972.strada.api.v1.option.drink.service.CreamType
-import com.wnsgml972.strada.api.v1.option.drink.service.MemoType
+import com.wnsgml972.strada.api.v1.option.drink.service.HotOrIcedType
 import com.wnsgml972.strada.api.v1.option.drizzle.domain.DrizzleOption
 import com.wnsgml972.strada.api.v1.option.syrup.domain.SyrupOption
 import javax.persistence.CascadeType
@@ -29,26 +22,17 @@ class DrinkOption private constructor(
     @Enumerated(EnumType.STRING)
     val cupType: CupType,
 
-    @Enumerated(EnumType.STRING)
-    val cupSizeType: CupSizeType,
+    val cupSize: Int,
 
-    @Enumerated(EnumType.STRING)
-    val waterType: WaterType,
+    val water: Int,
 
-    @Enumerated(EnumType.STRING)
-    val milkType: MilkType,
+    val milk: Int,
 
-    @Enumerated(EnumType.STRING)
-    val icedOnlyType: IcedOnlyType,
+    val iced: Int,
 
-    @Enumerated(EnumType.STRING)
-    val hotOnlyType: HotOnlyType,
+    val hot: Int,
 
-    @Enumerated(EnumType.STRING)
-    val creamType: CreamType,
-
-    @Enumerated(EnumType.STRING)
-    val memoType: MemoType,
+    val cream: Int,
 
     val memo: String = "",
 
@@ -69,13 +53,12 @@ class DrinkOption private constructor(
                 id == other.id &&
                 hotOrIced == other.hotOrIced &&
                 cupType == other.cupType &&
-                cupSizeType == other.cupSizeType &&
-                waterType == other.waterType &&
-                milkType == other.milkType &&
-                icedOnlyType == other.icedOnlyType &&
-                hotOnlyType == other.hotOnlyType &&
-                creamType == other.creamType &&
-                memoType == other.memoType &&
+                cupSize == other.cupSize &&
+                water == other.water &&
+                milk == other.milk &&
+                iced == other.iced &&
+                hot == other.hot &&
+                cream == other.cream &&
                 memo == other.memo &&
                 shotCount == other.shotCount &&
                 syrupOptions == other.syrupOptions &&
@@ -86,13 +69,12 @@ class DrinkOption private constructor(
         fun of(
             hotOrIcedType: HotOrIcedType,
             cupType: CupType,
-            cupSizeType: CupSizeType,
-            waterType: WaterType,
-            milkType: MilkType,
-            icedOnlyType: IcedOnlyType,
-            hotOnlyType: HotOnlyType,
-            creamType: CreamType,
-            memoType: MemoType,
+            cupSize: Int,
+            water: Int,
+            milk: Int,
+            iced: Int,
+            hot: Int,
+            cream: Int,
             memo: String,
             shotCount: Int,
             syrupOptions: List<SyrupOption>,
@@ -102,13 +84,12 @@ class DrinkOption private constructor(
             DrinkOption(
                 hotOrIcedType,
                 cupType,
-                cupSizeType,
-                waterType,
-                milkType,
-                icedOnlyType,
-                hotOnlyType,
-                creamType,
-                memoType,
+                cupSize,
+                water,
+                milk,
+                iced,
+                hot,
+                cream,
                 memo,
                 shotCount,
                 syrupOptions,

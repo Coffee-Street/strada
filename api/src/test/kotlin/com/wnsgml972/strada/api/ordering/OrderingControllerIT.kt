@@ -2,20 +2,18 @@ package com.wnsgml972.strada.api.ordering
 
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
+import com.wnsgml972.strada.api.v1.item.bread.service.BreadDTO
+import com.wnsgml972.strada.api.v1.item.bread.service.BreadInsertRequest
+import com.wnsgml972.strada.api.v1.item.coffee.service.BeanDTO
+import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeDTO
+import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeInsertRequest
 import com.wnsgml972.strada.api.v1.option.bean.service.BeanOptionDTO
 import com.wnsgml972.strada.api.v1.option.bean.service.GrindType
 import com.wnsgml972.strada.api.v1.option.bread.service.BreadOptionDTO
 import com.wnsgml972.strada.api.v1.option.bread.service.HereOrToGo
-import com.wnsgml972.strada.api.v1.option.drink.service.CreamType
-import com.wnsgml972.strada.api.v1.option.drink.service.CupSizeType
 import com.wnsgml972.strada.api.v1.option.drink.service.CupType
 import com.wnsgml972.strada.api.v1.option.drink.service.DrinkOptionDTO
-import com.wnsgml972.strada.api.v1.option.drink.service.HotOnlyType
 import com.wnsgml972.strada.api.v1.option.drink.service.HotOrIcedType
-import com.wnsgml972.strada.api.v1.option.drink.service.IcedOnlyType
-import com.wnsgml972.strada.api.v1.option.drink.service.MemoType
-import com.wnsgml972.strada.api.v1.option.drink.service.MilkType
-import com.wnsgml972.strada.api.v1.option.drink.service.WaterType
 import com.wnsgml972.strada.api.v1.option.drizzle.service.DrizzleOptionDTO
 import com.wnsgml972.strada.api.v1.option.syrup.service.SyrupOptionDTO
 import com.wnsgml972.strada.api.v1.ordering.controller.OrderingController
@@ -25,6 +23,8 @@ import com.wnsgml972.strada.api.v1.ordering.service.OrderingRequest
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingStatus
 import mu.KLogging
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -43,17 +43,29 @@ class OrderingControllerIT @Autowired constructor(
                 OrderingStatus.REQUEST,
                 listOf<OrderingDetailRequest>(
                     OrderingDetailRequest(
+                        CoffeeDTO(
+                            "",
+                            CoffeeInsertRequest(
+                                "",
+                                4400,
+                                "",
+                                "",
+                                listOf<BeanDTO>()
+                            ),
+                        ),
+                        null,
+                        null,
+                        null,
                         DrinkOptionDTO(
                             0,
                             HotOrIcedType.ICED,
                             CupType.MULTI_USE,
-                            CupSizeType.VENTI,
-                            WaterType.DEFAULT,
-                            MilkType.NONE,
-                            IcedOnlyType.DEFAULT,
-                            HotOnlyType.NONE,
-                            CreamType.NONE,
-                            MemoType.DEFAULT,
+                            591,
+                            3,
+                            0,
+                            1,
+                            0,
+                            0,
                             "진하게 타주세요",
                             5,
                             listOf<SyrupOptionDTO>(),
@@ -81,6 +93,18 @@ class OrderingControllerIT @Autowired constructor(
         val orderingRequest = OrderingRequest(OrderingStatus.REQUEST, listOf<OrderingDetailRequest>(
             OrderingDetailRequest(
                 null,
+                null,
+                BreadDTO(
+                    "",
+                    BreadInsertRequest(
+                        "",
+                        5600,
+                        "",
+                        ""
+                    ),
+                ),
+                null,
+                null,
                 BreadOptionDTO(
                     0,
                     HereOrToGo.TOGO,
@@ -105,6 +129,19 @@ class OrderingControllerIT @Autowired constructor(
         val accessToken = authHelper.getAccessToken()
         val orderingRequest = OrderingRequest(OrderingStatus.REQUEST, listOf<OrderingDetailRequest>(
             OrderingDetailRequest(
+                null,
+                null,
+                null,
+                BeanDTO(
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ),
                 null,
                 null,
                 BeanOptionDTO(

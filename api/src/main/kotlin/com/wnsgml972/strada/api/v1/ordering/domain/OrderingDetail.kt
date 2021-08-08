@@ -1,6 +1,10 @@
 package com.wnsgml972.strada.api.v1.ordering.domain
 
 import com.wnsgml972.strada.api.base.LongJpaEntity
+import com.wnsgml972.strada.api.v1.item.bread.domain.Bread
+import com.wnsgml972.strada.api.v1.item.coffee.domain.Bean
+import com.wnsgml972.strada.api.v1.item.coffee.domain.Coffee
+import com.wnsgml972.strada.api.v1.item.noncoffee.domain.NonCoffee
 import com.wnsgml972.strada.api.v1.option.bean.domain.BeanOption
 import com.wnsgml972.strada.api.v1.option.bread.domain.BreadOption
 import com.wnsgml972.strada.api.v1.option.drink.domain.DrinkOption
@@ -17,14 +21,19 @@ import javax.persistence.OneToOne
  *
  */
 @Entity
+@SuppressWarnings("LongParameterList")
 class OrderingDetail private constructor(
-//    val coffee : Coffee?,
-//
-//    val nonCoffee : NonCoffee?,
-//
-//    val bread : Bread?,
-//
-//    val bean : Bean?,
+    @OneToOne(cascade = [CascadeType.ALL])
+    val coffee: Coffee?,
+
+    @OneToOne(cascade = [CascadeType.ALL])
+    val nonCoffee: NonCoffee?,
+
+    @OneToOne(cascade = [CascadeType.ALL])
+    val bread: Bread?,
+
+    @OneToOne(cascade = [CascadeType.ALL])
+    val bean: Bean?,
 
     @OneToOne(cascade = [CascadeType.ALL])
     val drinkOption: DrinkOption?,
@@ -41,6 +50,10 @@ class OrderingDetail private constructor(
     override fun equalProperties(other: Any): Boolean {
         return other is OrderingDetail &&
                 id == other.id &&
+                coffee == other.coffee &&
+                nonCoffee == other.nonCoffee &&
+                bread == other.bread &&
+                bean == other.bean &&
                 drinkOption ?: drinkOption == other.drinkOption &&
                 breadOption ?: breadOption == other.breadOption &&
                 beanOption ?: beanOption == other.beanOption
@@ -48,11 +61,15 @@ class OrderingDetail private constructor(
 
     companion object {
         fun of(
+            coffee: Coffee?,
+            nonCoffee: NonCoffee?,
+            bread: Bread?,
+            bean: Bean?,
             drinkOption: DrinkOption?,
             breadOption: BreadOption?,
             beanOption: BeanOption?,
             id: Long?
         ) =
-            OrderingDetail(drinkOption, breadOption, beanOption, id)
+            OrderingDetail(coffee, nonCoffee, bread, bean, drinkOption, breadOption, beanOption, id)
     }
 }

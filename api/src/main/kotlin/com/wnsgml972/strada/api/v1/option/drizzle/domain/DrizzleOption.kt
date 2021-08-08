@@ -1,17 +1,12 @@
 package com.wnsgml972.strada.api.v1.option.drizzle.domain
 
 import com.wnsgml972.strada.api.base.LongJpaEntity
-import com.wnsgml972.strada.api.v1.option.drizzle.service.DrizzleType
 
 import javax.persistence.Entity
-import javax.persistence.EnumType
-import javax.persistence.Enumerated
 
 @Entity
 class DrizzleOption private constructor(
-    @Enumerated(EnumType.STRING)
-    val drizzleType: DrizzleType,
-
+    val drizzleType: Int,
     val drizzleCount: Int,
 
     override var id: Long? = null,
@@ -24,7 +19,7 @@ class DrizzleOption private constructor(
     }
 
     companion object {
-        fun of(drizzleType: DrizzleType, drizzleCount: Int, id: Long?) =
+        fun of(drizzleType: Int, drizzleCount: Int, id: Long?) =
             DrizzleOption(drizzleType, drizzleCount, id)
     }
 }

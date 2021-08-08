@@ -1,16 +1,11 @@
 package com.wnsgml972.strada.api.v1.option.syrup.domain
 
 import com.wnsgml972.strada.api.base.LongJpaEntity
-import com.wnsgml972.strada.api.v1.option.syrup.service.SyrupType
 import javax.persistence.Entity
-import javax.persistence.EnumType
-import javax.persistence.Enumerated
 
 @Entity
 class SyrupOption private constructor(
-    @Enumerated(EnumType.STRING)
-    val syrupType: SyrupType,
-
+    val syrupType: Int,
     val syrupCount: Int,
 
     override var id: Long? = null,
@@ -23,7 +18,7 @@ class SyrupOption private constructor(
     }
 
     companion object {
-        fun of(syrupType: SyrupType, syrupCount: Int, id: Long?) =
+        fun of(syrupType: Int, syrupCount: Int, id: Long?) =
             SyrupOption(syrupType, syrupCount, id)
     }
 }
