@@ -27,6 +27,7 @@ class BeanControllerIT@Autowired constructor(
 
     @BeforeEach
     fun `insert dummy Bean before each test`() {
+
         val beanDTO = BeanDTO(
             "dummy",
             "test",
@@ -37,12 +38,12 @@ class BeanControllerIT@Autowired constructor(
             "test",
             "test",
         )
-
         productHelper.insertBean(beanDTO)
     }
 
     @AfterEach
     fun `delete after each test`(){
+
         productHelper.deleteBean("dummy")
     }
 
@@ -50,15 +51,17 @@ class BeanControllerIT@Autowired constructor(
     @Test
     @Order(1)
     fun `insert Bean using post to BeanController`() {
+
         val beanInsertRequest = BeanInsertRequest(
-            "test2",
-            "test2",
-            "test2",
-            "test2",
-            "test2",
-            "test2",
-            "test2",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
         )
+
         val accessToken = authHelper.getAccessToken()
         client.post()
             .uri("${BeanController.BEAN_BASE_URL}/test_bean")
@@ -76,8 +79,8 @@ class BeanControllerIT@Autowired constructor(
     @Test
     @Order(2)
     fun `select Bean using get from BeanController`() {
-        val accessToken = authHelper.getAccessToken()
 
+        val accessToken = authHelper.getAccessToken()
         client.get()
             .uri("${BeanController.BEAN_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
@@ -90,6 +93,7 @@ class BeanControllerIT@Autowired constructor(
     @Test
     @Order(3)
     fun `select all Bean using get from BeanController`() {
+
         val accessToken = authHelper.getAccessToken()
         client.get()
             .uri("${BeanController.BEAN_BASE_URL}")
@@ -105,6 +109,7 @@ class BeanControllerIT@Autowired constructor(
     @Test
     @Order(4)
     fun `update Bean using put to BeanController`() {
+
         val beanInsertRequest = BeanInsertRequest(
             "update",
             "update",
@@ -114,6 +119,7 @@ class BeanControllerIT@Autowired constructor(
             "test2",
             "test2",
         )
+
         val accessToken = authHelper.getAccessToken()
         client.put()
             .uri("${BeanController.BEAN_BASE_URL}/dummy")
@@ -156,6 +162,7 @@ class BeanControllerIT@Autowired constructor(
     @Test
     @Order(6)
     fun `delete Non Exist Bean using delete from BeanController`() {
+
         val accessToken = authHelper.getAccessToken()
         client.delete()
             .uri("${BeanController.BEAN_BASE_URL}/noting")

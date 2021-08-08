@@ -32,6 +32,7 @@ class CoffeeControllerIT @Autowired constructor(
 
     @BeforeEach
     fun `insert dummy date before each test`() {
+
         val coffeeDTO = CoffeeDTO(
             "dummy",
             "http://coffeeInsertTest.com",
@@ -54,6 +55,7 @@ class CoffeeControllerIT @Autowired constructor(
 
     @AfterEach
     fun `delete after each test`(){
+
         productHelper.deleteCoffee("dummy")
         productHelper.deleteBean("dummybean")
     }
@@ -61,6 +63,7 @@ class CoffeeControllerIT @Autowired constructor(
     @Test
     @Order(1)
     fun `insert Conffee using post to CoffeeController`() {
+
         val coffeeInsertRequest = CoffeeInsertRequest(
             "http://coffeeInsertTest.com",
             3000,
@@ -77,6 +80,7 @@ class CoffeeControllerIT @Autowired constructor(
                     "test")
             )
         )
+
         val accessToken = authHelper.getAccessToken()
         client.post()
             .uri("${CoffeeController.COFFEE_BASE_URL}/test")
@@ -98,7 +102,6 @@ class CoffeeControllerIT @Autowired constructor(
     fun `select Coffee using get from CoffeeController`() {
 
         val accessToken = authHelper.getAccessToken()
-
         client.get()
             .uri("${CoffeeController.COFFEE_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
@@ -147,6 +150,7 @@ class CoffeeControllerIT @Autowired constructor(
                     "test")
             )
         )
+
         val accessToken = authHelper.getAccessToken()
         client.put()
             .uri("${CoffeeController.COFFEE_BASE_URL}/dummy")
@@ -161,7 +165,6 @@ class CoffeeControllerIT @Autowired constructor(
                     logger.debug { "result=${result.responseBody}"
                 }
             }
-
 
     }
 
@@ -189,8 +192,6 @@ class CoffeeControllerIT @Autowired constructor(
         productHelper.insertCoffee(coffeeDTO)
 
         val accessToken = authHelper.getAccessToken()
-
-
         client.delete()
             .uri("${CoffeeController.COFFEE_BASE_URL}/test_coffee")
             .header("Authorization", "Bearer $accessToken")
@@ -203,15 +204,14 @@ class CoffeeControllerIT @Autowired constructor(
     @Test
     @Order(6)
     fun `delete Non Exist Coffee using delete from CoffeeController`() {
+
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri("${CoffeeController.COFFEE_BASE_URL}/test")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/nothing")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().isNotFound
     }
-
-
 
     companion object : KLogging()
 }

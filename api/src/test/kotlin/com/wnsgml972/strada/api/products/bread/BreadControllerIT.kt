@@ -34,27 +34,30 @@ class BreadControllerIT @Autowired constructor(
             "http://breadInsertTest.com",
             2000,
             "insert bread",
-            "bread")
-
+            "bread"
+        )
         productHelper.insertBread(breadDTO)
     }
 
     @AfterEach
     fun `delete after each test`(){
+
         productHelper.clearBread()
     }
 
     @Test
     @Order(1)
     fun `insert Bread using post to BreadController`() {
+
         val breadInsertRequest = BreadInsertRequest(
             "http://breadinserttest.com",
             1000,
             "insert test",
             "breads")
+
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri("${BreadController.BREAD_BASE_URL}/test")
+            .uri("${BreadController.BREAD_BASE_URL}/test_bread")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(breadInsertRequest)
@@ -67,8 +70,8 @@ class BreadControllerIT @Autowired constructor(
     @Test
     @Order(2)
     fun `select Bread using get from BreadController`() {
-        val accessToken = authHelper.getAccessToken()
 
+        val accessToken = authHelper.getAccessToken()
         client.get()
             .uri("${BreadController.BREAD_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
@@ -81,6 +84,7 @@ class BreadControllerIT @Autowired constructor(
     @Test
     @Order(3)
     fun `select all Bread using get from BreadController`() {
+
         val accessToken = authHelper.getAccessToken()
         client.get()
             .uri("${BreadController.BREAD_BASE_URL}")
@@ -96,7 +100,13 @@ class BreadControllerIT @Autowired constructor(
     @Test
     @Order(4)
     fun `update Bread using put to BreadController`() {
-        val breadInsertRequest = BreadInsertRequest("http://breadinserttest.com", 10000, "insert test", "breads")
+
+        val breadInsertRequest = BreadInsertRequest(
+            "http://breadinserttest.com",
+            10000,
+            "insert test",
+            "breads")
+
         val accessToken = authHelper.getAccessToken()
         client.post()
             .uri("${BreadController.BREAD_BASE_URL}/dummy")
@@ -115,9 +125,19 @@ class BreadControllerIT @Autowired constructor(
     @Test
     @Order(5)
     fun `delete Bread using delete from BreadController`() {
+
+        val breadDTO = BreadDTO(
+            "delete_bread",
+            "http://breadInsertTest.com",
+            2000,
+            "insert bread",
+            "bread"
+        )
+        productHelper.insertBread(breadDTO)
+
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri("${BreadController.BREAD_BASE_URL}/dummy")
+            .uri("${BreadController.BREAD_BASE_URL}/delete_bread")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
@@ -126,9 +146,10 @@ class BreadControllerIT @Autowired constructor(
     @Test
     @Order(6)
     fun `delete Non Exist Bread using delete from BreadController`() {
+
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri("${BreadController.BREAD_BASE_URL}/test")
+            .uri("${BreadController.BREAD_BASE_URL}/nothing")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().isNotFound()
