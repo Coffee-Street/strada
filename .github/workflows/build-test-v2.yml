@@ -42,9 +42,9 @@ jobs:
         distribution: 'adopt'
         java-version: '11'
 
-    - name: Run docker-test for pr build
+    - name: Run test script for pr build
       run: |
-        bash tools/docker-test.sh
+        bash tools/test/test.sh
 
     # Runs a single command using the runners shell
     - name: Run a one-line script
