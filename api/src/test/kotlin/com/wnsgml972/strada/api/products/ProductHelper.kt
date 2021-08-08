@@ -19,34 +19,6 @@ class ProductHelper @Autowired constructor(
     private val nonCoffeeService: NonCoffeeService
 ){
 
-    fun insertDummyCoffee(){
-        val coffeeDTO = CoffeeDTO(
-            "dummy",
-            "http://coffeeInsertTest.com",
-            2000,
-            "insert coffee",
-            "coffee",
-            listOf(
-                BeanDTO("dummybean",
-                    "test",
-                    "test",
-                    "test",
-                    "test",
-                    "test",
-                    "test",
-                    "test")
-            )
-        )
-        coffeeService.insert(coffeeDTO)
-
-    }
-    fun deleteDummyCoffee() {
-        coffeeService.delete("dummy")
-        beanService.delete("dummybean")
-    }
-
-
-
     fun insertCoffee(coffeeDTO: CoffeeDTO) =
         coffeeService.insert(coffeeDTO)
 

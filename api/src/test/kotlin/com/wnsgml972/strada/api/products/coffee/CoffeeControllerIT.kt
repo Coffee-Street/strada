@@ -32,12 +32,30 @@ class CoffeeControllerIT @Autowired constructor(
 
     @BeforeEach
     fun `insert dummy date before each test`() {
-        productHelper.insertDummyCoffee()
+        val coffeeDTO = CoffeeDTO(
+            "dummy",
+            "http://coffeeInsertTest.com",
+            2000,
+            "insert coffee",
+            "coffee",
+            listOf(
+                BeanDTO("dummybean",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test")
+            )
+        )
+        productHelper.insertCoffee(coffeeDTO)
     }
 
     @AfterEach
     fun `delete after each test`(){
-        productHelper.deleteDummyCoffee()
+        productHelper.deleteCoffee("dummy")
+        productHelper.deleteBean("dummybean")
     }
 
     @Test
@@ -150,8 +168,6 @@ class CoffeeControllerIT @Autowired constructor(
     @Test
     @Order(5)
     fun `delete Coffee using delete from CoffeeController`() {
-
-
 
         val coffeeDTO = CoffeeDTO(
             "test_coffee",
