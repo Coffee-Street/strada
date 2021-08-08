@@ -134,7 +134,7 @@ class BeanControllerIT@Autowired constructor(
     fun `delete Bean using delete from BeanController`() {
 
         val beanDTO = BeanDTO(
-            "test_bean",
+            "delete_bean",
             "test",
             "test",
             "test",
@@ -147,7 +147,7 @@ class BeanControllerIT@Autowired constructor(
 
         val accessToken = authHelper.getAccessToken()
         client.delete()
-            .uri("${BeanController.BEAN_BASE_URL}/test_bean")
+            .uri("${BeanController.BEAN_BASE_URL}/delete_bean")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
