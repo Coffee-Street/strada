@@ -30,15 +30,15 @@ class CoffeeControllerIT @Autowired constructor(
     private val productHelper: ProductHelper
 ) : IntegrationTest() {
 
-//    @BeforeEach
-//    fun `insert dummy date before each test`() {
-//        productHelper.insertDummyCoffee()
-//    }
-//
-//    @AfterEach
-//    fun `delete after each test`(){
-//        productHelper.deleteDummyCoffee()
-//    }
+    @BeforeEach
+    fun `insert dummy date before each test`() {
+        productHelper.insertDummyCoffee()
+    }
+
+    @AfterEach
+    fun `delete after each test`(){
+        productHelper.deleteDummyCoffee()
+    }
 
     @Test
     @Order(1)
@@ -79,8 +79,6 @@ class CoffeeControllerIT @Autowired constructor(
     @Order(2)
     fun `select Coffee using get from CoffeeController`() {
 
-        productHelper.insertDummyCoffee()
-
         val accessToken = authHelper.getAccessToken()
 
         client.get()
@@ -93,14 +91,11 @@ class CoffeeControllerIT @Autowired constructor(
                     result -> logger.debug { "result=${result.responseBody}" }
             }
 
-        productHelper.deleteDummyCoffee()
     }
 
     @Test
     @Order(3)
     fun `select all Coffee using get from CoffeeController`() {
-
-        productHelper.insertDummyCoffee()
 
         val accessToken = authHelper.getAccessToken()
         client.get()
@@ -112,15 +107,11 @@ class CoffeeControllerIT @Autowired constructor(
             .consumeWith { result ->
                 result.responseBody?.forEach { it -> logger.debug { "result=${it}" } }
             }
-
-        productHelper.deleteDummyCoffee()
     }
 
     @Test
     @Order(4)
     fun `update Coffee using put to CoffeeController`() {
-
-        productHelper.insertDummyCoffee()
 
         val coffeeInsertRequest = CoffeeInsertRequest(
             "http://coffeeInsertTest.com",
@@ -153,7 +144,6 @@ class CoffeeControllerIT @Autowired constructor(
                 }
             }
 
-        productHelper.deleteDummyCoffee()
 
     }
 
@@ -162,18 +152,37 @@ class CoffeeControllerIT @Autowired constructor(
     fun `delete Coffee using delete from CoffeeController`() {
 
 
-        productHelper.insertDummyCoffee()
+
+        val coffeeDTO = CoffeeDTO(
+            "test_coffee",
+            "http://coffeeInsertTest.com",
+            2000,
+            "insert coffee",
+            "coffee",
+            listOf(
+                BeanDTO("test_bean",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test",
+                    "test")
+            )
+        )
+        productHelper.insertCoffee(coffeeDTO)
 
         val accessToken = authHelper.getAccessToken()
 
 
         client.delete()
-            .uri("${CoffeeController.COFFEE_BASE_URL}/dummy")
+            .uri("${CoffeeController.COFFEE_BASE_URL}/test_coffee")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
             .expectStatus().is2xxSuccessful
 
-        productHelper.deleteBean("dummybean")
+        productHelper.deleteCoffee("test_coffee")
+        productHelper.deleteBean("test_bean")
     }
 
     @Test
