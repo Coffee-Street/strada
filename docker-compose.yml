@@ -39,14 +39,3 @@ services:
       - "$HOME/mnt/strada/secondary-mysql:/var/lib/strada/secondary-mysql"
     depends_on:
       - primary-mysql
-
-# 전체 배포 시 주석 해제
-#  application:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    ports:
-#      - 8080:8080
-#    depends_on:
-#      - primary-mysql
-#      - secondary-mysql
