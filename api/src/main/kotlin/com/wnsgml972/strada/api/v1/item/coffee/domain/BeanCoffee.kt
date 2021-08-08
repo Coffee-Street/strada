@@ -26,7 +26,7 @@ class BeanCoffee(
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     var bean: Bean?,
 
-    ) : AbstractValueObject() {
+) : AbstractValueObject() {
 
     override fun equalProperties(other: Any): Boolean {
         return other is BeanCoffee &&
