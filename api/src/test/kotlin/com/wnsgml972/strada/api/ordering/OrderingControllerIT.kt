@@ -14,6 +14,7 @@ import com.wnsgml972.strada.api.v1.option.bread.service.HereOrToGo
 import com.wnsgml972.strada.api.v1.option.drink.service.CupType
 import com.wnsgml972.strada.api.v1.option.drink.service.DrinkOptionDTO
 import com.wnsgml972.strada.api.v1.option.drink.service.HotOrIcedType
+import com.wnsgml972.strada.api.v1.option.drink.service.QuantityType
 import com.wnsgml972.strada.api.v1.option.drizzle.service.DrizzleOptionDTO
 import com.wnsgml972.strada.api.v1.option.syrup.service.SyrupOptionDTO
 import com.wnsgml972.strada.api.v1.ordering.controller.OrderingController
@@ -61,11 +62,11 @@ class OrderingControllerIT @Autowired constructor(
                             HotOrIcedType.ICED,
                             CupType.MULTI_USE,
                             591,
-                            3,
-                            0,
-                            1,
-                            0,
-                            0,
+                            QuantityType.DEFAULT,
+                            QuantityType.NONE,
+                            QuantityType.DEFAULT,
+                            QuantityType.NONE,
+                            QuantityType.NONE,
                             "진하게 타주세요",
                             5,
                             listOf<SyrupOptionDTO>(),

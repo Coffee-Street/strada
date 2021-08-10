@@ -12,17 +12,22 @@ class OrderingService(
 ) {
     @Transactional(readOnly = true)
     fun selectAll(): List<OrderingDTO> {
-        return orderingRepository.findAll().map { it.toDto() }
+        return orderingRepository
+            .findAll()
+            .map { it.toDto() }
     }
 
     @Transactional(readOnly = true)
     fun selectById(id: Long): OrderingDTO {
-        return orderingRepository.findByIdOrNull(id)?.toDto() ?: throw NotFoundException("$id is not found")
+        return orderingRepository
+            .findByIdOrNull(id)?.toDto() ?: throw NotFoundException("$id is not found")
     }
 
     @Transactional
     fun insert(orderingDTO: OrderingDTO): OrderingDTO {
-        return orderingRepository.save(orderingDTO.toEntity()).toDto()
+        return orderingRepository
+            .save(orderingDTO.toEntity())
+            .toDto()
     }
 
     @Transactional
