@@ -3,24 +3,33 @@ package com.wnsgml972.strada.api.v1.banner.service
 import com.wnsgml972.strada.api.v1.banner.domain.Banner
 
 fun Banner.toDto() = BannerDTO(
-    this.evalOrder,
-    this.topLatters,
+    this.code,
+    this.title,
     this.imageUrl,
-    this.bottomLatters
+    this.message,
 )
 
-fun BannerDTO.toEntity() = Banner(
+fun Banner.toBannerInsertResponse() = BannerInsertResponse(
+    this.evalOrder,
+    this.code,
+    this.title,
+    this.imageUrl,
+    this.message,
+)
+fun BannerInsertRequest.toEntity() = Banner(
     0,
+    this.code,
     this.evalOrder,
-    this.topLatters,
+    this.title,
     this.imageUrl,
-    this.bottomLatters
+    this.message,
 )
 
-fun BannerDTO.toEntity(id: Long) = Banner(
+fun BannerInsertRequest.toEntity(id: Long) = Banner(
     id,
+    this.code,
     this.evalOrder,
-    this.topLatters,
+    this.title,
     this.imageUrl,
-    this.bottomLatters
+    this.message,
 )

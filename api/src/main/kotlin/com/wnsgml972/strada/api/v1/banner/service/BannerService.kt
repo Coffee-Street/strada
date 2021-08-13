@@ -1,6 +1,5 @@
 package com.wnsgml972.strada.api.v1.banner.service
 
-import com.wnsgml972.strada.api.v1.banner.domain.Banner
 import com.wnsgml972.strada.api.v1.banner.domain.BannerRepository
 import javassist.NotFoundException
 import mu.KLogging
@@ -15,37 +14,41 @@ class BannerService(
     fun selectAll(): List<BannerDTO> =
         bannerRepository
             .findAll()
-            .map { it.toDto() }
             .sortedBy { it.evalOrder }
+            .map { it.toDto() }
 
     @Transactional(readOnly = true)
-    fun select(evalOrder: Int): BannerDTO =
+    fun select(code: String): BannerDTO =
         bannerRepository
-            .findByEvalOrder(evalOrder)
-            .orElseThrow { NotFoundException("$evalOrder Not Found") }
+            .findByCode(code)
+            .orElseThrow { NotFoundException("$code Not Found") }
             .toDto()
 
     @Transactional
-    fun insert(bannerDTO: BannerDTO): Banner =
+    fun insert(bannerInsertRequest: BannerInsertRequest): BannerInsertResponse =
         bannerRepository
-            .save(bannerDTO.toEntity())
+            .save(bannerInsertRequest.toEntity())
+            .toBannerInsertResponse()
 
     @Transactional
-    fun update(bannerDTO: BannerDTO) =
+    fun update(bannerInsertRequest: BannerInsertRequest) =
         bannerRepository
-            .findByEvalOrder(bannerDTO.evalOrder)
-            .orElseThrow { NotFoundException("${bannerDTO.evalOrder} Not Found") }
+            .findByCode(bannerInsertRequest.code)
+            .orElseThrow { NotFoundException("${bannerInsertRequest.code} Not Found") }
             .id?.let {
                 bannerRepository
-                    .save(bannerDTO.toEntity(it))
+                    .save(bannerInsertRequest.toEntity(it))
+                    .toDto()
             }
 
     @Transactional
-    fun delete(evalOrder: Int) =
+    fun delete(code: String) =
         bannerRepository
-            .findByEvalOrder(evalOrder)
-            .orElseThrow { NotFoundException("$evalOrder Not Found") }
-            .run { bannerRepository.delete(this) }
+            .findByCode(code)
+            .orElseThrow { NotFoundException("$code Not Found") }
+            .run {
+                bannerRepository.delete(this)
+            }
 
     companion object : KLogging()
 }

@@ -1,10 +1,9 @@
 package com.wnsgml972.strada.api.v1.banner.controller
 
 import BASE_URL_V1
-import com.wnsgml972.strada.api.v1.banner.service.BannerDTO
 import com.wnsgml972.strada.api.v1.banner.service.BannerInsertRequest
+import com.wnsgml972.strada.api.v1.banner.service.BannerInsertResponse
 import com.wnsgml972.strada.api.v1.banner.service.BannerService
-import com.wnsgml972.strada.api.v1.banner.service.toDto
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -38,33 +37,31 @@ class BannerController @Autowired constructor(
     fun selectAll() =
         bannerService.selectAll()
 
-    @GetMapping("/{id}")
+    @GetMapping("/{code}")
     @ApiResponse(responseCode = "200", description = "Find one banner by eval order")
-    fun select(@PathVariable("id") evalOrder: Int) =
-        bannerService.select(evalOrder)
+    fun select(@PathVariable("code") code: String) =
+        bannerService.select(code)
 
     @PostMapping
     @ApiResponse(responseCode = "200", description = "Add one banner")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun insert(@RequestBody @Valid bannerInsertRequest: BannerInsertRequest): BannerDTO =
+    fun insert(@RequestBody @Valid bannerInsertRequest: BannerInsertRequest): BannerInsertResponse =
         bannerService
-            .insert(BannerDTO(bannerInsertRequest))
-            .toDto()
+            .insert(bannerInsertRequest)
 
     @PutMapping
     @ApiResponse(responseCode = "200", description = "Update one banner")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun update(@RequestBody @Valid bannerInsertRequest: BannerInsertRequest) =
         bannerService
-            .update(BannerDTO(bannerInsertRequest))
-            ?.toDto()
+            .update(bannerInsertRequest)
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{code}")
     @ApiResponse(responseCode = "200", description = "delete one banner")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun delete(@PathVariable evalOrder: Int) =
+    fun delete(@PathVariable code: String) =
         bannerService
-            .delete(evalOrder)
+            .delete(code)
 
     companion object : KLogging() {
         private const val BANNER_SERVICE_NAME = "/banners"

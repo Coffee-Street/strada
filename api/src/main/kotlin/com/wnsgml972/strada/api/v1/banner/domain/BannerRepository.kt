@@ -7,5 +7,5 @@ import java.util.Optional
 @Repository
 interface BannerRepository : JpaRepository<Banner, String> {
 
-    fun findByEvalOrder(evalOrder: Int): Optional<Banner>
+    fun findByCode(code: String): Optional<Banner>
 }

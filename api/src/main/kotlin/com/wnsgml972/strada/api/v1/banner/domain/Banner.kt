@@ -6,6 +6,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
+@SuppressWarnings("LongParameterList")
 class Banner(
 
     @Id
@@ -13,37 +14,35 @@ class Banner(
     override var id: Long?,
 
     @Column(unique = true)
+    val code: String,
+
     val evalOrder: Int,
 
-    val topLatters: String,
+    val title: String,
 
     val imageUrl: String,
 
-    val bottomLatters: String,
-
-//    @Enumerated(EnumType.STRING)
-//    val backgroundColor: BackgroundColor,
-//
-//    @Enumerated(EnumType.STRING)
-//    val latterFont: LatterFont,
+    val message: String,
 
 ) : LongJpaEntity() {
     override fun equalProperties(other: Any): Boolean {
         return other is Banner &&
                 id == other.id &&
+                code == other.code &&
                 evalOrder == other.evalOrder &&
-                topLatters == other.topLatters &&
+                title == other.title &&
                 imageUrl == other.imageUrl &&
-                bottomLatters == other.bottomLatters
+                message == other.message
     }
 
     companion object {
         fun of(
             id: Long,
+            code: String,
             evalOrder: Int,
-            topLatters: String,
+            title: String,
             imageUrl: String,
-            bottomLatters: String,
-        ) = Banner(id, evalOrder, topLatters, imageUrl, bottomLatters)
+            message: String,
+        ) = Banner(id, code, evalOrder, title, imageUrl, message)
     }
 }
