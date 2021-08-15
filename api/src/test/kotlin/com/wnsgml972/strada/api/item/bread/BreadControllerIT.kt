@@ -119,7 +119,7 @@ class BreadControllerIT @Autowired constructor(
             .uri(BreadController.BREAD_BASE_URL + "/test")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
-            .expectStatus().isNotFound()
+            .expectStatus().isNotFound
     }
 
     companion object : KLogging()
