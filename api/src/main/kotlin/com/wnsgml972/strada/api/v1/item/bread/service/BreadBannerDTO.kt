@@ -7,11 +7,8 @@ package com.wnsgml972.strada.api.v1.item.bread.service
  * Tag domain을 위해 차후 tags 리스트를 추가한다
  *
  */
-
 data class BreadBannerDTO(
-
     val id: String,
-    val url: String,
+    val imageUrl: String,
     val description: String,
-
 )
