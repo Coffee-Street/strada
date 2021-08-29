@@ -6,14 +6,7 @@ import com.wnsgml972.strada.api.v1.banner.controller.BannerController
 import com.wnsgml972.strada.api.v1.banner.service.BannerDTO
 import com.wnsgml972.strada.api.v1.banner.service.BannerInsertRequest
 import com.wnsgml972.strada.api.v1.banner.service.BannerInsertResponse
-import com.wnsgml972.strada.api.v1.health.HealthCheckController
-import com.wnsgml972.strada.api.v1.item.bread.controller.admin.BreadController
-import com.wnsgml972.strada.api.v1.item.coffee.controller.admin.CoffeeController
-import com.wnsgml972.strada.api.v1.item.coffee.service.BeanDTO
-import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeDTO
-import com.wnsgml972.strada.api.v1.item.coffee.service.CoffeeInsertRequest
 import mu.KLogging
-import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.MethodOrderer
@@ -52,6 +45,7 @@ class BannerControllerIT@Autowired constructor(
     @Test
     @Order(1)
     fun `insert banner using post to BannerController`() {
+
         val bannerInsertRequest = BannerInsertRequest(
             1,
             "test insert",
@@ -75,8 +69,8 @@ class BannerControllerIT@Autowired constructor(
     @Test
     @Order(2)
     fun `select Banner using get from BannerController`() {
-        val accessToken = authHelper.getAccessToken()
 
+        val accessToken = authHelper.getAccessToken()
         client.get()
             .uri("${BannerController.BANNER_BASE_URL}/dummy")
             .header("Authorization", "Bearer $accessToken")
@@ -92,6 +86,7 @@ class BannerControllerIT@Autowired constructor(
     @Test
     @Order(3)
     fun `select all Banner using get from BannerController`() {
+
         val accessToken = authHelper.getAccessToken()
         client.get()
             .uri("${BannerController.BANNER_BASE_URL}")
@@ -108,6 +103,7 @@ class BannerControllerIT@Autowired constructor(
     @Test
     @Order(4)
     fun `update Banner using put to BannerController`() {
+
         val bannerInsertRequest = BannerInsertRequest(
             1,
             "test update",
@@ -141,8 +137,8 @@ class BannerControllerIT@Autowired constructor(
             "http://dummy",
             "this is dummy",
         )
-        bannerHelper.insertBanner("test", bannerInsertRequest)
 
+        bannerHelper.insertBanner("test", bannerInsertRequest)
         val accessToken = authHelper.getAccessToken()
         client.delete()
             .uri("${BannerController.BANNER_BASE_URL}/test")
@@ -155,6 +151,7 @@ class BannerControllerIT@Autowired constructor(
     @Test
     @Order(6)
     fun `delete Non Exist Banner using delete from BannerController`() {
+
         val accessToken = authHelper.getAccessToken()
         client.delete()
             .uri("${BannerController.BANNER_BASE_URL}/test")

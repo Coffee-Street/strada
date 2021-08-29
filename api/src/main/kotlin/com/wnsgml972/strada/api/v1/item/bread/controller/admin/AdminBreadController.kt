@@ -1,9 +1,8 @@
 package com.wnsgml972.strada.api.v1.item.bread.controller.admin
 
-import BASE_URL_V1
-import com.wnsgml972.strada.api.v1.item.bread.service.BreadDTO
+import com.wnsgml972.strada.api.v1.item.bread.controller.BreadController.Companion.BREAD_BASE_URL
+import com.wnsgml972.strada.api.v1.item.bread.service.AdminBreadService
 import com.wnsgml972.strada.api.v1.item.bread.service.BreadInsertRequest
-import com.wnsgml972.strada.api.v1.item.bread.service.BreadService
 import com.wnsgml972.strada.api.v1.item.bread.service.toDto
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
@@ -23,44 +22,63 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import javax.validation.Valid
 
 @RestController
-@RequestMapping(path = [BreadController.BREAD_BASE_URL])
+@RequestMapping(path = [AdminBreadController.ADMIN_BREAD_BASE_URL])
 @Tag(
     name = "breads",
     description = """아이템을 위한 API, bread 컨트롤"""
 )
-class BreadController @Autowired constructor(
-    private var breadService: BreadService
+class AdminBreadController @Autowired constructor(
+    private val adminBreadService: AdminBreadService
 ) {
 
     @GetMapping
     @ApiResponse(responseCode = "200", description = "List all Bread")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun selectAll() = breadService.selectAll()
+    fun selectAll() =
+        adminBreadService
+            .selectAll()
 
     @GetMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Find Bread")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun select(@PathVariable("id") id: String) = breadService.selectById(id)
+    fun select(
+        @PathVariable("id") id: String
+    ) =
+        adminBreadService
+            .selectById(id)
 
     @PostMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Add Bread")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun insert(@PathVariable id: String, @RequestBody @Valid breadInsertRequest: BreadInsertRequest): BreadDTO =
-        breadService.insert(BreadDTO(id, breadInsertRequest)).toDto()
+    fun insert(
+        @PathVariable id: String,
+        @RequestBody @Valid breadInsertRequest: BreadInsertRequest
+    ) =
+        adminBreadService
+            .insert(breadInsertRequest.toDto(id))
+            .toDto()
 
     @PutMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Update Bread")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun update(@PathVariable id: String, @RequestBody @Valid breadInsertRequest: BreadInsertRequest): BreadDTO =
-        breadService.update(BreadDTO(id, breadInsertRequest)).toDto()
+    fun update(
+        @PathVariable id: String,
+        @RequestBody @Valid breadInsertRequest: BreadInsertRequest
+    ) =
+        adminBreadService
+            .update(breadInsertRequest.toDto(id))
+            .toDto()
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Delete Bread")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun delete(@PathVariable id: String) = breadService.delete(id)
+    fun delete(
+        @PathVariable id: String
+    ) =
+        adminBreadService
+            .delete(id)
 
     companion object : KLogging() {
-        private const val ACCOUNT_SERVICE_NAME = "breads/admin"
-        const val BREAD_BASE_URL = "$BASE_URL_V1/$ACCOUNT_SERVICE_NAME"
+        const val ADMIN_BREAD_BASE_URL = "$BREAD_BASE_URL/admin"
     }
 }

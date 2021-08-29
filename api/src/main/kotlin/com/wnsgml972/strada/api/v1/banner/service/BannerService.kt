@@ -1,8 +1,7 @@
 package com.wnsgml972.strada.api.v1.banner.service
 
 import com.wnsgml972.strada.api.v1.banner.domain.BannerRepository
-import com.wnsgml972.strada.exception.NotFoundException
-
+import com.wnsgml972.strada.exception.StradaNotFoundException
 import mu.KLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -22,7 +21,7 @@ class BannerService(
     fun select(code: String): BannerDTO =
         bannerRepository
             .findByCode(code)
-            .orElseThrow { NotFoundException("$code Not Found") }
+            .orElseThrow { StradaNotFoundException("$code Not Found") }
             .toDto()
 
     @Transactional
@@ -35,7 +34,7 @@ class BannerService(
     fun update(code: String, bannerInsertRequest: BannerInsertRequest) =
         bannerRepository
             .findByCode(code)
-            .orElseThrow { NotFoundException("$code Not Found") }
+            .orElseThrow { StradaNotFoundException("$code Not Found") }
             .id?.let {
                 bannerRepository
                     .save(bannerInsertRequest.toEntity(it, code))
@@ -46,7 +45,7 @@ class BannerService(
     fun delete(code: String) =
         bannerRepository
             .findByCode(code)
-            .orElseThrow { NotFoundException("$code Not Found") }
+            .orElseThrow { StradaNotFoundException("$code Not Found") }
             .run {
                 bannerRepository.delete(this)
             }
