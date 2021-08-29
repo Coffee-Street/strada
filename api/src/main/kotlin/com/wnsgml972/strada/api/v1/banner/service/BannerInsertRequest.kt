@@ -6,9 +6,6 @@ import javax.validation.constraints.Size
 
 data class BannerInsertRequest(
 
-    @field:Size(max = 25, message = "최대 25글자까지 입력가능합니다.")
-    val code: String,
-
     @field:Positive
     val evalOrder: Int,
 

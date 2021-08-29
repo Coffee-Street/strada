@@ -1,7 +1,8 @@
 package com.wnsgml972.strada.api.v1.banner.service
 
 import com.wnsgml972.strada.api.v1.banner.domain.BannerRepository
-import javassist.NotFoundException
+import com.wnsgml972.strada.exception.NotFoundException
+
 import mu.KLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -25,19 +26,19 @@ class BannerService(
             .toDto()
 
     @Transactional
-    fun insert(bannerInsertRequest: BannerInsertRequest): BannerInsertResponse =
+    fun insert(code: String, bannerInsertRequest: BannerInsertRequest): BannerInsertResponse =
         bannerRepository
-            .save(bannerInsertRequest.toEntity())
+            .save(bannerInsertRequest.toEntity(code))
             .toBannerInsertResponse()
 
     @Transactional
-    fun update(bannerInsertRequest: BannerInsertRequest) =
+    fun update(code: String, bannerInsertRequest: BannerInsertRequest) =
         bannerRepository
-            .findByCode(bannerInsertRequest.code)
-            .orElseThrow { NotFoundException("${bannerInsertRequest.code} Not Found") }
+            .findByCode(code)
+            .orElseThrow { NotFoundException("$code Not Found") }
             .id?.let {
                 bannerRepository
-                    .save(bannerInsertRequest.toEntity(it))
+                    .save(bannerInsertRequest.toEntity(it, code))
                     .toDto()
             }
 

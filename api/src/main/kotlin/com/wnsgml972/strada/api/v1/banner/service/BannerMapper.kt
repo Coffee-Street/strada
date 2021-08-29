@@ -16,18 +16,18 @@ fun Banner.toBannerInsertResponse() = BannerInsertResponse(
     this.imageUrl,
     this.message,
 )
-fun BannerInsertRequest.toEntity() = Banner(
+fun BannerInsertRequest.toEntity(code: String) = Banner(
     0,
-    this.code,
+    code,
     this.evalOrder,
     this.title,
     this.imageUrl,
     this.message,
 )
 
-fun BannerInsertRequest.toEntity(id: Long) = Banner(
+fun BannerInsertRequest.toEntity(id: Long, code: String) = Banner(
     id,
-    this.code,
+    code,
     this.evalOrder,
     this.title,
     this.imageUrl,

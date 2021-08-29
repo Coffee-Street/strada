@@ -2,7 +2,6 @@ package com.wnsgml972.strada.api.v1.banner.controller
 
 import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.banner.service.BannerInsertRequest
-import com.wnsgml972.strada.api.v1.banner.service.BannerInsertResponse
 import com.wnsgml972.strada.api.v1.banner.service.BannerService
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
@@ -42,19 +41,19 @@ class BannerController @Autowired constructor(
     fun select(@PathVariable("code") code: String) =
         bannerService.select(code)
 
-    @PostMapping
+    @PostMapping("/{code}")
     @ApiResponse(responseCode = "200", description = "Add one banner")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun insert(@RequestBody @Valid bannerInsertRequest: BannerInsertRequest): BannerInsertResponse =
+    fun insert(@PathVariable("code") code: String, @RequestBody @Valid bannerInsertRequest: BannerInsertRequest) =
         bannerService
-            .insert(bannerInsertRequest)
+            .insert(code, bannerInsertRequest)
 
-    @PutMapping
+    @PutMapping("/{code}")
     @ApiResponse(responseCode = "200", description = "Update one banner")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun update(@RequestBody @Valid bannerInsertRequest: BannerInsertRequest) =
+    fun update(@PathVariable("code") code: String, @RequestBody @Valid bannerInsertRequest: BannerInsertRequest) =
         bannerService
-            .update(bannerInsertRequest)
+            .update(code, bannerInsertRequest)
 
     @DeleteMapping("/{code}")
     @ApiResponse(responseCode = "200", description = "delete one banner")
