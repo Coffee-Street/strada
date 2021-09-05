@@ -38,6 +38,7 @@ class BannerController @Autowired constructor(
 
     @GetMapping("/{code}")
     @ApiResponse(responseCode = "200", description = "Find one banner by eval order")
+    @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun select(@PathVariable("code") code: String) =
         bannerService.select(code)
 
