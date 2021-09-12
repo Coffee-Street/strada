@@ -4,7 +4,6 @@ import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.product.noncoffee.service.NonCoffeeDTO
 import com.wnsgml972.strada.api.v1.product.noncoffee.service.NonCoffeeInsertRequest
 import com.wnsgml972.strada.api.v1.product.noncoffee.service.NonCoffeeService
-import com.wnsgml972.strada.api.v1.product.noncoffee.service.toDto
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -35,12 +34,14 @@ class NonCoffeeController @Autowired constructor(
     @GetMapping
     @ApiResponse(responseCode = "200", description = "List all NonCoffees")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun selectAll() = nonCoffeeService.selectAll()
+    fun selectAll() =
+        nonCoffeeService.selectAll()
 
     @GetMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Find NonCoffees from id")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun select(@PathVariable("id") id: String) = nonCoffeeService.selectById(id)
+    fun select(@PathVariable("id") id: String): NonCoffeeDTO =
+        nonCoffeeService.selectById(id)
 
     @PostMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Add NonCoffees")
@@ -49,7 +50,7 @@ class NonCoffeeController @Autowired constructor(
         @PathVariable id: String,
         @RequestBody @Valid nonCoffeeInsertRequest: NonCoffeeInsertRequest
     ): NonCoffeeDTO =
-        nonCoffeeService.insert(NonCoffeeDTO(id, nonCoffeeInsertRequest)).toDto()
+        nonCoffeeService.insert(NonCoffeeDTO(id, nonCoffeeInsertRequest))
 
     @PutMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Update coffee")
@@ -58,12 +59,13 @@ class NonCoffeeController @Autowired constructor(
         @PathVariable id: String,
         @RequestBody @Valid nonCoffeeInsertRequest: NonCoffeeInsertRequest
     ): NonCoffeeDTO =
-        nonCoffeeService.update(NonCoffeeDTO(id, nonCoffeeInsertRequest)).toDto()
+        nonCoffeeService.update(NonCoffeeDTO(id, nonCoffeeInsertRequest))
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "delete coffee")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun delete(@PathVariable id: String) = nonCoffeeService.delete(id)
+    fun delete(@PathVariable id: String) =
+        nonCoffeeService.delete(id)
 
     companion object : KLogging() {
         private const val NONCOFFEE_SERVICE_NAME = "noncoffees/admin"

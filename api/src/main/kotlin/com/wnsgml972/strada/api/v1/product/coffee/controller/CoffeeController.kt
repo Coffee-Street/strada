@@ -4,7 +4,6 @@ import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeDTO
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeInsertRequest
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeService
-import com.wnsgml972.strada.api.v1.product.coffee.service.toDto
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -35,29 +34,32 @@ class CoffeeController @Autowired constructor(
     @GetMapping
     @ApiResponse(responseCode = "200", description = "List all coffees")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun selectAll() = coffeeService.selectAll()
+    fun selectAll() =
+        coffeeService.selectAll()
 
     @GetMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Find coffee from id")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun select(@PathVariable("id") name: String) = coffeeService.select(name)
+    fun select(@PathVariable("id") name: String): CoffeeDTO =
+        coffeeService.select(name)
 
     @PostMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Add coffee")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun insert(@PathVariable id: String, @RequestBody @Valid coffeeInsertRequest: CoffeeInsertRequest): CoffeeDTO =
-        coffeeService.insert(CoffeeDTO(id, coffeeInsertRequest)).toDto()
+        coffeeService.insert(CoffeeDTO(id, coffeeInsertRequest))
 
     @PutMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Update coffee")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun update(@PathVariable id: String, @RequestBody @Valid coffeeInsertRequest: CoffeeInsertRequest) =
-        coffeeService.update(CoffeeDTO(id, coffeeInsertRequest))?.toDto()
+    fun update(@PathVariable id: String, @RequestBody @Valid coffeeInsertRequest: CoffeeInsertRequest): CoffeeDTO =
+        coffeeService.update(CoffeeDTO(id, coffeeInsertRequest))
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "delete coffee")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun delete(@PathVariable id: String) = coffeeService.delete(id)
+    fun delete(@PathVariable id: String) =
+        coffeeService.delete(id)
 
     companion object : KLogging() {
         private const val COFFEE_SERVICE_NAME = "coffees/admin"

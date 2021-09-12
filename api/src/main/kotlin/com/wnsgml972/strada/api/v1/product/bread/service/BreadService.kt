@@ -35,14 +35,20 @@ class BreadService(
     @Transactional
     fun update(breadDTO: BreadDTO) =
         breadRepository
-            .save(breadDTO.toEntity())
+            .findById(breadDTO.id)
+            .orElseThrow { StradaNotFoundException("${breadDTO.id} is not found") }
+            .let {
+                breadRepository.save(breadDTO.toEntity())
+            }
 
     @Transactional
     fun delete(id: String) =
         breadRepository
             .findById(id)
             .orElseThrow { StradaNotFoundException("$id is not found") }
-            .run { breadRepository.delete(this) }
+            .let {
+                breadRepository.delete(it)
+            }
 
     companion object : KLogging()
 }

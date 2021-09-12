@@ -2,6 +2,7 @@ package com.wnsgml972.strada.api.v1.product.bread.controller
 
 import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.item.bread.service.BreadService
+import com.wnsgml972.strada.api.v1.product.bread.service.BreadDTO
 import com.wnsgml972.strada.api.v1.product.bread.service.BreadInsertRequest
 import com.wnsgml972.strada.api.v1.product.bread.service.toDto
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
@@ -35,17 +36,13 @@ class BreadController @Autowired constructor(
     @ApiResponse(responseCode = "200", description = "List all Bread")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun selectAll() =
-        breadService
-            .selectAll()
+        breadService.selectAll()
 
     @GetMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Find Bread")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun select(
-        @PathVariable("id") id: String
-    ) =
-        breadService
-            .selectById(id)
+    fun select(@PathVariable("id") id: String): BreadDTO =
+        breadService.selectById(id)
 
     @PostMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Add Bread")
@@ -53,7 +50,7 @@ class BreadController @Autowired constructor(
     fun insert(
         @PathVariable id: String,
         @RequestBody @Valid breadInsertRequest: BreadInsertRequest
-    ) =
+    ): BreadDTO =
         breadService
             .insert(breadInsertRequest.toDto(id))
             .toDto()
@@ -64,7 +61,7 @@ class BreadController @Autowired constructor(
     fun update(
         @PathVariable id: String,
         @RequestBody @Valid breadInsertRequest: BreadInsertRequest
-    ) =
+    ): BreadDTO =
         breadService
             .update(breadInsertRequest.toDto(id))
             .toDto()
@@ -72,9 +69,7 @@ class BreadController @Autowired constructor(
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Delete Bread")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun delete(
-        @PathVariable id: String
-    ) =
+    fun delete(@PathVariable id: String) =
         breadService
             .delete(id)
 
