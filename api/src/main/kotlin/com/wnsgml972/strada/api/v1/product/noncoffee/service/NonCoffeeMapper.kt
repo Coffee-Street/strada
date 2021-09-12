@@ -27,4 +27,3 @@ fun NonCoffeeInsertRequest.toNonCoffeeDto(id: String) =
         this.description,
         this.category
     )
-
