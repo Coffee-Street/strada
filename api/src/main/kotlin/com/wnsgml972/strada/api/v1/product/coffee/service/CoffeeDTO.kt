@@ -9,13 +9,4 @@ data class CoffeeDTO(
     val description: String,
     val category: String,
     val beans: List<BeanDTO>
-) {
-    constructor(name: String, coffeeInsertRequest: CoffeeInsertRequest) : this(
-        name,
-        coffeeInsertRequest.imageUrl,
-        coffeeInsertRequest.price,
-        coffeeInsertRequest.description,
-        coffeeInsertRequest.category,
-        coffeeInsertRequest.beans
-    )
-}
+)

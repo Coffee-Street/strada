@@ -4,6 +4,7 @@ import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.product.bean.service.BeanDTO
 import com.wnsgml972.strada.api.v1.product.bean.service.BeanInsertRequest
 import com.wnsgml972.strada.api.v1.product.bean.service.BeanService
+import com.wnsgml972.strada.api.v1.product.bean.service.toBeanDto
 import com.wnsgml972.strada.api.v1.product.bean.service.toDto
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
@@ -40,24 +41,30 @@ class BeanController@Autowired constructor(
     @GetMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Find coffee from id")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun select(@PathVariable("id") id: String) = beanService.selectById(id)
+    fun select(@PathVariable("id") id: String) =
+        beanService.selectById(id)
 
     @PostMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Add coffee")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun insert(@PathVariable id: String, @RequestBody @Valid beanInsertRequest: BeanInsertRequest): BeanDTO =
-        beanService.insert(BeanDTO(id, beanInsertRequest)).toDto()
+        beanService
+            .insert(beanInsertRequest.toBeanDto(id))
+            .toDto()
 
     @PutMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Update coffee")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun update(@PathVariable id: String, @RequestBody @Valid beanInsertRequest: BeanInsertRequest): BeanDTO =
-        beanService.update(BeanDTO(id, beanInsertRequest)).toDto()
+        beanService
+            .update(beanInsertRequest.toBeanDto(id))
+            .toDto()
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "delete bean")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    fun delete(@PathVariable id: String) = beanService.delete(id)
+    fun delete(@PathVariable id: String) =
+        beanService.delete(id)
 
     companion object : KLogging() {
         private const val BEAN_SERVICE_NAME = "beans/admin"

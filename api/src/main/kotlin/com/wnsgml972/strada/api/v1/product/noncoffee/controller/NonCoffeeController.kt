@@ -4,6 +4,7 @@ import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.product.noncoffee.service.NonCoffeeDTO
 import com.wnsgml972.strada.api.v1.product.noncoffee.service.NonCoffeeInsertRequest
 import com.wnsgml972.strada.api.v1.product.noncoffee.service.NonCoffeeService
+import com.wnsgml972.strada.api.v1.product.noncoffee.service.toNonCoffeeDto
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -50,7 +51,7 @@ class NonCoffeeController @Autowired constructor(
         @PathVariable id: String,
         @RequestBody @Valid nonCoffeeInsertRequest: NonCoffeeInsertRequest
     ): NonCoffeeDTO =
-        nonCoffeeService.insert(NonCoffeeDTO(id, nonCoffeeInsertRequest))
+        nonCoffeeService.insert(nonCoffeeInsertRequest.toNonCoffeeDto(id))
 
     @PutMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Update coffee")
@@ -59,7 +60,7 @@ class NonCoffeeController @Autowired constructor(
         @PathVariable id: String,
         @RequestBody @Valid nonCoffeeInsertRequest: NonCoffeeInsertRequest
     ): NonCoffeeDTO =
-        nonCoffeeService.update(NonCoffeeDTO(id, nonCoffeeInsertRequest))
+        nonCoffeeService.update(nonCoffeeInsertRequest.toNonCoffeeDto(id))
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "delete coffee")

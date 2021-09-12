@@ -11,12 +11,6 @@ fun Bread.toDto() = BreadDTO(
     this.category,
 )
 
-fun Bread.toBannerDto() = BreadBannerDTO(
-    this.id ?: throw StradaBadRequestException("$id is not null"),
-    this.imageUrl,
-    this.description
-)
-
 fun BreadDTO.toEntity() = Bread(
     this.id,
     this.imageUrl,

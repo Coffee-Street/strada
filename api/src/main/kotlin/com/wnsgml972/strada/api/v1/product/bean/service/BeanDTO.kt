@@ -9,15 +9,4 @@ data class BeanDTO(
     val roasting: String,
     val kind: String,
     val grade: String,
-) {
-    constructor(id: String, beanInsertRequest: BeanInsertRequest) : this(
-        id,
-        beanInsertRequest.origin,
-        beanInsertRequest.farm,
-        beanInsertRequest.description,
-        beanInsertRequest.processing,
-        beanInsertRequest.roasting,
-        beanInsertRequest.kind,
-        beanInsertRequest.grade
-    )
-}
+)

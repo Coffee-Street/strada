@@ -6,12 +6,4 @@ data class NonCoffeeDTO(
     val price: Int,
     val description: String,
     val category: String,
-) {
-    constructor(id: String, nonCoffeeInsertRequest: NonCoffeeInsertRequest) : this(
-        id,
-        nonCoffeeInsertRequest.url,
-        nonCoffeeInsertRequest.price,
-        nonCoffeeInsertRequest.description,
-        nonCoffeeInsertRequest.category
-    )
-}
+)

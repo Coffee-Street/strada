@@ -1,7 +1,6 @@
 package com.wnsgml972.strada.api.v1.product.coffee.service
 
 import com.wnsgml972.strada.api.v1.product.coffee.domain.CoffeeRepository
-import com.wnsgml972.strada.exception.StradaIllegalStateException
 import com.wnsgml972.strada.exception.StradaNotFoundException
 import mu.KLogging
 import org.springframework.stereotype.Service
@@ -37,7 +36,7 @@ class CoffeeService(
             .findByName(coffeeDTO.name)
             .orElseThrow { StradaNotFoundException("${coffeeDTO.name} Not Found") }
             .let {
-                it.id ?: throw StradaIllegalStateException("${it.id} is not initialized")
+                it.id ?: throw StradaNotFoundException("${it.id} is not initialized")
                 coffeeRepository
                         .save(coffeeDTO.toEntity(it.id!!))
             }

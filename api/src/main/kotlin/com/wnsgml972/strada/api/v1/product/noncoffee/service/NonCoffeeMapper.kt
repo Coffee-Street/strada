@@ -10,11 +10,7 @@ fun NonCoffee.toDto() = NonCoffeeDTO(
     this.description,
     this.category,
 )
-fun NonCoffee.toBannerDto() = NonCoffeeBannerDTO(
-    this.id ?: throw StradaBadRequestException("$id is not null"),
-    this.imageUrl,
-    this.description
-)
+
 fun NonCoffeeDTO.toEntity() = NonCoffee(
     this.id,
     this.url,
@@ -22,3 +18,13 @@ fun NonCoffeeDTO.toEntity() = NonCoffee(
     this.description,
     this.category,
 )
+
+fun NonCoffeeInsertRequest.toNonCoffeeDto(id: String) =
+    NonCoffeeDTO(
+        id,
+        this.url,
+        this.price,
+        this.description,
+        this.category
+    )
+
