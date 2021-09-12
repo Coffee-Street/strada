@@ -3,13 +3,9 @@ package com.wnsgml972.strada.api.products.bean
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
 import com.wnsgml972.strada.api.products.ProductHelper
-import com.wnsgml972.strada.api.products.coffee.CoffeeControllerIT
-import com.wnsgml972.strada.api.v1.product.bean.controller.admin.BeanController
+import com.wnsgml972.strada.api.v1.product.bean.controller.BeanController
 import com.wnsgml972.strada.api.v1.product.bean.service.BeanDTO
 import com.wnsgml972.strada.api.v1.product.bean.service.BeanInsertRequest
-import com.wnsgml972.strada.api.v1.product.coffee.controller.admin.CoffeeController
-import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeDTO
-import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeInsertRequest
 import mu.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.*

@@ -6,9 +6,8 @@ import javax.validation.constraints.Positive
 import javax.validation.constraints.Size
 
 data class BreadInsertRequest(
-
     @field:URL(message = "URL형식입니다.")
-    val url: String,
+    val imageUrl: String,
 
     @field:Positive(message = "금액을 입력해 주세요.")
     @NotNull

@@ -3,7 +3,7 @@ package com.wnsgml972.strada.api.products.bread
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
 import com.wnsgml972.strada.api.products.ProductHelper
-import com.wnsgml972.strada.api.v1.product.bread.controller.admin.BreadController
+import com.wnsgml972.strada.api.v1.product.bread.controller.BreadController
 import com.wnsgml972.strada.api.v1.product.bread.service.BreadDTO
 import com.wnsgml972.strada.api.v1.product.bread.service.BreadInsertRequest
 import mu.KLogging
@@ -28,7 +28,6 @@ class BreadControllerIT @Autowired constructor(
 
     @BeforeEach
     fun `insert dummy date before each test`() {
-
         val breadDTO = BreadDTO(
             "dummy",
             "http://breadInsertTest.com",
@@ -140,7 +139,8 @@ class BreadControllerIT @Autowired constructor(
             .uri("${BreadController.BREAD_BASE_URL}/delete_bread")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
-            .expectStatus().is2xxSuccessful
+            .expectStatus()
+            .is2xxSuccessful
     }
 
     @Test
@@ -152,7 +152,8 @@ class BreadControllerIT @Autowired constructor(
             .uri("${BreadController.BREAD_BASE_URL}/nothing")
             .header("Authorization", "Bearer $accessToken")
             .exchange()
-            .expectStatus().isNotFound()
+            .expectStatus()
+            .isNotFound
     }
 
     companion object : KLogging()

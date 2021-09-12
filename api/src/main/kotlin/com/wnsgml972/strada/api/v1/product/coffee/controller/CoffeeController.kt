@@ -1,4 +1,4 @@
-package com.wnsgml972.strada.api.v1.product.coffee.controller.admin
+package com.wnsgml972.strada.api.v1.product.coffee.controller
 
 import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeDTO

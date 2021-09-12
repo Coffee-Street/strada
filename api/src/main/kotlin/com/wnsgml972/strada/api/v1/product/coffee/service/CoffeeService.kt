@@ -2,7 +2,7 @@ package com.wnsgml972.strada.api.v1.product.coffee.service
 
 import com.wnsgml972.strada.api.v1.product.coffee.domain.Coffee
 import com.wnsgml972.strada.api.v1.product.coffee.domain.CoffeeRepository
-import com.wnsgml972.strada.exception.NotFoundException
+import com.wnsgml972.strada.exception.StradaNotFoundException
 import mu.KLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -22,7 +22,7 @@ class CoffeeService(
     fun select(name: String): CoffeeDTO? =
         coffeeRepository
             .findByName(name)
-            .orElseThrow { NotFoundException("$name Not Found") }
+            .orElseThrow { StradaNotFoundException("$name Not Found") }
             .toDto()
 
     @Transactional
@@ -34,7 +34,7 @@ class CoffeeService(
     fun update(coffeeDTO: CoffeeDTO) =
         coffeeRepository
             .findByName(coffeeDTO.name)
-            .orElseThrow { NotFoundException("${coffeeDTO.name} Not Found") }
+            .orElseThrow { StradaNotFoundException("${coffeeDTO.name} Not Found") }
             .id?.let {
                 coffeeRepository
                     .save(coffeeDTO.toEntity(it))
@@ -44,7 +44,7 @@ class CoffeeService(
     fun delete(name: String) =
         coffeeRepository
             .findByName(name)
-            .orElseThrow { NotFoundException("$name Not Found") }
+            .orElseThrow { StradaNotFoundException("$name Not Found") }
             .run { coffeeRepository.delete(this) }
 
     companion object : KLogging()

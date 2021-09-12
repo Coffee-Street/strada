@@ -1,7 +1,7 @@
 package com.wnsgml972.strada.api.v1.product.bean.service
 
 import com.wnsgml972.strada.api.v1.product.bean.domain.BeanRepository
-import com.wnsgml972.strada.exception.NotFoundException
+import com.wnsgml972.strada.exception.StradaNotFoundException
 import mu.KLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -21,7 +21,7 @@ class BeanService(
     fun selectById(id: String): BeanDTO? =
         beanRepository
             .findById(id)
-            .orElseThrow { NotFoundException("$id Not Found") }
+            .orElseThrow { StradaNotFoundException("$id Not Found") }
             .toDto()
 
     @Transactional
@@ -38,7 +38,7 @@ class BeanService(
     fun delete(id: String) =
         beanRepository
             .findById(id)
-            .orElseThrow { NotFoundException("$id Not Found") }
+            .orElseThrow { StradaNotFoundException("$id Not Found") }
             .run { beanRepository.delete(this) }
 
     companion object : KLogging()

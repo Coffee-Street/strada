@@ -1,4 +1,4 @@
-package com.wnsgml972.strada.api.v1.product.noncoffee.controller.admin
+package com.wnsgml972.strada.api.v1.product.noncoffee.controller
 
 import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.product.noncoffee.service.NonCoffeeDTO
@@ -66,7 +66,7 @@ class NonCoffeeController @Autowired constructor(
     fun delete(@PathVariable id: String) = nonCoffeeService.delete(id)
 
     companion object : KLogging() {
-        private const val ACCOUNT_SERVICE_NAME = "noncoffees/admin"
-        const val NONCOFFEE_BASE_URL = "$BASE_URL_V1/$ACCOUNT_SERVICE_NAME"
+        private const val NONCOFFEE_SERVICE_NAME = "noncoffees/admin"
+        const val NONCOFFEE_BASE_URL = "$BASE_URL_V1/$NONCOFFEE_SERVICE_NAME"
     }
 }

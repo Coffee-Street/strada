@@ -3,7 +3,7 @@ package com.wnsgml972.strada.api.products.noncoffee
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
 import com.wnsgml972.strada.api.products.ProductHelper
-import com.wnsgml972.strada.api.v1.product.noncoffee.controller.admin.NonCoffeeController
+import com.wnsgml972.strada.api.v1.product.noncoffee.controller.NonCoffeeController
 import com.wnsgml972.strada.api.v1.product.noncoffee.service.NonCoffeeDTO
 import com.wnsgml972.strada.api.v1.product.noncoffee.service.NonCoffeeInsertRequest
 import mu.KLogging
@@ -11,7 +11,6 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Order
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.TestMethodOrder
