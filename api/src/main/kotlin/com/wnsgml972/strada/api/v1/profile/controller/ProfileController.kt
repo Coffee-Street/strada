@@ -34,16 +34,16 @@ class ProfileController @Autowired constructor(
 
     @GetMapping
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    @ApiResponse(responseCode = "200", description = "")
+    @ApiResponse(responseCode = "200", description = "모든 유저의 profile 가져오기")
     fun selectAll() =
         profileService.selectAll()
 
     @GetMapping("/{id}")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = ""),
-        ApiResponse(responseCode = "401", description = ""),
-        ApiResponse(responseCode = "403", description = ""),
+        ApiResponse(responseCode = "200", description = "유저의 profile 가져오기"),
+        ApiResponse(responseCode = "401", description = "유저의 profile 인증 실패"),
+        ApiResponse(responseCode = "403", description = "유저의 profile 접근 금지"),
     )
     fun select(@PathVariable("id") id: Long) =
         profileService.selectById(id)
@@ -51,9 +51,9 @@ class ProfileController @Autowired constructor(
     @PostMapping()
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = ""),
-        ApiResponse(responseCode = "401", description = ""),
-        ApiResponse(responseCode = "403", description = ""),
+        ApiResponse(responseCode = "200", description = "유저 profile 생성"),
+        ApiResponse(responseCode = "304", description = "유저 profile 이미 존재"),
+        ApiResponse(responseCode = "400", description = "유저 profile 생성 실패"),
     )
     fun insert(@RequestBody @Valid profileRequest: ProfileRequest) =
         profileService.insert(profileRequest.toDto())
@@ -61,9 +61,9 @@ class ProfileController @Autowired constructor(
     @PutMapping("/{id}")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = ""),
-        ApiResponse(responseCode = "401", description = ""),
-        ApiResponse(responseCode = "403", description = ""),
+        ApiResponse(responseCode = "200", description = "유저의 profile 수정"),
+        ApiResponse(responseCode = "401", description = "유저의 profile 인증 실패"),
+        ApiResponse(responseCode = "403", description = "유저의 profile 접근 금지"),
     )
     fun update(@PathVariable("id") id: Long, @RequestBody @Valid profileRequest: ProfileRequest) =
         profileService.update(profileRequest.toDto(id))
@@ -71,9 +71,9 @@ class ProfileController @Autowired constructor(
     @DeleteMapping("/{id}")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = ""),
-        ApiResponse(responseCode = "401", description = ""),
-        ApiResponse(responseCode = "403", description = ""),
+        ApiResponse(responseCode = "200", description = "유저의 profile 삭제"),
+        ApiResponse(responseCode = "401", description = "유저의 profile 인증 실패"),
+        ApiResponse(responseCode = "403", description = "유저의 profile 접근 금지"),
     )
     fun delete(@PathVariable("id") id: Long) =
         profileService.delete(id)
