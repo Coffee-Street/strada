@@ -1,11 +1,12 @@
 package com.wnsgml972.strada.api.v1.item.bread.service
 
+import com.wnsgml972.strada.api.v1.product.bread.domain.Bread
 import com.wnsgml972.strada.api.v1.product.bread.domain.BreadRepository
 import com.wnsgml972.strada.api.v1.product.bread.service.BreadDTO
 import com.wnsgml972.strada.api.v1.product.bread.service.toDto
 import com.wnsgml972.strada.api.v1.product.bread.service.toEntity
+import com.wnsgml972.strada.exception.StradaIllegalStateException
 import com.wnsgml972.strada.exception.StradaNotFoundException
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import mu.KLogging
@@ -23,9 +24,8 @@ class BreadService(
 
     @Transactional(readOnly = true)
     fun selectById(id: String) =
-        breadRepository.findByIdOrNull(id)
-            ?.toDto()
-            ?: throw StradaNotFoundException("$id is not found")
+        load(id)
+            .toDto()
 
     @Transactional
     fun insert(breadDTO: BreadDTO) =
@@ -34,20 +34,26 @@ class BreadService(
 
     @Transactional
     fun update(breadDTO: BreadDTO) =
-        breadRepository
-            .findById(breadDTO.id)
-            .orElseThrow { StradaNotFoundException("${breadDTO.id} is not found") }
+        load(breadDTO.id)
             .let {
                 breadRepository.save(breadDTO.toEntity())
             }
 
     @Transactional
     fun delete(id: String) =
-        breadRepository
-            .findById(id)
-            .orElseThrow { StradaNotFoundException("$id is not found") }
+        load(id)
             .let {
                 breadRepository.delete(it)
+            }
+
+    @Transactional(readOnly = true)
+    fun load(id: String): Bread =
+        breadRepository
+            .findById(id)
+            .orElseThrow { StradaNotFoundException("$id Not Found") }
+            .let {
+                it.id ?: throw StradaIllegalStateException("${it.id} is not initialized")
+                it
             }
 
     companion object : KLogging()

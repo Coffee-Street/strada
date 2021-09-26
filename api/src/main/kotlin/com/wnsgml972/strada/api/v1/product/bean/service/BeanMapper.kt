@@ -25,6 +25,7 @@ fun BeanDTO.toEntity() =
         this.kind,
         this.grade
     )
+
 fun BeanInsertRequest.toBeanDto(id: String) =
     BeanDTO(
         id,

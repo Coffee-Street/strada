@@ -1,7 +1,10 @@
 package com.wnsgml972.strada.api.v1.product.noncoffee.service
 
+import com.wnsgml972.strada.api.v1.product.noncoffee.domain.NonCoffee
 import com.wnsgml972.strada.api.v1.product.noncoffee.domain.NonCoffeeRepository
+import com.wnsgml972.strada.exception.StradaIllegalStateException
 import com.wnsgml972.strada.exception.StradaNotFoundException
+import mu.KLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -18,9 +21,7 @@ class NonCoffeeService(
 
     @Transactional(readOnly = true)
     fun selectById(id: String): NonCoffeeDTO =
-        nonCoffeeRepository
-            .findById(id)
-            .orElseThrow { StradaNotFoundException("$id is not found") }
+        load(id)
             .toDto()
 
     @Transactional
@@ -31,19 +32,28 @@ class NonCoffeeService(
 
     @Transactional
     fun update(nonCoffeeDTO: NonCoffeeDTO): NonCoffeeDTO =
-        nonCoffeeRepository
-            .findById(nonCoffeeDTO.id)
-            .orElseThrow { StradaNotFoundException("${nonCoffeeDTO.id} is not found") }
+        load(nonCoffeeDTO.id)
             .let {
                 nonCoffeeRepository.save(nonCoffeeDTO.toEntity())
             }
             .toDto()
 
     @Transactional
-    fun delete(id: String) = nonCoffeeRepository
-        .findById(id)
-        .orElseThrow { StradaNotFoundException("$id is not found") }
-        .let {
-            nonCoffeeRepository.delete(it)
-        }
+    fun delete(id: String) =
+        load(id)
+            .let {
+                nonCoffeeRepository.delete(it)
+            }
+
+    @Transactional(readOnly = true)
+    fun load(id: String): NonCoffee =
+        nonCoffeeRepository
+            .findById(id)
+            .orElseThrow { StradaNotFoundException("$id Not Found") }
+            .let {
+                it.id ?: throw StradaIllegalStateException("${it.id} is not initialized")
+                it
+            }
+
+    companion object : KLogging()
 }

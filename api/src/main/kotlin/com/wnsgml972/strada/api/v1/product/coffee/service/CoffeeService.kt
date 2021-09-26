@@ -1,6 +1,8 @@
 package com.wnsgml972.strada.api.v1.product.coffee.service
 
+import com.wnsgml972.strada.api.v1.product.coffee.domain.Coffee
 import com.wnsgml972.strada.api.v1.product.coffee.domain.CoffeeRepository
+import com.wnsgml972.strada.exception.StradaIllegalStateException
 import com.wnsgml972.strada.exception.StradaNotFoundException
 import mu.KLogging
 import org.springframework.stereotype.Service
@@ -19,9 +21,7 @@ class CoffeeService(
 
     @Transactional(readOnly = true)
     fun select(name: String): CoffeeDTO =
-        coffeeRepository
-            .findByName(name)
-            .orElseThrow { StradaNotFoundException("$name Not Found") }
+        load(name)
             .toDto()
 
     @Transactional
@@ -32,23 +32,27 @@ class CoffeeService(
 
     @Transactional
     fun update(coffeeDTO: CoffeeDTO): CoffeeDTO =
-        coffeeRepository
-            .findByName(coffeeDTO.name)
-            .orElseThrow { StradaNotFoundException("${coffeeDTO.name} Not Found") }
+        load(coffeeDTO.name)
             .let {
-                it.id ?: throw StradaNotFoundException("${it.id} is not initialized")
-                coffeeRepository
-                        .save(coffeeDTO.toEntity(it.id!!))
+                coffeeRepository.save(coffeeDTO.toEntity(it.id!!))
             }
             .toDto()
 
     @Transactional
     fun delete(name: String) =
+        load(name)
+            .let {
+                coffeeRepository.delete(it)
+            }
+
+    @Transactional(readOnly = true)
+    fun load(name: String): Coffee =
         coffeeRepository
             .findByName(name)
             .orElseThrow { StradaNotFoundException("$name Not Found") }
             .let {
-                coffeeRepository.delete(it)
+                it.id ?: throw StradaIllegalStateException("${it.id} is not initialized")
+                it
             }
 
     companion object : KLogging()
