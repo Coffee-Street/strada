@@ -1,21 +1,21 @@
 package com.wnsgml972.strada.api.v1.profile.service
 
-import com.wnsgml972.strada.api.v1.profile.domain.Profile
+import com.wnsgml972.strada.api.v1.profile.domain.UserProfile
 import com.wnsgml972.strada.exception.StradaBadRequestException
 
-fun Profile.toDto() = ProfileDTO(
+fun UserProfile.toDto() = UserProfileDTO(
     this.id ?: throw StradaBadRequestException("$id must not null"),
     this.userId,
     this.point
 )
 
-fun ProfileDTO.toEntity() = Profile.of(
+fun UserProfileDTO.toEntity() = UserProfile.of(
     this.id,
     this.userId,
     this.point
 )
 
-fun ProfileRequest.toDto(id: Long = 0) = ProfileDTO(
+fun UserProfileRequest.toEntity(id: Long? = null) = UserProfile.of(
     id,
     this.userId,
     this.point

@@ -1,8 +1,8 @@
 package com.wnsgml972.strada.api.v1.profile.controller
 
 import BASE_URL_V1
-import com.wnsgml972.strada.api.v1.profile.service.ProfileRequest
-import com.wnsgml972.strada.api.v1.profile.service.ProfileService
+import com.wnsgml972.strada.api.v1.profile.service.UserProfileRequest
+import com.wnsgml972.strada.api.v1.profile.service.UserProfileService
 import com.wnsgml972.strada.api.v1.profile.service.toDto
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
@@ -23,20 +23,20 @@ import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
 @RestController
-@RequestMapping(path = [ProfileController.PROFILE_BASE_URL])
+@RequestMapping(path = [UserProfileController.USER_PROFILE_BASE_URL])
 @Tag(
     name = "profiles",
     description = """User profile을 위한 API"""
 )
-class ProfileController @Autowired constructor(
-    private var profileService: ProfileService
-) {
+        class UserProfileController @Autowired constructor(
+        private var userProfileService: UserProfileService
+    ) {
 
-    @GetMapping
-    @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
+        @GetMapping
+        @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     @ApiResponse(responseCode = "200", description = "모든 유저의 profile 가져오기")
     fun selectAll() =
-        profileService.selectAll()
+        userProfileService.selectAll()
 
     @GetMapping("/{id}")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
@@ -46,7 +46,7 @@ class ProfileController @Autowired constructor(
         ApiResponse(responseCode = "403", description = "유저의 profile 접근 금지"),
     )
     fun select(@PathVariable("id") id: Long) =
-        profileService.selectById(id)
+        userProfileService.selectById(id)
 
     @PostMapping()
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
@@ -55,8 +55,8 @@ class ProfileController @Autowired constructor(
         ApiResponse(responseCode = "304", description = "유저 profile 이미 존재"),
         ApiResponse(responseCode = "400", description = "유저 profile 생성 실패"),
     )
-    fun insert(@RequestBody @Valid profileRequest: ProfileRequest) =
-        profileService.insert(profileRequest.toDto())
+    fun insert(@RequestBody @Valid userProfileRequest: UserProfileRequest) =
+        userProfileService.insert(userProfileRequest)
 
     @PutMapping("/{id}")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
@@ -65,8 +65,8 @@ class ProfileController @Autowired constructor(
         ApiResponse(responseCode = "401", description = "유저의 profile 인증 실패"),
         ApiResponse(responseCode = "403", description = "유저의 profile 접근 금지"),
     )
-    fun update(@PathVariable("id") id: Long, @RequestBody @Valid profileRequest: ProfileRequest) =
-        profileService.update(profileRequest.toDto(id))
+    fun update(@PathVariable("id") id: Long, @RequestBody @Valid userProfileRequest: UserProfileRequest) =
+        userProfileService.update(id, userProfileRequest)
 
     @DeleteMapping("/{id}")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
@@ -76,10 +76,10 @@ class ProfileController @Autowired constructor(
         ApiResponse(responseCode = "403", description = "유저의 profile 접근 금지"),
     )
     fun delete(@PathVariable("id") id: Long) =
-        profileService.delete(id)
+        userProfileService.delete(id)
 
     companion object : KLogging() {
-        private const val PROFILE_SERVICE_NAME = "/profiles"
-        const val PROFILE_BASE_URL = "$BASE_URL_V1/$PROFILE_SERVICE_NAME"
+        private const val USER_PROFILE_SERVICE_NAME = "/profiles"
+        const val USER_PROFILE_BASE_URL = "$BASE_URL_V1/$USER_PROFILE_SERVICE_NAME"
     }
 }
