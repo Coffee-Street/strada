@@ -15,28 +15,32 @@ import org.springframework.test.web.reactive.server.expectBody
 class UserProfileControllerIT @Autowired constructor(
     private val client: WebTestClient,
     private val authHelper: AuthHelper,
-//    private val userHelper: UserHelper,
+    private val userProfileHelper: UserProfileHelper,
 ) : IntegrationTest() {
 
-//    @BeforeEach
-//    fun `유저 생성`() {
-//
-//    }
+    @BeforeEach
+    fun `유저 생성`() {
+        userProfileHelper.signup(USER_ID)
+    }
 
-//    @Test
-//    fun `결제 후 1000포인트 추가`() {
-//
-//        val userProfileRequest = UserProfileRequest(userId = "010-1234-1234", point = 1000)
-//
-//        val accessToken = authHelper.getAccessToken()
-//        client.post()
-//            .uri("${UserProfileController.USER_PROFILE_BASE_URL}/test")
-//            .header("Authorization", "Bearer $accessToken")
-//            .contentType(MediaType.APPLICATION_JSON)
-//            .bodyValue(userProfileRequest)
-//            .exchange()
-//            .expectStatus()
-//            .is2xxSuccessful
-//            .expectBody<UserProfileDTO>()
-//    }
+    @Test
+    fun `결제 후 1000포인트 추가`() {
+        val userProfileDTO = userProfileHelper.selectByUserId(USER_ID)
+        val userProfileRequest = UserProfileRequest(userId = USER_ID, point = userProfileDTO.point + 1000)
+
+        val accessToken = authHelper.getAccessToken()
+        client.post()
+            .uri("${UserProfileController.USER_PROFILE_BASE_URL}/test")
+            .header("Authorization", "Bearer $accessToken")
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(userProfileRequest)
+            .exchange()
+            .expectStatus()
+            .is2xxSuccessful
+            .expectBody<UserProfileDTO>()
+    }
+
+    companion object {
+        private val USER_ID = "010-1234-5678"
+    }
 }

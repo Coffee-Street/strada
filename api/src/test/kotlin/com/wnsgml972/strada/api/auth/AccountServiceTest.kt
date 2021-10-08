@@ -4,6 +4,7 @@ import com.wnsgml972.strada.AbstractWebTest
 import com.wnsgml972.strada.api.v1.account.domain.User
 import com.wnsgml972.strada.api.v1.account.domain.UserRepository
 import com.wnsgml972.strada.api.v1.account.service.UserService
+import com.wnsgml972.strada.api.v1.profile.service.UserProfileService
 import com.wnsgml972.strada.exception.StradaNotFoundException
 import io.mockk.*
 import org.amshove.kluent.`should be equal to`
@@ -16,6 +17,7 @@ class AccountServiceTest : AbstractWebTest() {
     lateinit var sut: UserService
 
     lateinit var userRepository: UserRepository
+    lateinit var userProfileService: UserProfileService
     private val userMap = mutableMapOf<String, User>()
     private var capturedId = ""
 
@@ -47,7 +49,7 @@ class AccountServiceTest : AbstractWebTest() {
         }
 
         // set unit test service
-        sut = UserService(userRepository)
+        sut = UserService(userRepository, userProfileService)
     }
 
     @Test

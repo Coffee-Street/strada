@@ -22,6 +22,13 @@ class UserProfileService(
         load(id)
             .toDto()
 
+    @Transactional(readOnly = true)
+    fun selectByUserId(userId: String): UserProfileDTO =
+        profileRepository
+            .findByUserId(userId)
+            .orElseThrow { StradaNotFoundException("$userId Not Found") }
+            .toDto()
+
     @Transactional
     fun insert(userProfileRequest: UserProfileRequest) =
         profileRepository
