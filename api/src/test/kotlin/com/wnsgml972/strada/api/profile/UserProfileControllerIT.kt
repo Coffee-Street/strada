@@ -29,8 +29,8 @@ class UserProfileControllerIT @Autowired constructor(
         val userProfileRequest = UserProfileRequest(userId = USER_ID, point = userProfileDTO.point + 1000)
 
         val accessToken = authHelper.getAccessToken()
-        client.post()
-            .uri("${UserProfileController.USER_PROFILE_BASE_URL}/test")
+        client.put()
+            .uri("${UserProfileController.USER_PROFILE_BASE_URL}/${userProfileDTO.id}")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(userProfileRequest)

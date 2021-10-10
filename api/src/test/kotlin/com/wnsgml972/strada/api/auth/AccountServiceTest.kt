@@ -4,6 +4,7 @@ import com.wnsgml972.strada.AbstractWebTest
 import com.wnsgml972.strada.api.v1.account.domain.User
 import com.wnsgml972.strada.api.v1.account.domain.UserRepository
 import com.wnsgml972.strada.api.v1.account.service.UserService
+import com.wnsgml972.strada.api.v1.profile.service.UserProfileDTO
 import com.wnsgml972.strada.api.v1.profile.service.UserProfileService
 import com.wnsgml972.strada.exception.StradaNotFoundException
 import io.mockk.*
@@ -19,6 +20,7 @@ class AccountServiceTest : AbstractWebTest() {
     lateinit var userRepository: UserRepository
     lateinit var userProfileService: UserProfileService
     private val userMap = mutableMapOf<String, User>()
+    private val userProfileDTOMap = mutableMapOf<String, UserProfileDTO>()
     private var capturedId = ""
 
     @BeforeEach
@@ -46,6 +48,21 @@ class AccountServiceTest : AbstractWebTest() {
             userRepository.findAll()
         } answers {
             userMap.values.toList()
+        }
+
+        userProfileService = mockk()
+
+        every {
+            userProfileService.insert(any())
+        } answers {
+            userProfileDTOMap[capturedId] = UserProfileDTO(1, capturedId, 0)
+            userProfileDTOMap[capturedId] ?: throw StradaNotFoundException()
+        }
+
+        every {
+            userProfileService.selectByUserId(any())
+        } answers {
+            userProfileDTOMap[capturedId] ?: throw StradaNotFoundException()
         }
 
         // set unit test service
