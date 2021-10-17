@@ -1,6 +1,6 @@
 delete from Banner;
 
-    insert
+insert
 into
     Banner
 (code, evalOrder, imageUrl, message, title)
@@ -20,3 +20,6 @@ into
 (code, evalOrder, imageUrl, message, title)
 values
     ("Strada 아이콘 banner", 3, "https://avatars.githubusercontent.com/u/70061917?s=200&v=4", "이미지 테스트", "Strada");
+
+
+
