@@ -1,12 +1,10 @@
 package com.wnsgml972.strada.api.v1.profile.domain
 
 import com.wnsgml972.strada.api.base.LongJpaEntity
-import org.hibernate.validator.constraints.Length
 import javax.persistence.Column
 
 import javax.persistence.Entity
 import javax.persistence.Id
-import javax.validation.constraints.Positive
 
 /**
  * UserProfile
@@ -23,10 +21,8 @@ class UserProfile private constructor(
     override var id: Long?,
 
     @Column(unique = true)
-    @Length(min = 1)
     val userId: String,
 
-    @Positive
     val point: Long
 
 ) : LongJpaEntity() {
