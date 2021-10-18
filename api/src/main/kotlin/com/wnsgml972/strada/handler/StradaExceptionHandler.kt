@@ -1,9 +1,9 @@
 package com.wnsgml972.strada.handler
 
-import com.wnsgml972.strada.exception.BadRequestException
-import com.wnsgml972.strada.exception.NotFoundException
-import com.wnsgml972.strada.exception.IllegalStateException
-import com.wnsgml972.strada.exception.UnAuthorizedException
+import com.wnsgml972.strada.exception.StradaBadRequestException
+import com.wnsgml972.strada.exception.StradaNotFoundException
+import com.wnsgml972.strada.exception.StradaIllegalStateException
+import com.wnsgml972.strada.exception.StradaUnAuthorizedException
 import mu.KLogging
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -13,29 +13,29 @@ import java.time.LocalDateTime
 
 interface StradaExceptionHandler : AdviceTrait {
 
-    @ExceptionHandler(UnAuthorizedException::class)
-    fun handleUnAuthorizedException(e: UnAuthorizedException): ResponseEntity<ErrorResponse> {
+    @ExceptionHandler(StradaUnAuthorizedException::class)
+    fun handleUnAuthorizedException(e: StradaUnAuthorizedException): ResponseEntity<ErrorResponse> {
         logger.debug("handleUnAuthorizedException : ", e)
         val response = ErrorResponse(null, e.message)
         return ResponseEntity(response, HttpStatus.UNAUTHORIZED)
     }
 
-    @ExceptionHandler(BadRequestException::class)
-    fun handleBadRequestException(e: BadRequestException): ResponseEntity<ErrorResponse> {
+    @ExceptionHandler(StradaBadRequestException::class)
+    fun handleBadRequestException(e: StradaBadRequestException): ResponseEntity<ErrorResponse> {
         logger.debug("handleBadRequestException : ", e)
         val response = ErrorResponse(null, e.message)
         return ResponseEntity(response, HttpStatus.BAD_REQUEST)
     }
 
-    @ExceptionHandler(NotFoundException::class)
-    fun handleNotFoundException(e: NotFoundException): ResponseEntity<ErrorResponse> {
+    @ExceptionHandler(StradaNotFoundException::class)
+    fun handleNotFoundException(e: StradaNotFoundException): ResponseEntity<ErrorResponse> {
         logger.debug("handleNotFoundException : ", e)
         val response = ErrorResponse(null, e.message)
         return ResponseEntity(response, HttpStatus.NOT_FOUND)
     }
 
-    @ExceptionHandler(IllegalStateException::class)
-    fun handleIllegalStateException(e: IllegalStateException): ResponseEntity<ErrorResponse> {
+    @ExceptionHandler(StradaIllegalStateException::class)
+    fun handleIllegalStateException(e: StradaIllegalStateException): ResponseEntity<ErrorResponse> {
         logger.debug("handleIllegalStateException : ", e)
         val response = ErrorResponse(null, e.message)
         return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)

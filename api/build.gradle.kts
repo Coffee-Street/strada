@@ -67,6 +67,8 @@ dependencies {
     api(Libs.springBootStarter("web"))
     api(Libs.springBootStarter("validation"))
 
+    api(Libs.springData("jpa"))
+
     implementation("org.springframework.data:spring-data-jpa")
 
     testApi(Libs.springBootStarter("test")) {

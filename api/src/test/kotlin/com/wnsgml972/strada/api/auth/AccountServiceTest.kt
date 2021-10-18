@@ -4,7 +4,9 @@ import com.wnsgml972.strada.AbstractWebTest
 import com.wnsgml972.strada.api.v1.account.domain.User
 import com.wnsgml972.strada.api.v1.account.domain.UserRepository
 import com.wnsgml972.strada.api.v1.account.service.UserService
-import com.wnsgml972.strada.exception.NotFoundException
+import com.wnsgml972.strada.api.v1.profile.service.UserProfileDTO
+import com.wnsgml972.strada.api.v1.profile.service.UserProfileService
+import com.wnsgml972.strada.exception.StradaNotFoundException
 import io.mockk.*
 import org.amshove.kluent.`should be equal to`
 import org.junit.jupiter.api.BeforeEach
@@ -16,7 +18,9 @@ class AccountServiceTest : AbstractWebTest() {
     lateinit var sut: UserService
 
     lateinit var userRepository: UserRepository
+    lateinit var userProfileService: UserProfileService
     private val userMap = mutableMapOf<String, User>()
+    private val userProfileDTOMap = mutableMapOf<String, UserProfileDTO>()
     private var capturedId = ""
 
     @BeforeEach
@@ -30,14 +34,14 @@ class AccountServiceTest : AbstractWebTest() {
         every {
             userRepository.findById(any())
         } answers {
-            Optional.of(userMap[capturedId] ?: throw NotFoundException())
+            Optional.of(userMap[capturedId] ?: throw StradaNotFoundException())
         }
 
         every {
             userRepository.save(any())
         } answers {
             userMap[capturedId] = User.of(capturedId, true)
-            userMap[capturedId] ?: throw NotFoundException()
+            userMap[capturedId] ?: throw StradaNotFoundException()
         }
 
         every {
@@ -46,8 +50,23 @@ class AccountServiceTest : AbstractWebTest() {
             userMap.values.toList()
         }
 
+        userProfileService = mockk()
+
+        every {
+            userProfileService.insert(any())
+        } answers {
+            userProfileDTOMap[capturedId] = UserProfileDTO(1, capturedId, 0)
+            userProfileDTOMap[capturedId] ?: throw StradaNotFoundException()
+        }
+
+        every {
+            userProfileService.selectByUserId(any())
+        } answers {
+            userProfileDTOMap[capturedId] ?: throw StradaNotFoundException()
+        }
+
         // set unit test service
-        sut = UserService(userRepository)
+        sut = UserService(userRepository, userProfileService)
     }
 
     @Test

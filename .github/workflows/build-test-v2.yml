@@ -22,7 +22,7 @@ jobs:
         ports:
           - 3306:3306
         options: '--health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3'
-
+      
     steps:
     - uses: actions/checkout@v2.3.4
     
@@ -42,16 +42,16 @@ jobs:
         distribution: 'adopt'
         java-version: '11'
 
-    - name: Run docker-test for pr build
+    - name: Run test script for pr build
       run: |
-        bash tools/docker-test.sh
+        bash tools/test/test.sh
 
     # Runs a single command using the runners shell
     - name: Run a one-line script
       run: echo 'Build Success!'
           
     - name: Report Codecov
-      uses: codecov/codecov-action@v2.0.2
+      uses: codecov/codecov-action@v2.1.0
       with:
         # User defined upload name. Visible in Codecov UI
         name: codecov-strada # optional

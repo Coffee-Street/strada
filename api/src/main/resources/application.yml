@@ -24,17 +24,6 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: true
-      org:
-        hibernate:
-          envers:
-            audit_table_suffix: _history
-            modified_flag_suffix: _changed
-            store_data_at_delete: true
 
 springdoc:
   version: '@springdoc.version@'
