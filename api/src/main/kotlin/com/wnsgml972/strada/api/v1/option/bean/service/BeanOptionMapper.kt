@@ -8,7 +8,7 @@ fun BeanOption.toDto() = BeanOptionDTO(
     this.grindType
 )
 
-fun BeanOptionDTO.toEntity() = BeanOption.of(
+fun BeanOptionRequest.toEntity(id: Long? = null) = BeanOption.of(
     this.grindType,
-    this.id
+    id
 )

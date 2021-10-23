@@ -4,7 +4,6 @@ import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingService
 import com.wnsgml972.strada.api.v1.ordering.controller.OrderingController.Companion.ORDERING_BASE_URL
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingRequest
-import com.wnsgml972.strada.api.v1.ordering.service.toDto
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse

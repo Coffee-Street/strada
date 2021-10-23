@@ -2,7 +2,6 @@ package com.wnsgml972.strada.api.v1.option.drink.service
 
 import com.wnsgml972.strada.api.v1.option.drizzle.service.DrizzleOptionDTO
 import com.wnsgml972.strada.api.v1.option.syrup.service.SyrupOptionDTO
-import javax.validation.constraints.PositiveOrZero
 
 data class DrinkOptionDTO(
     val id: Long,
@@ -15,10 +14,7 @@ data class DrinkOptionDTO(
     val hot: QuantityType,
     val cream: QuantityType,
     val memo: String,
-
-    @PositiveOrZero
     val shotCount: Int,
-
     val syrupOptions: List<SyrupOptionDTO>,
     val drizzleOptions: List<DrizzleOptionDTO>
 ) {

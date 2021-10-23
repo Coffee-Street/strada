@@ -46,7 +46,7 @@ class OrderingDetail private constructor(
 
     override var id: Long? = null,
 
-    ) : LongJpaEntity() {
+) : LongJpaEntity() {
     override fun equalProperties(other: Any): Boolean {
         return other is OrderingDetail &&
                 id == other.id &&

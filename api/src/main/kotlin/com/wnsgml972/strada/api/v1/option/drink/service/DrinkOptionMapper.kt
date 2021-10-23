@@ -23,7 +23,7 @@ fun DrinkOption.toDto() = DrinkOptionDTO(
     this.drizzleOptions.map { it.toDto() }
 )
 
-fun DrinkOptionDTO.toEntity() = DrinkOption.of(
+fun DrinkOptionRequest.toEntity(id: Long? = null) = DrinkOption.of(
     this.hotOrIced,
     this.cupType,
     this.cupSize,
@@ -34,7 +34,7 @@ fun DrinkOptionDTO.toEntity() = DrinkOption.of(
     this.cream,
     this.memo,
     this.shotCount,
-    this.syrupOptions.map { it.toEntity() },
-    this.drizzleOptions.map { it.toEntity() },
-    this.id
+    this.syrupOptionRequests.map { it.toEntity() },
+    this.drizzleOptionRequests.map { it.toEntity() },
+    id
 )

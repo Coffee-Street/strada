@@ -9,8 +9,8 @@ fun DrizzleOption.toDto() = DrizzleOptionDTO(
     this.drizzleCount
 )
 
-fun DrizzleOptionDTO.toEntity() = DrizzleOption.of(
+fun DrizzleOptionRequest.toEntity(id: Long? = null) = DrizzleOption.of(
     this.drizzleType,
     this.drizzleCount,
-    this.id
+    id
 )

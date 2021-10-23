@@ -6,5 +6,5 @@ data class OrderingDTO(
     val id: Long,
     val status: OrderingStatus,
     val createdAt: LocalDateTime,
-    val orderingDetailDTOs: List<OrderingDetailDTO>
+    val orderingDetailDTOs: List<OrderingDetailDTO>,
 )

@@ -9,8 +9,8 @@ fun BreadOption.toDto() = BreadOptionDTO(
     this.forkCount
 )
 
-fun BreadOptionDTO.toEntity() = BreadOption.of(
+fun BreadOptionRequest.toEntity(id: Long? = null) = BreadOption.of(
     this.hereOrToGo,
     this.forkCount,
-    this.id
+    id,
 )

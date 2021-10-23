@@ -33,8 +33,8 @@ fun OrderingDetailRequest.toEntity(id: Long? = null) = OrderingDetail.of(
     this.nonCoffeeDTO?.toEntity(),
     this.breadDTO?.toEntity(),
     this.beanDTO?.toEntity(),
-    this.drinkOptionDTO?.toEntity(),
-    this.breadOptionDTO?.toEntity(),
-    this.beanOptionDTO?.toEntity(),
+    this.drinkOptionRequest?.toEntity(),
+    this.breadOptionRequest?.toEntity(),
+    this.beanOptionRequest?.toEntity(),
     id,
 )

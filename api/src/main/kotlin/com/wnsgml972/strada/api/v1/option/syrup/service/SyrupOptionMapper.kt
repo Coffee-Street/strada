@@ -9,8 +9,8 @@ fun SyrupOption.toDto() = SyrupOptionDTO(
     this.syrupCount
 )
 
-fun SyrupOptionDTO.toEntity() = SyrupOption.of(
+fun SyrupOptionRequest.toEntity(id: Long? = null) = SyrupOption.of(
     this.syrupType,
     this.syrupCount,
-    this.id
+    id
 )
