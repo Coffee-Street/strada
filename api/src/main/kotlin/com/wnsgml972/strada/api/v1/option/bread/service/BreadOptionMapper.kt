@@ -1,10 +1,10 @@
 package com.wnsgml972.strada.api.v1.option.bread.service
 
 import com.wnsgml972.strada.api.v1.option.bread.domain.BreadOption
-import com.wnsgml972.strada.exception.BadRequestException
+import com.wnsgml972.strada.exception.StradaBadRequestException
 
 fun BreadOption.toDto() = BreadOptionDTO(
-    this.id ?: throw BadRequestException("$id must not null"),
+    this.id ?: throw StradaBadRequestException("$id must not null"),
     this.hereOrToGo,
     this.forkCount
 )

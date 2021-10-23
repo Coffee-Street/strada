@@ -5,10 +5,10 @@ import com.wnsgml972.strada.api.v1.option.drizzle.service.toDto
 import com.wnsgml972.strada.api.v1.option.drizzle.service.toEntity
 import com.wnsgml972.strada.api.v1.option.syrup.service.toDto
 import com.wnsgml972.strada.api.v1.option.syrup.service.toEntity
-import com.wnsgml972.strada.exception.BadRequestException
+import com.wnsgml972.strada.exception.StradaBadRequestException
 
 fun DrinkOption.toDto() = DrinkOptionDTO(
-    this.id ?: throw BadRequestException("$id must not null"),
+    this.id ?: throw StradaBadRequestException("$id must not null"),
     this.hotOrIced,
     this.cupType,
     this.cupSize,

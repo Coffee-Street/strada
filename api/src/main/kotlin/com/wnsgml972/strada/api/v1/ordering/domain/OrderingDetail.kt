@@ -1,13 +1,13 @@
 package com.wnsgml972.strada.api.v1.ordering.domain
 
 import com.wnsgml972.strada.api.base.LongJpaEntity
-import com.wnsgml972.strada.api.v1.item.bread.domain.Bread
-import com.wnsgml972.strada.api.v1.item.coffee.domain.Bean
-import com.wnsgml972.strada.api.v1.item.coffee.domain.Coffee
-import com.wnsgml972.strada.api.v1.item.noncoffee.domain.NonCoffee
 import com.wnsgml972.strada.api.v1.option.bean.domain.BeanOption
 import com.wnsgml972.strada.api.v1.option.bread.domain.BreadOption
 import com.wnsgml972.strada.api.v1.option.drink.domain.DrinkOption
+import com.wnsgml972.strada.api.v1.product.bean.domain.Bean
+import com.wnsgml972.strada.api.v1.product.bread.domain.Bread
+import com.wnsgml972.strada.api.v1.product.coffee.domain.Coffee
+import com.wnsgml972.strada.api.v1.product.noncoffee.domain.NonCoffee
 import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.OneToOne
@@ -46,7 +46,7 @@ class OrderingDetail private constructor(
 
     override var id: Long? = null,
 
-) : LongJpaEntity() {
+    ) : LongJpaEntity() {
     override fun equalProperties(other: Any): Boolean {
         return other is OrderingDetail &&
                 id == other.id &&

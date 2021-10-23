@@ -1,7 +1,7 @@
 package com.wnsgml972.strada.api.v1.ordering.service
 
 import com.wnsgml972.strada.api.v1.ordering.domain.OrderingRepository
-import com.wnsgml972.strada.exception.NotFoundException
+import com.wnsgml972.strada.exception.StradaNotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -20,27 +20,27 @@ class OrderingService(
     @Transactional(readOnly = true)
     fun selectById(id: Long): OrderingDTO {
         return orderingRepository
-            .findByIdOrNull(id)?.toDto() ?: throw NotFoundException("$id is not found")
+            .findByIdOrNull(id)?.toDto() ?: throw StradaNotFoundException("$id is not found")
     }
 
     @Transactional
-    fun insert(orderingDTO: OrderingDTO): OrderingDTO {
+    fun insert(orderingRequest: OrderingRequest): OrderingDTO {
         return orderingRepository
-            .save(orderingDTO.toEntity())
+            .save(orderingRequest.toEntity())
             .toDto()
     }
 
     @Transactional
-    fun update(orderingDTO: OrderingDTO): OrderingDTO {
-        return orderingRepository.findById(orderingDTO.id)
-            .orElseThrow { NotFoundException("${orderingDTO.id} is not found") }
-            .let { orderingRepository.save(orderingDTO.toEntity()).toDto() }
+    fun update(id: Long, orderingRequest: OrderingRequest): OrderingDTO {
+        return orderingRepository.findById(id)
+            .orElseThrow { StradaNotFoundException("$id is not found") }
+            .let { orderingRepository.save(orderingRequest.toEntity(id)).toDto() }
     }
 
     @Transactional
     fun delete(id: Long) {
         orderingRepository.findById(id)
-            .orElseThrow { NotFoundException("$id is not found") }
+            .orElseThrow { StradaNotFoundException("$id is not found") }
             .run { orderingRepository.delete(this) }
     }
 }

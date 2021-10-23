@@ -62,7 +62,7 @@ class OrderingController @Autowired constructor(
     fun insert(
         @RequestBody @Valid orderingRequest: OrderingRequest
     ) =
-        orderingService.insert(orderingRequest.toDto())
+        orderingService.insert(orderingRequest)
 
     @PutMapping("/{id}")
     @Operation(
@@ -74,7 +74,7 @@ class OrderingController @Autowired constructor(
         @PathVariable("id") id: Long,
         @RequestBody @Valid orderingRequest: OrderingRequest
     ) =
-        orderingService.update(orderingRequest.toDto(id))
+        orderingService.update(id, orderingRequest)
 
     @DeleteMapping("/{id}")
     @Operation(

@@ -1,26 +1,20 @@
 package com.wnsgml972.strada.api.v1.ordering.service
 
 import com.wnsgml972.strada.api.v1.ordering.domain.Ordering
-import com.wnsgml972.strada.exception.BadRequestException
+import com.wnsgml972.strada.exception.StradaBadRequestException
+
 import java.time.LocalDateTime
 
 fun Ordering.toDto() = OrderingDTO(
-    this.id ?: throw BadRequestException("$id must not null"),
+    this.id ?: throw StradaBadRequestException("$id must not null"),
     this.status,
     this.createdAt,
     this.orderingDetails.map { it.toDto() }
 )
 
-fun OrderingDTO.toEntity() = Ordering.of(
-    this.status,
-    this.createdAt,
-    this.orderingDetailDTOs.map { it.toEntity() },
-    this.id,
-)
-
-fun OrderingRequest.toDto(id: Long = 0) = OrderingDTO(
-    id,
+fun OrderingRequest.toEntity(id: Long? = null) = Ordering.of(
     this.status,
     LocalDateTime.now(),
-    this.orderingDetailRequests.map { it.toDto() }
+    this.orderingDetailRequests.map { it.toEntity() },
+    id,
 )
