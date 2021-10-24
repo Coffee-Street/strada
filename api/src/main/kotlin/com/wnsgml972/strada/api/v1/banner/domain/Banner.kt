@@ -24,6 +24,10 @@ class Banner(
 
     val message: String,
 
+    val backgroundColor: String,
+
+    val fontColor: String
+
 ) : LongJpaEntity() {
     override fun equalProperties(other: Any): Boolean {
         return other is Banner &&
@@ -32,7 +36,9 @@ class Banner(
                 evalOrder == other.evalOrder &&
                 title == other.title &&
                 imageUrl == other.imageUrl &&
-                message == other.message
+                message == other.message &&
+                backgroundColor == other.backgroundColor &&
+                fontColor == other.fontColor
     }
 
     companion object {
@@ -43,6 +49,8 @@ class Banner(
             title: String,
             imageUrl: String,
             message: String,
-        ) = Banner(id, code, evalOrder, title, imageUrl, message)
+            backgroundColor: String,
+            fontColor: String
+        ) = Banner(id, code, evalOrder, title, imageUrl, message, backgroundColor, fontColor)
     }
 }
