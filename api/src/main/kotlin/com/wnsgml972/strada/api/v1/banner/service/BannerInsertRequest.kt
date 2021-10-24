@@ -16,6 +16,12 @@ data class BannerInsertRequest(
     val imageUrl: String,
 
     @field:Size(max = 255, message = "최대 255글자까지 입력가능합니다.")
-    val message: String
+    val message: String,
+
+    @field:Size(max = 128)
+    val backgroundColor: String,
+
+    @field:Size(max = 128)
+    val fontColor: String
 
 )

@@ -7,6 +7,8 @@ fun Banner.toDto() = BannerDTO(
     this.title,
     this.imageUrl,
     this.message,
+    this.backgroundColor,
+    this.fontColor
 )
 
 fun Banner.toBannerInsertResponse() = BannerInsertResponse(
@@ -15,21 +17,27 @@ fun Banner.toBannerInsertResponse() = BannerInsertResponse(
     this.title,
     this.imageUrl,
     this.message,
+    this.backgroundColor,
+    this.fontColor
 )
-fun BannerInsertRequest.toEntity(code: String) = Banner(
+fun BannerInsertRequest.toEntity(code: String) = Banner.of(
     0,
     code,
     this.evalOrder,
     this.title,
     this.imageUrl,
     this.message,
+    this.backgroundColor,
+    this.fontColor
 )
 
-fun BannerInsertRequest.toEntity(id: Long, code: String) = Banner(
+fun BannerInsertRequest.toEntity(id: Long, code: String) = Banner.of(
     id,
     code,
     this.evalOrder,
     this.title,
     this.imageUrl,
     this.message,
+    this.backgroundColor,
+    this.fontColor
 )
