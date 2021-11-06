@@ -23,16 +23,16 @@ import javax.persistence.OneToOne
 @Entity
 @SuppressWarnings("LongParameterList")
 class OrderingDetail private constructor(
-    @OneToOne(cascade = [CascadeType.ALL])
+    @OneToOne
     val coffee: Coffee?,
 
-    @OneToOne(cascade = [CascadeType.ALL])
+    @OneToOne
     val nonCoffee: NonCoffee?,
 
-    @OneToOne(cascade = [CascadeType.ALL])
+    @OneToOne
     val bread: Bread?,
 
-    @OneToOne(cascade = [CascadeType.ALL])
+    @OneToOne
     val bean: Bean?,
 
     @OneToOne(cascade = [CascadeType.ALL])

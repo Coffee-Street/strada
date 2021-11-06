@@ -53,7 +53,6 @@ class BreadController @Autowired constructor(
     ): BreadDTO =
         breadService
             .insert(breadInsertRequest.toDto(id))
-            .toDto()
 
     @PutMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "Update Bread")

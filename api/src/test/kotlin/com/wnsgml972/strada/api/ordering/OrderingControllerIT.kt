@@ -32,22 +32,38 @@ import org.springframework.test.web.reactive.server.expectBody
 class OrderingControllerIT @Autowired constructor(
     private val client: WebTestClient,
     private val authHelper: AuthHelper,
+    private val productHelper: ProductHelper,
 ) : IntegrationTest() {
 
 //    @Test
 //    fun `아이스 아메리카노 5샷 벤티 사이즈 재사용 컵으로 한잔이요`() {
-//        val accessToken = authHelper.getAccessToken()
+//        val beanDTO = productHelper.insertBean(
+//            BeanDTO(
+//            "dummy_bean",
+//            "dummy",
+//            "bean",
+//            "",
+//            "",
+//            "",
+//            "",
+//            ""
+//            )
+//        )
+//        val coffeeDTO = productHelper.insertCoffee(
+//            CoffeeDTO(
+//                "americano",
+//                "",
+//                4400,
+//                "",
+//                "",
+//                listOf<BeanDTO>(beanDTO)
+//            )
+//        )
 //
+//        val accessToken = authHelper.getAccessToken()
 //        val orderingRequest = OrderingRequest(OrderingStatus.REQUEST, listOf<OrderingDetailRequest>(
 //            OrderingDetailRequest(
-//                CoffeeDTO(
-//                    "americano",
-//                    "",
-//                    4400,
-//                    "",
-//                    "coffee",
-//                    listOf<BeanDTO>(),
-//                ),
+//                coffeeDTO,
 //                null,
 //                null,
 //                null,
@@ -82,18 +98,20 @@ class OrderingControllerIT @Autowired constructor(
 
     @Test
     fun `크로크무슈 포크 2개넣어서 포장이요`() {
+        val breadDTO = productHelper.insertBread(BreadDTO(
+            "Croque_Monsieur",
+            "",
+            5600,
+            "",
+            ""
+        ))
+
         val accessToken = authHelper.getAccessToken()
         val orderingRequest = OrderingRequest(OrderingStatus.REQUEST, listOf<OrderingDetailRequest>(
             OrderingDetailRequest(
                 null,
                 null,
-                BreadDTO(
-                    "",
-                    "",
-                    5600,
-                    "",
-                    ""
-                ),
+                breadDTO,
                 null,
                 null,
                 BreadOptionRequest(
@@ -116,22 +134,26 @@ class OrderingControllerIT @Autowired constructor(
 
     @Test
     fun `인도네시아 만델링 원두 드립으로 내려먹을 1팩이요`() {
+        val beanDTO = productHelper.insertBean(
+            BeanDTO(
+                "Indonesian_Mandeling",
+                "Indo",
+                "nesian",
+                "",
+                "",
+                "",
+                "",
+                ""
+            )
+        )
+
         val accessToken = authHelper.getAccessToken()
         val orderingRequest = OrderingRequest(OrderingStatus.REQUEST, listOf<OrderingDetailRequest>(
             OrderingDetailRequest(
                 null,
                 null,
                 null,
-                BeanDTO(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                ),
+                beanDTO,
                 null,
                 null,
                 BeanOptionRequest(

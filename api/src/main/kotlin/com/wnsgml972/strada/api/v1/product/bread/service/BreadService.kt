@@ -31,6 +31,7 @@ class BreadService(
     fun insert(breadDTO: BreadDTO) =
         breadRepository
             .save(breadDTO.toEntity())
+            .toDto()
 
     @Transactional
     fun update(breadDTO: BreadDTO) =

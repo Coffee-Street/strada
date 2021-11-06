@@ -40,14 +40,19 @@ class DrinkOption private constructor(
 
     val cupSize: Int,
 
+    @Enumerated(EnumType.STRING)
     val water: QuantityType,
 
+    @Enumerated(EnumType.STRING)
     val milk: QuantityType,
 
+    @Enumerated(EnumType.STRING)
     val iced: QuantityType,
 
+    @Enumerated(EnumType.STRING)
     val hot: QuantityType,
 
+    @Enumerated(EnumType.STRING)
     val cream: QuantityType,
 
     val memo: String = "",
