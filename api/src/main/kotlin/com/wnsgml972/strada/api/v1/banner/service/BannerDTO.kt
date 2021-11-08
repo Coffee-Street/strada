@@ -4,5 +4,7 @@ data class BannerDTO(
     val code: String,
     val title: String,
     val imageUrl: String,
-    val message: String
+    val message: String,
+    val backgroundColor: String,
+    val fontColor: String
 )

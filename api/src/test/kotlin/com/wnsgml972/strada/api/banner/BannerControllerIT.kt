@@ -33,6 +33,8 @@ class BannerControllerIT@Autowired constructor(
             "dummy title",
             "http://dummy",
             "this is dummy",
+            "#ffffff",
+            "#000000"
         )
         bannerHelper.insertBanner("dummy", bannerInsertRequest)
     }
@@ -51,6 +53,8 @@ class BannerControllerIT@Autowired constructor(
             "test insert",
             "http://dummy",
             "this is dummy",
+            "#ffffff",
+            "#000000"
         )
 
         val accessToken = authHelper.getAccessToken()
@@ -109,6 +113,8 @@ class BannerControllerIT@Autowired constructor(
             "test update",
             "http://dummy",
             "this is dummy",
+            "#ffffff",
+            "#000000"
         )
 
         val accessToken = authHelper.getAccessToken()
@@ -136,6 +142,8 @@ class BannerControllerIT@Autowired constructor(
             "test delete",
             "http://dummy",
             "this is dummy",
+            "#ffffff",
+            "#000000"
         )
 
         bannerHelper.insertBanner("test", bannerInsertRequest)
