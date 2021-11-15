@@ -27,7 +27,7 @@ class CoffeeService(
     @Transactional
     fun insert(name:String, coffeeInsertRequest: CoffeeInsertRequest): CoffeeDTO =
         coffeeRepository
-            .save(coffeeInsertRequest.toEntity(null, name))
+            .save(coffeeInsertRequest.toEntity( name))
             .toDto()
 
     @Transactional

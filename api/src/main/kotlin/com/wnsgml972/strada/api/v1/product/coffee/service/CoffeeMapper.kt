@@ -20,8 +20,8 @@ fun Coffee.toDto() = CoffeeDTO(
         }
 )
 
-fun CoffeeDTO.toEntity(id: Long? = 0) = Coffee(
-    id,
+fun CoffeeDTO.toEntity() = Coffee(
+    0,
     this.name,
     this.imageUrl,
     this.price,
@@ -32,7 +32,18 @@ fun CoffeeDTO.toEntity(id: Long? = 0) = Coffee(
     coffee
 }
 
-fun CoffeeInsertRequest.toEntity(id: Long? = 0, name: String) = Coffee(
+fun CoffeeInsertRequest.toEntity(name: String) = Coffee(
+    0,
+    name,
+    this.imageUrl,
+    this.price,
+    this.description,
+    this.category,
+).let { coffee ->
+    coffee.beanCoffees = this.beans.map { v -> BeanCoffee(coffee, v.toEntity()) }.toList()
+    coffee
+}
+fun CoffeeInsertRequest.toEntity(id:Long? = 0, name:String) = Coffee(
     id,
     name,
     this.imageUrl,
