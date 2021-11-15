@@ -5,6 +5,7 @@ import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeDTO
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeInsertRequest
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeService
 import com.wnsgml972.strada.api.v1.product.coffee.service.toCoffeeDto
+import com.wnsgml972.strada.api.v1.product.coffee.service.toEntity
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -48,13 +49,13 @@ class CoffeeController @Autowired constructor(
     @ApiResponse(responseCode = "200", description = "Add coffee")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun insert(@PathVariable name: String, @RequestBody @Valid coffeeInsertRequest: CoffeeInsertRequest): CoffeeDTO =
-        coffeeService.insert(coffeeInsertRequest.toCoffeeDto(name))
+        coffeeService.insert(name, coffeeInsertRequest)
 
     @PutMapping("/{name}")
     @ApiResponse(responseCode = "200", description = "Update coffee")
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     fun update(@PathVariable name: String, @RequestBody @Valid coffeeInsertRequest: CoffeeInsertRequest): CoffeeDTO =
-        coffeeService.update(coffeeInsertRequest.toCoffeeDto(name))
+        coffeeService.update(name, coffeeInsertRequest)
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "200", description = "delete coffee")

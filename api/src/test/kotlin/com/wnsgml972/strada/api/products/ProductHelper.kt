@@ -88,5 +88,8 @@ class ProductHelper @Autowired constructor(
                 nonCoffeeService.delete(it.id)
             }
 
+    fun test() =
+        coffeeService.load("aaa")
+
 }
 

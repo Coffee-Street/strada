@@ -25,16 +25,16 @@ class CoffeeService(
             .toDto()
 
     @Transactional
-    fun insert(coffeeDTO: CoffeeDTO): CoffeeDTO =
+    fun insert(name:String, coffeeInsertRequest: CoffeeInsertRequest): CoffeeDTO =
         coffeeRepository
-            .save(coffeeDTO.toEntity())
+            .save(coffeeInsertRequest.toEntity(null, name))
             .toDto()
 
     @Transactional
-    fun update(coffeeDTO: CoffeeDTO): CoffeeDTO =
-        load(coffeeDTO.name)
+    fun update(name:String, coffeeInsertRequest: CoffeeInsertRequest): CoffeeDTO =
+        load(name)
             .let {
-                coffeeRepository.save(coffeeDTO.toEntity(it.id!!))
+                coffeeRepository.save(coffeeInsertRequest.toEntity(it.id!!,name))
             }
             .toDto()
 
@@ -45,8 +45,8 @@ class CoffeeService(
                 coffeeRepository.delete(it)
             }
 
-    @Transactional(readOnly = true)
-    fun load(name: String): Coffee =
+    //@Transactional(readOnly = true)
+    private fun load(name: String): Coffee =
         coffeeRepository
             .findByName(name)
             .orElseThrow { StradaNotFoundException("$name Not Found") }
