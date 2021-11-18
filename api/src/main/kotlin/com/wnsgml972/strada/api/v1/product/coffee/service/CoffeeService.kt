@@ -25,16 +25,16 @@ class CoffeeService(
             .toDto()
 
     @Transactional
-    fun insert(name:String, coffeeInsertRequest: CoffeeInsertRequest): CoffeeDTO =
+    fun insert(name: String, coffeeInsertRequest: CoffeeInsertRequest): CoffeeDTO =
         coffeeRepository
-            .save(coffeeInsertRequest.toEntity( name))
+            .save(coffeeInsertRequest.toEntity(name))
             .toDto()
 
     @Transactional
-    fun update(name:String, coffeeInsertRequest: CoffeeInsertRequest): CoffeeDTO =
+    fun update(name: String, coffeeInsertRequest: CoffeeInsertRequest): CoffeeDTO =
         load(name)
             .let {
-                coffeeRepository.save(coffeeInsertRequest.toEntity(it.id!!,name))
+                coffeeRepository.save(coffeeInsertRequest.toEntity(it.id!!, name))
             }
             .toDto()
 
@@ -45,7 +45,7 @@ class CoffeeService(
                 coffeeRepository.delete(it)
             }
 
-    //@Transactional(readOnly = true)
+    // @Transactional(readOnly = true)
     private fun load(name: String): Coffee =
         coffeeRepository
             .findByName(name)

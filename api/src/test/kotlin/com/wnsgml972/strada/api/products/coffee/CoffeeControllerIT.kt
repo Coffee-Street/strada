@@ -31,6 +31,7 @@ class CoffeeControllerIT @Autowired constructor(
     fun `insert dummy date before each test`() {
 
         val coffeeDTO = CoffeeDTO(
+            0,
             "dummy",
             "http://coffeeInsertTest.com",
             2000,
@@ -170,6 +171,7 @@ class CoffeeControllerIT @Autowired constructor(
     fun `delete Coffee using delete from CoffeeController`() {
 
         val coffeeDTO = CoffeeDTO(
+            0,
             "test_coffee",
             "http://coffeeInsertTest.com",
             2000,

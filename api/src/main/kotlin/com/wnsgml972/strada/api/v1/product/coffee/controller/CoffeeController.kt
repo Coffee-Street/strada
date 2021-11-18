@@ -4,8 +4,6 @@ import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeDTO
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeInsertRequest
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeService
-import com.wnsgml972.strada.api.v1.product.coffee.service.toCoffeeDto
-import com.wnsgml972.strada.api.v1.product.coffee.service.toEntity
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
