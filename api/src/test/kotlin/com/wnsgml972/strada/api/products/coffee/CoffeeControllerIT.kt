@@ -30,8 +30,7 @@ class CoffeeControllerIT @Autowired constructor(
     @BeforeEach
     fun `insert dummy date before each test`() {
 
-        val coffeeDTO = CoffeeDTO(
-            "dummy",
+        val coffeeInsertRequest = CoffeeInsertRequest(
             "http://coffeeInsertTest.com",
             2000,
             "insert coffee",
@@ -47,7 +46,8 @@ class CoffeeControllerIT @Autowired constructor(
                     "test")
             )
         )
-        productHelper.insertCoffee(coffeeDTO)
+
+        productHelper.insertCoffee("dummy", coffeeInsertRequest)
     }
 
     @AfterEach
@@ -169,8 +169,7 @@ class CoffeeControllerIT @Autowired constructor(
     @Order(5)
     fun `delete Coffee using delete from CoffeeController`() {
 
-        val coffeeDTO = CoffeeDTO(
-            "test_coffee",
+        val coffeeInsertRequest = CoffeeInsertRequest(
             "http://coffeeInsertTest.com",
             2000,
             "insert coffee",
@@ -186,7 +185,7 @@ class CoffeeControllerIT @Autowired constructor(
                     "test")
             )
         )
-        productHelper.insertCoffee(coffeeDTO)
+        productHelper.insertCoffee("test_coffee", coffeeInsertRequest)
 
         val accessToken = authHelper.getAccessToken()
         client.delete()
