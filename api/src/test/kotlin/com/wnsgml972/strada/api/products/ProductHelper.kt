@@ -5,6 +5,7 @@ import com.wnsgml972.strada.api.v1.product.bean.service.BeanDTO
 import com.wnsgml972.strada.api.v1.product.bean.service.BeanService
 import com.wnsgml972.strada.api.v1.product.bread.service.BreadDTO
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeDTO
+import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeInsertRequest
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeService
 import com.wnsgml972.strada.api.v1.product.noncoffee.service.NonCoffeeDTO
 import com.wnsgml972.strada.api.v1.product.noncoffee.service.NonCoffeeService
@@ -21,8 +22,8 @@ class ProductHelper @Autowired constructor(
 ){
 
     @Transactional
-    fun insertCoffee(coffeeDTO: CoffeeDTO) =
-        coffeeService.insert(coffeeDTO)
+    fun insertCoffee(name: String, coffeeInsertRequest: CoffeeInsertRequest) =
+        coffeeService.insert(name, coffeeInsertRequest)
 
     @Transactional
     fun deleteCoffee(coffeeName: String) =
@@ -87,6 +88,5 @@ class ProductHelper @Autowired constructor(
             .forEach {
                 nonCoffeeService.delete(it.id)
             }
-
 }
 

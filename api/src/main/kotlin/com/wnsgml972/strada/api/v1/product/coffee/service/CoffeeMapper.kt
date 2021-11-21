@@ -6,6 +6,7 @@ import com.wnsgml972.strada.api.v1.product.coffee.domain.BeanCoffee
 import com.wnsgml972.strada.api.v1.product.coffee.domain.Coffee
 
 fun Coffee.toDto() = CoffeeDTO(
+    this.id,
     this.name,
     this.imageUrl,
     this.price,
@@ -31,9 +32,9 @@ fun CoffeeDTO.toEntity() = Coffee(
     coffee
 }
 
-fun CoffeeDTO.toEntity(id: Long) = Coffee(
+fun CoffeeInsertRequest.toEntity(name: String, id: Long? = 0) = Coffee(
     id,
-    this.name,
+    name,
     this.imageUrl,
     this.price,
     this.description,
@@ -42,13 +43,14 @@ fun CoffeeDTO.toEntity(id: Long) = Coffee(
     coffee.beanCoffees = this.beans.map { v -> BeanCoffee(coffee, v.toEntity()) }.toList()
     coffee
 }
-
-fun CoffeeInsertRequest.toCoffeeDto(name: String) =
-    CoffeeDTO(
-        name,
-        this.imageUrl,
-        this.price,
-        this.description,
-        this.category,
-        this.beans
-    )
+fun CoffeeInsertRequest.toEntity(id: Long? = 0, name: String) = Coffee(
+    id,
+    name,
+    this.imageUrl,
+    this.price,
+    this.description,
+    this.category,
+).let { coffee ->
+    coffee.beanCoffees = this.beans.map { v -> BeanCoffee(coffee, v.toEntity()) }.toList()
+    coffee
+}
