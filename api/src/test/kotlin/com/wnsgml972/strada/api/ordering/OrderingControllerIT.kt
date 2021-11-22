@@ -21,6 +21,7 @@ import com.wnsgml972.strada.api.v1.ordering.service.OrderingStatus
 import com.wnsgml972.strada.api.v1.product.bean.service.BeanDTO
 import com.wnsgml972.strada.api.v1.product.bread.service.BreadDTO
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeDTO
+import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeInsertRequest
 import mu.KLogging
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -35,66 +36,66 @@ class OrderingControllerIT @Autowired constructor(
     private val productHelper: ProductHelper,
 ) : IntegrationTest() {
 
-//    @Test
-//    fun `아이스 아메리카노 5샷 벤티 사이즈 재사용 컵으로 한잔이요`() {
-//        val beanDTO = productHelper.insertBean(
-//            BeanDTO(
-//            "dummy_bean",
-//            "dummy",
-//            "bean",
-//            "",
-//            "",
-//            "",
-//            "",
-//            ""
-//            )
-//        )
-//        val coffeeDTO = productHelper.insertCoffee(
-//            CoffeeDTO(
-//                "americano",
-//                "",
-//                4400,
-//                "",
-//                "",
-//                listOf<BeanDTO>(beanDTO)
-//            )
-//        )
-//
-//        val accessToken = authHelper.getAccessToken()
-//        val orderingRequest = OrderingRequest(OrderingStatus.REQUEST, listOf<OrderingDetailRequest>(
-//            OrderingDetailRequest(
-//                coffeeDTO,
-//                null,
-//                null,
-//                null,
-//                DrinkOptionRequest(
-//                    HotOrIcedType.ICED,
-//                    CupType.MULTI_USE,
-//                    591,
-//                    QuantityType.DEFAULT,
-//                    QuantityType.NONE,
-//                    QuantityType.DEFAULT,
-//                    QuantityType.NONE,
-//                    QuantityType.NONE,
-//                    "very thick",
-//                    5,
-//                    listOf<SyrupOptionRequest>(),
-//                    listOf<DrizzleOptionRequest>(),
-//                ),
-//                null,
-//                null
-//            )
-//        ))
-//
-//        client.post()
-//            .uri(OrderingController.ORDERING_BASE_URL)
-//            .header("Authorization", "Bearer $accessToken")
-//            .contentType(MediaType.APPLICATION_JSON)
-//            .bodyValue(orderingRequest)
-//            .exchange()
-//            .expectStatus().is2xxSuccessful
-//            .expectBody<OrderingDTO>()
-//    }
+    @Test
+    fun `아이스 아메리카노 5샷 벤티 사이즈 재사용 컵으로 한잔이요`() {
+        val beanDTO = productHelper.insertBean(
+            BeanDTO(
+            "dummy_bean",
+            "dummy",
+            "bean",
+            "",
+            "",
+            "",
+            "",
+            ""
+            )
+        )
+        val coffeeDTO = productHelper.insertCoffee(
+            "americano",
+            CoffeeInsertRequest(
+                "",
+                4400,
+                "",
+                "",
+                listOf<BeanDTO>(beanDTO)
+            )
+        )
+
+        val accessToken = authHelper.getAccessToken()
+        val orderingRequest = OrderingRequest(OrderingStatus.REQUEST, listOf<OrderingDetailRequest>(
+            OrderingDetailRequest(
+                coffeeDTO,
+                null,
+                null,
+                null,
+                DrinkOptionRequest(
+                    HotOrIcedType.ICED,
+                    CupType.MULTI_USE,
+                    591,
+                    QuantityType.DEFAULT,
+                    QuantityType.NONE,
+                    QuantityType.DEFAULT,
+                    QuantityType.NONE,
+                    QuantityType.NONE,
+                    "very thick",
+                    5,
+                    listOf<SyrupOptionRequest>(),
+                    listOf<DrizzleOptionRequest>(),
+                ),
+                null,
+                null
+            )
+        ))
+
+        client.post()
+            .uri(OrderingController.ORDERING_BASE_URL)
+            .header("Authorization", "Bearer $accessToken")
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(orderingRequest)
+            .exchange()
+            .expectStatus().is2xxSuccessful
+            .expectBody<OrderingDTO>()
+    }
 
     @Test
     fun `크로크무슈 포크 2개넣어서 포장이요`() {
