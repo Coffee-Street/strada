@@ -22,7 +22,7 @@ fun Coffee.toDto() = CoffeeDTO(
 )
 
 fun CoffeeDTO.toEntity() = Coffee(
-    this.id?: throw StradaNotFoundException("$id is not found"),
+    this.id ?: throw StradaNotFoundException("$id is not found"),
     this.name,
     this.imageUrl,
     this.price,
