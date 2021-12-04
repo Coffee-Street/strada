@@ -50,6 +50,7 @@ class OrderingControllerIT @Autowired constructor(
             ""
             )
         )
+
         val coffeeDTO = productHelper.insertCoffee(
             "americano",
             CoffeeInsertRequest(
