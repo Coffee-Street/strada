@@ -21,7 +21,7 @@ class BeanService(
             .map { it.toDto() }
 
     @Transactional(readOnly = true)
-    fun selectById(id: String): BeanDTO? =
+    fun selectById(id: String): BeanDTO =
         load(id)
             .toDto()
 
