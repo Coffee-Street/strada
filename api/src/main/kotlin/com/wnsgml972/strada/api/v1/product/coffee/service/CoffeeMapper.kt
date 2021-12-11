@@ -4,6 +4,7 @@ import com.wnsgml972.strada.api.v1.product.bean.service.toDto
 import com.wnsgml972.strada.api.v1.product.bean.service.toEntity
 import com.wnsgml972.strada.api.v1.product.coffee.domain.BeanCoffee
 import com.wnsgml972.strada.api.v1.product.coffee.domain.Coffee
+import com.wnsgml972.strada.exception.StradaNotFoundException
 
 fun Coffee.toDto() = CoffeeDTO(
     this.id,
@@ -21,7 +22,7 @@ fun Coffee.toDto() = CoffeeDTO(
 )
 
 fun CoffeeDTO.toEntity() = Coffee(
-    0,
+    this.id ?: throw StradaNotFoundException("$id is not found"),
     this.name,
     this.imageUrl,
     this.price,
