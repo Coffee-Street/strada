@@ -24,9 +24,7 @@ class UserProfileService(
 
     @Transactional(readOnly = true)
     fun selectByUserId(userId: String): UserProfileDTO =
-        profileRepository
-            .findByUserId(userId)
-            .orElseThrow { StradaNotFoundException("$userId Not Found") }
+        load(userId)
             .toDto()
 
     @Transactional
@@ -36,17 +34,17 @@ class UserProfileService(
             .toDto()
 
     @Transactional
-    fun update(id: Long, userProfileRequest: UserProfileRequest) =
-        load(id)
-            .let {
+    fun update(userId: String, userProfileRequest: UserProfileRequest) =
+        load(userId)
+            .run {
                 profileRepository
-                    .save(userProfileRequest.toEntity(id))
+                    .save(userProfileRequest.toEntity(this.id))
                     .toDto()
             }
 
     @Transactional
-    fun delete(id: Long) =
-        load(id)
+    fun delete(userId: String) =
+        load(userId)
             .run {
                 profileRepository.delete(this)
             }
@@ -56,6 +54,16 @@ class UserProfileService(
         profileRepository
             .findById(id)
             .orElseThrow { StradaNotFoundException("$id Not Found") }
+            .let {
+                it.id ?: throw StradaIllegalStateException("${it.id} is not initialized")
+                it
+            }
+
+    @Transactional
+    private fun load(userId: String): UserProfile =
+        profileRepository
+            .findByUserId(userId)
+            .orElseThrow { StradaNotFoundException("$userId's entity is Not Found") }
             .let {
                 it.id ?: throw StradaIllegalStateException("${it.id} is not initialized")
                 it
