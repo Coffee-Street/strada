@@ -64,7 +64,7 @@ class OrderingControllerIT @Autowired constructor(
         val accessToken = authHelper.getAccessToken()
         val orderingRequest = OrderingRequest(OrderingStatus.REQUEST, listOf<OrderingDetailRequest>(
             OrderingDetailRequest(
-                coffeeDTO,
+                coffeeDTO.name,
                 null,
                 null,
                 null,
@@ -112,7 +112,7 @@ class OrderingControllerIT @Autowired constructor(
             OrderingDetailRequest(
                 null,
                 null,
-                breadDTO,
+                breadDTO.id,
                 null,
                 null,
                 BreadOptionRequest(
@@ -154,7 +154,7 @@ class OrderingControllerIT @Autowired constructor(
                 null,
                 null,
                 null,
-                beanDTO,
+                beanDTO.id,
                 null,
                 null,
                 BeanOptionRequest(
