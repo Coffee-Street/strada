@@ -1,5 +1,6 @@
 package com.wnsgml972.strada.api.profile
 
+import com.wnsgml972.strada.api.v1.account.service.UserDto
 import com.wnsgml972.strada.api.v1.account.service.UserService
 import com.wnsgml972.strada.api.v1.profile.service.UserProfileDTO
 import com.wnsgml972.strada.api.v1.profile.service.UserProfileRequest
@@ -14,16 +15,12 @@ class UserProfileHelper @Autowired constructor(
     private val userService: UserService,
     private val userProfileService: UserProfileService,
 ) {
-    @Transactional
-    fun signup(userId: String) {
+    fun signup(userId: String): UserDto =
         userService.signUp(userId)
-    }
 
-    @Transactional
     fun select(id: Long): UserProfileDTO =
         userProfileService.selectById(id)
 
-    @Transactional
     fun selectByUserId(userId: String): UserProfileDTO =
         userProfileService.selectByUserId(userId)
 }

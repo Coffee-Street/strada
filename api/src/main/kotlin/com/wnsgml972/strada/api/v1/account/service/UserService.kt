@@ -34,12 +34,17 @@ class UserService(
     }
 
     @Transactional
-    private fun load(id: String): User? =
-        userRepository
-            .findById(id)
-            .orElse(null)
-            .let {
-                it.id ?: throw StradaIllegalStateException("${it.id} is not initialized")
-                it
-            }
+    private fun load(id: String): User? {
+        val user = userRepository.findById(id)
+
+        if (user.isEmpty) {
+            return null
+        }
+
+        user.map {
+            it.id ?: throw StradaIllegalStateException("${it.id} is not initialized")
+        }
+
+        return user.get()
+    }
 }
