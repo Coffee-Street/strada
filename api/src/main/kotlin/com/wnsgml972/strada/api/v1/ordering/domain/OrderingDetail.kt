@@ -10,7 +10,6 @@ import com.wnsgml972.strada.api.v1.product.coffee.domain.Coffee
 import com.wnsgml972.strada.api.v1.product.noncoffee.domain.NonCoffee
 import javax.persistence.CascadeType
 import javax.persistence.Entity
-import javax.persistence.JoinColumn
 import javax.persistence.OneToOne
 
 /**
@@ -25,19 +24,15 @@ import javax.persistence.OneToOne
 @SuppressWarnings("LongParameterList")
 class OrderingDetail private constructor(
     @OneToOne
-    @JoinColumn(name = "coffee_id")
     val coffee: Coffee?,
 
     @OneToOne
-    @JoinColumn(name = "non_coffee_id")
     val nonCoffee: NonCoffee?,
 
     @OneToOne
-    @JoinColumn(name = "bread_id")
     val bread: Bread?,
 
     @OneToOne
-    @JoinColumn(name = "bean_id")
     val bean: Bean?,
 
     @OneToOne(cascade = [CascadeType.ALL])
