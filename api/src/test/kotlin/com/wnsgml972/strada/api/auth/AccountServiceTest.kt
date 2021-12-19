@@ -34,7 +34,7 @@ class AccountServiceTest : AbstractWebTest() {
         every {
             userRepository.findById(any())
         } answers {
-            Optional.of(userMap[capturedId] ?: throw StradaNotFoundException())
+            Optional.ofNullable(userMap[capturedId])
         }
 
         every {
@@ -84,7 +84,7 @@ class AccountServiceTest : AbstractWebTest() {
         totalUserCount `should be equal to` (1)
 
         verify(exactly = 1) { userRepository.save(any()) }
-        verify(exactly = 1) { userRepository.findById(any()) }
+        verify(exactly = 2) { userRepository.findById(any()) }
         verify(exactly = 1) { userRepository.findAll() }
         confirmVerified(userRepository)
     }
