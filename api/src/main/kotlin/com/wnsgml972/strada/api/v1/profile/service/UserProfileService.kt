@@ -49,7 +49,6 @@ class UserProfileService(
                 profileRepository.delete(this)
             }
 
-    @Transactional(readOnly = true)
     private fun load(id: Long): UserProfile =
         profileRepository
             .findById(id)
@@ -59,7 +58,6 @@ class UserProfileService(
                 it
             }
 
-    @Transactional
     private fun load(userId: String): UserProfile =
         profileRepository
             .findByUserId(userId)

@@ -31,13 +31,6 @@ import javax.validation.Valid
 class UserProfileController @Autowired constructor(
     private var userProfileService: UserProfileService,
 ) {
-
-//    @GetMapping
-//    @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-//    @ApiResponse(responseCode = "200", description = "모든 유저의 profile 가져오기")
-//    fun selectAll() =
-//        userProfileService.selectAll()
-
     @GetMapping
     @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     @ApiResponse(responseCode = "200", description = "token에 있는 정보를 통해 해당 user의 profile을 가져오기")

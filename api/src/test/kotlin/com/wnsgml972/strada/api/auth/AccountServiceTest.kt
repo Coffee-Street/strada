@@ -50,6 +50,12 @@ class AccountServiceTest : AbstractWebTest() {
             userMap.values.toList()
         }
 
+        every {
+            userRepository.existsById(any())
+        } answers {
+            userMap.contains(capturedId)
+        }
+
         userProfileService = mockk()
 
         every {
@@ -83,6 +89,7 @@ class AccountServiceTest : AbstractWebTest() {
         user1 `should be equal to` user2
         totalUserCount `should be equal to` (1)
 
+        verify(exactly = 1) { userRepository.existsById(any()) }
         verify(exactly = 1) { userRepository.save(any()) }
         verify(exactly = 2) { userRepository.findById(any()) }
         verify(exactly = 1) { userRepository.findAll() }
