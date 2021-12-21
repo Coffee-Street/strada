@@ -30,6 +30,15 @@ class UserService(
         return userRepository.save(User.of(id, isEnabled)).toDto()
     }
 
+    @Transactional
+    fun signOut(id: String) {
+        userProfileService.delete(id)
+        load(id)
+            .run {
+                userRepository.delete(this)
+            }
+    }
+
     private fun load(id: String): User =
         userRepository
             .findById(id)

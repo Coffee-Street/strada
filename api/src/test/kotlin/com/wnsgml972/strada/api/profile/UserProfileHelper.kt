@@ -15,7 +15,7 @@ class UserProfileHelper @Autowired constructor(
     private val userService: UserService,
     private val userProfileService: UserProfileService,
 ) {
-    fun signup(userId: String): UserDto =
+    fun signUp(userId: String): UserDto =
         userService.signUp(userId)
 
     fun select(id: Long): UserProfileDTO =
@@ -23,4 +23,7 @@ class UserProfileHelper @Autowired constructor(
 
     fun selectByUserId(userId: String): UserProfileDTO =
         userProfileService.selectByUserId(userId)
+
+    fun signOut(userId: String) =
+        userService.signOut(userId)
 }

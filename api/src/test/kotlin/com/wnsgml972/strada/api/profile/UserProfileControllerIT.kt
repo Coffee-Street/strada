@@ -6,6 +6,7 @@ import com.wnsgml972.strada.api.v1.profile.controller.UserProfileController
 import com.wnsgml972.strada.api.v1.profile.service.UserProfileDTO
 import com.wnsgml972.strada.api.v1.profile.service.UserProfileRequest
 import com.wnsgml972.strada.security.SecurityUtils
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,7 +22,12 @@ class UserProfileControllerIT @Autowired constructor(
 
     @BeforeEach
     fun `유저 생성`() {
-        userProfileHelper.signup(authHelper.phoneNumber)
+        userProfileHelper.signUp(authHelper.phoneNumber)
+    }
+
+    @AfterEach
+    fun `유저 삭제`() {
+        userProfileHelper.signOut(authHelper.phoneNumber)
     }
 
     @Test
