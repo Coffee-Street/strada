@@ -30,8 +30,6 @@ class UserService(
         return userRepository.save(User.of(id, isEnabled)).toDto()
     }
 
-    }
-
     private fun load(id: String): User =
         userRepository
             .findById(id)

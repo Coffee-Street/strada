@@ -91,7 +91,7 @@ class AccountServiceTest : AbstractWebTest() {
 
         verify(exactly = 1) { userRepository.existsById(any()) }
         verify(exactly = 1) { userRepository.save(any()) }
-        verify(exactly = 2) { userRepository.findById(any()) }
+        verify(exactly = 1) { userRepository.findById(any()) }
         verify(exactly = 1) { userRepository.findAll() }
         confirmVerified(userRepository)
     }
