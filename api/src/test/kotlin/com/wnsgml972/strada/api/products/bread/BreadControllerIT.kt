@@ -10,7 +10,7 @@ import mu.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
+import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
@@ -19,7 +19,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
 
-@TestMethodOrder(OrderAnnotation::class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class BreadControllerIT @Autowired constructor(
     private val client: WebTestClient,
     private val authHelper: AuthHelper,
@@ -28,6 +28,7 @@ class BreadControllerIT @Autowired constructor(
 
     @BeforeEach
     fun `insert dummy date before each test`() {
+
         val breadDTO = BreadDTO(
             "dummy",
             "http://breadInsertTest.com",
@@ -118,7 +119,6 @@ class BreadControllerIT @Autowired constructor(
                 result.responseBody?.price shouldBeEqualTo 10000
                 logger.debug { "result=${result.responseBody}" }
             }
-
     }
 
     @Test
