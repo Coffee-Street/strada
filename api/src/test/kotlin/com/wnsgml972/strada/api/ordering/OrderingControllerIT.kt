@@ -17,13 +17,13 @@ import com.wnsgml972.strada.api.v1.ordering.controller.OrderingController
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingDTO
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingDetailRequest
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingRequest
+import com.wnsgml972.strada.api.v1.ordering.service.OrderingService
 import com.wnsgml972.strada.api.v1.ordering.service.OrderingStatus
 import com.wnsgml972.strada.api.v1.product.bean.service.BeanDTO
 import com.wnsgml972.strada.api.v1.product.bread.service.BreadDTO
-import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeDTO
 import com.wnsgml972.strada.api.v1.product.coffee.service.CoffeeInsertRequest
 import mu.KLogging
-import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -34,7 +34,21 @@ class OrderingControllerIT @Autowired constructor(
     private val client: WebTestClient,
     private val authHelper: AuthHelper,
     private val productHelper: ProductHelper,
+    private val orderingService: OrderingService
 ) : IntegrationTest() {
+
+
+    @AfterEach
+    fun `delete after each test`() {
+        orderingService.selectAll()
+            .forEach{
+                orderingService.delete(it.id)
+            }
+        productHelper.clearCoffee()
+        productHelper.clearBean()
+        productHelper.clearBread()
+        productHelper.clearNonCoffee()
+    }
 
     @Test
     fun `아이스 아메리카노 5샷 벤티 사이즈 재사용 컵으로 한잔이요`() {
