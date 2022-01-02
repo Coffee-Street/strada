@@ -20,7 +20,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
-class NonCoffeeControllerIT@Autowired constructor(
+class NonCoffeeControllerIT @Autowired constructor(
     private val client: WebTestClient,
     private val authHelper: AuthHelper,
     private val productHelper: ProductHelper
@@ -36,7 +36,6 @@ class NonCoffeeControllerIT@Autowired constructor(
             "insert NonCoffee",
             "NonCoffee")
         productHelper.insertNonCoffee(nonCoffeeDTO)
-
     }
 
     @AfterEach
