@@ -2,10 +2,11 @@ package com.wnsgml972.strada.api.profile
 
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
+import com.wnsgml972.strada.api.products.bread.BreadControllerIT
 import com.wnsgml972.strada.api.v1.profile.controller.UserProfileController
 import com.wnsgml972.strada.api.v1.profile.service.UserProfileDTO
 import com.wnsgml972.strada.api.v1.profile.service.UserProfileRequest
-import com.wnsgml972.strada.security.SecurityUtils
+import mu.KLogging
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -45,5 +46,8 @@ class UserProfileControllerIT @Autowired constructor(
             .expectStatus()
             .is2xxSuccessful
             .expectBody<UserProfileDTO>()
+            .consumeWith { result -> UserProfileControllerIT.logger.debug { "result=${result.responseBody}" } }
     }
+
+    companion object : KLogging()
 }

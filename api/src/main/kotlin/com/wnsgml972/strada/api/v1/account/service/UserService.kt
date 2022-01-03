@@ -23,7 +23,7 @@ class UserService(
 
     @Transactional
     fun signUp(id: String, isEnabled: Boolean = true): UserDto {
-        if (userRepository.existsById(id)) {
+        if (!userRepository.existsById(id)) {
             userProfileService.insert(UserProfileRequest(id, INITIAL_POINT))
         }
 
