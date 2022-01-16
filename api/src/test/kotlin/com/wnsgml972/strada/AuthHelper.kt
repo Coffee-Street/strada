@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component
 class AuthHelper @Autowired constructor(
     private val jwtService: JwtService
 ) {
-    private val accessTokenRequest = AccessTokenRequest("010-1234-1234")
+    val phoneNumber = "010-1234-1234"
+    private val accessTokenRequest = AccessTokenRequest(phoneNumber)
 
     fun getAccessToken(): String {
         return jwtService
