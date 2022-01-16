@@ -12,5 +12,6 @@ import org.springframework.context.annotation.Import
     RestApiTemplateConfig::class,
     SecurityConfig::class,
     ExecutorConfig::class,
+    AsyncConfig::class,
 )
 class StradaWebConfig
