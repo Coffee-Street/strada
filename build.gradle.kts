@@ -36,7 +36,6 @@ allprojects {
 
     repositories {
         mavenCentral()
-        jcenter()
         google()
 
         // for Oracle ojdbc10
