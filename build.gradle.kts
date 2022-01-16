@@ -48,6 +48,10 @@ allprojects {
             name = "jitpack"
             setUrl("https://jitpack.io")
         }
+
+        // for Schema Registry plugin ( https://github.com/ImFlog/schema-registry-plugin )
+        maven(url = "https://plugins.gradle.org/m2/")
+        maven(url = "http://packages.confluent.io/maven/")
     }
 }
 
