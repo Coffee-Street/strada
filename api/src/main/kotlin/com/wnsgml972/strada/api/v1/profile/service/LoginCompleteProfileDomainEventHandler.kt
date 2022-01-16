@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 class LoginCompleteProfileDomainEventHandler @Autowired constructor(
-    private val userProfileService: UserProfileService
+    private val userProfileService: UserProfileService,
 ) : DomainEventListener {
 
     @Async("loginEventHandlerExecutor")
@@ -22,8 +22,14 @@ class LoginCompleteProfileDomainEventHandler @Autowired constructor(
             return
         }
 
-        val request = UserProfileRequest(event.userId, USER_FIRST_POINT)
-        userProfileService.insert(request)
+        runCatching {
+            userProfileService.selectByUserId(event.userId)
+        }.onFailure {
+            logger.debug(it) { "UserProfile 이 없으면 새로운 프로필을 삽입합니다." }
+
+            val request = UserProfileRequest(event.userId, USER_FIRST_POINT)
+            userProfileService.insert(request)
+        }
     }
 
     private val LoginEvent.isComplete

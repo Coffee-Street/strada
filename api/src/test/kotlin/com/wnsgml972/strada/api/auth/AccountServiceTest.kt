@@ -39,7 +39,7 @@ class AccountServiceTest : AbstractWebTest() {
         every {
             userRepository.findById(any())
         } answers {
-            Optional.of(userMap[capturedId] ?: throw StradaNotFoundException())
+            Optional.ofNullable(userMap[capturedId])
         }
 
         every {
@@ -53,6 +53,12 @@ class AccountServiceTest : AbstractWebTest() {
             userRepository.findAll()
         } answers {
             userMap.values.toList()
+        }
+
+        every {
+            userRepository.existsById(any())
+        } answers {
+            userMap.contains(capturedId)
         }
 
         userProfileService = mockk()
