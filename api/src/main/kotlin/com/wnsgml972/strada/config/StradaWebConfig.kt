@@ -11,5 +11,6 @@ import org.springframework.context.annotation.Import
     SpringdocOpenApiConfig::class,
     RestApiTemplateConfig::class,
     SecurityConfig::class,
+    ExecutorConfig::class,
 )
 class StradaWebConfig

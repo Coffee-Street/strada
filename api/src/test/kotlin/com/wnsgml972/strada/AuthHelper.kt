@@ -14,6 +14,5 @@ class AuthHelper @Autowired constructor(
     fun getAccessToken(): String {
         return jwtService
             .createToken(accessTokenRequest.phoneNumber)
-            .accessToken
     }
 }
