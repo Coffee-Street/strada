@@ -80,7 +80,7 @@ class AccountServiceTest : AbstractWebTest() {
         every {
             jwtService.createToken(any())
         } answers {
-            "token"
+            "random-token"
         }
 
         // set unit test service
