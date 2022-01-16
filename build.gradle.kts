@@ -39,11 +39,6 @@ allprojects {
         jcenter()
         google()
 
-        // for Kotlinx Benchmark
-        maven {
-            name = "Kotlinx"
-            setUrl("https://dl.bintray.com/kotlin/kotlinx")
-        }
         // for Oracle ojdbc10
         maven {
             name = "ICM"
