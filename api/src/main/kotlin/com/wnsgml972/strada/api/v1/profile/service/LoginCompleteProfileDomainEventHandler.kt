@@ -29,7 +29,6 @@ class LoginCompleteProfileDomainEventHandler @Autowired constructor(
                 val request = UserProfileRequest(event.userId, USER_FIRST_POINT)
                 userProfileService.insert(request)
             }
-
     }
 
     private val LoginEvent.isComplete
