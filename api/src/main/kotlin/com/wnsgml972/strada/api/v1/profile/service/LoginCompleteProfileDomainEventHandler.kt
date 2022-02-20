@@ -15,7 +15,7 @@ class LoginCompleteProfileDomainEventHandler @Autowired constructor(
 ) : DomainEventListener {
 
     @Async("loginEventHandlerExecutor")
-    @EventListener
+    @EventListener(LoginEvent::class)
     @Transactional
     fun handle(event: LoginEvent) {
         if (!event.isComplete) {
