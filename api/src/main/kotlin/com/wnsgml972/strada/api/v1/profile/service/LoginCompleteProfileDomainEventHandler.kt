@@ -22,14 +22,14 @@ class LoginCompleteProfileDomainEventHandler @Autowired constructor(
             return
         }
 
-        runCatching {
-            userProfileService.selectByUserId(event.userId)
-        }.onFailure {
-            logger.debug(it) { "UserProfile 이 없으면 새로운 프로필을 삽입합니다." }
+        userProfileService.selectByUserIdOrNull(event.userId)
+            ?: run {
+                logger.debug { "UserProfile 이 없으면 새로운 프로필을 삽입합니다." }
 
-            val request = UserProfileRequest(event.userId, USER_FIRST_POINT)
-            userProfileService.insert(request)
-        }
+                val request = UserProfileRequest(event.userId, USER_FIRST_POINT)
+                userProfileService.insert(request)
+            }
+
     }
 
     private val LoginEvent.isComplete

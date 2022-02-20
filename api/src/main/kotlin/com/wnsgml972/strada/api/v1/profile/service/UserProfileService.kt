@@ -27,6 +27,13 @@ class UserProfileService(
         load(userId)
             .toDto()
 
+    @Transactional(readOnly = true)
+    fun selectByUserIdOrNull(userId: String): UserProfileDTO? {
+        return profileRepository
+            .findByUserId(userId)
+            ?.toDto()
+    }
+
     @Transactional
     fun insert(userProfileRequest: UserProfileRequest) =
         profileRepository
@@ -61,9 +68,8 @@ class UserProfileService(
     private fun load(userId: String): UserProfile =
         profileRepository
             .findByUserId(userId)
-            .orElseThrow { StradaNotFoundException("$userId's entity is Not Found") }
-            .let {
+            ?.let {
                 it.id ?: throw StradaIllegalStateException("${it.id} is not initialized")
                 it
-            }
+            } ?: throw StradaNotFoundException("$userId's entity is Not Found")
 }

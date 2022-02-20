@@ -14,22 +14,22 @@ class StradaAsyncExceptionHandler : AsyncUncaughtExceptionHandler {
     override fun handleUncaughtException(ex: Throwable, method: Method, vararg args: Any?) {
         when (ex) {
             is ConcurrencyFailureException -> {
-                logger.info(ex) { "ConcurrencyFailureException in @Async task" }
+                logger.info(ex) { "[$method] ConcurrencyFailureException in @Async task" }
             }
             is StradaUnAuthorizedException -> {
-                logger.debug(ex) { "StradaUnAuthorizedException in @Async task" }
+                logger.debug(ex) { "[$method] StradaUnAuthorizedException in @Async task" }
             }
             is StradaBadRequestException -> {
-                logger.warn(ex) { "StradaBadRequestException in @Async task" }
+                logger.warn(ex) { "[$method] StradaBadRequestException in @Async task" }
             }
             is StradaNotFoundException -> {
-                logger.warn(ex) { "StradaNotFoundException in @Async task" }
+                logger.warn(ex) { "[$method] StradaNotFoundException in @Async task" }
             }
             is StradaIllegalStateException -> {
-                logger.error(ex) { "StradaIllegalStateException in @Async task" }
+                logger.error(ex) { "[$method] StradaIllegalStateException in @Async task" }
             }
             else -> {
-                logger.error(ex) { "@Async 처리 중 예상하지 못한 Exception이 발생했습니다." }
+                logger.error(ex) { "[$method] @Async 처리 중 예상하지 못한 Exception이 발생했습니다." }
             }
         }
     }
