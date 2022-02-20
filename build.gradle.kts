@@ -36,14 +36,8 @@ allprojects {
 
     repositories {
         mavenCentral()
-        jcenter()
         google()
 
-        // for Kotlinx Benchmark
-        maven {
-            name = "Kotlinx"
-            setUrl("https://dl.bintray.com/kotlin/kotlinx")
-        }
         // for Oracle ojdbc10
         maven {
             name = "ICM"
@@ -54,6 +48,10 @@ allprojects {
             name = "jitpack"
             setUrl("https://jitpack.io")
         }
+
+        // for Schema Registry plugin ( https://github.com/ImFlog/schema-registry-plugin )
+        maven(url = "https://plugins.gradle.org/m2/")
+        maven(url = "http://packages.confluent.io/maven/")
     }
 }
 

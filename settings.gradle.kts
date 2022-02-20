@@ -1,14 +1,12 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        jcenter()
         mavenCentral()
 
-        // for Avro plugin ( https://github.com/davidmc24/gradle-avro-plugin )
-        maven(url = "https://dl.bintray.com/gradle/gradle-plugins")
-
-        // kotlinx benchamrk
-        maven(url = "https://dl.bintray.com/kotlin/kotlinx")
+        // for Schema Registry plugin ( https://github.com/ImFlog/schema-registry-plugin )
+        maven(url = "https://plugins.gradle.org/m2/")
+        maven(url = "http://packages.confluent.io/maven/")
+        maven(url = "https://jitpack.io")
     }
 }
 

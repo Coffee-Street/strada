@@ -1,9 +1,9 @@
 package com.wnsgml972.strada.api.v1.account.service
 
+import com.wnsgml972.strada.api.v1.account.domain.LoginEvent
 import com.wnsgml972.strada.api.v1.account.domain.UserRepository
 import com.wnsgml972.strada.api.v1.account.domain.User
-import com.wnsgml972.strada.api.v1.profile.service.UserProfileRequest
-import com.wnsgml972.strada.api.v1.profile.service.UserProfileService
+import com.wnsgml972.strada.api.v1.event.service.DomainEventService
 import com.wnsgml972.strada.exception.StradaIllegalStateException
 import com.wnsgml972.strada.exception.StradaNotFoundException
 import mu.KLogging
@@ -13,7 +13,8 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val userProfileService: UserProfileService,
+    private val domainEventService: DomainEventService,
+    private val jwtService: JwtService,
 ) {
     @Transactional(readOnly = true)
     fun findAll() = userRepository.findAll().map { it.toDto() }
@@ -22,20 +23,17 @@ class UserService(
     fun findById(id: String): UserDto = load(id).toDto()
 
     @Transactional
-    fun signUp(id: String, isEnabled: Boolean = true): UserDto {
-        if (!userRepository.existsById(id)) {
-            userProfileService.insert(UserProfileRequest(id, INITIAL_POINT))
-        }
+    fun signUp(id: String, isEnabled: Boolean = true): LoginCompleteResponse {
+        val accessToken = jwtService.createToken(id)
 
-        return userRepository.save(User.of(id, isEnabled)).toDto()
-    }
+        val entity = User.of(id, isEnabled)
+        return userRepository.save(entity)
+            .toDto()
+            .let {
+                val event = LoginEvent(LoginEvent.Status.COMPLETE.value, id)
+                domainEventService.publishEvent(event)
 
-    @Transactional
-    fun signOut(id: String) {
-        userProfileService.delete(id)
-        load(id)
-            .run {
-                userRepository.delete(this)
+                LoginCompleteResponse(it, accessToken)
             }
     }
 
@@ -48,7 +46,5 @@ class UserService(
                 it
             }
 
-    companion object : KLogging() {
-        private const val INITIAL_POINT: Long = 0
-    }
+    companion object : KLogging()
 }

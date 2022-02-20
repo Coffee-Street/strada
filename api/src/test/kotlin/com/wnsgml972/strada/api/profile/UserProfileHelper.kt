@@ -1,22 +1,22 @@
 package com.wnsgml972.strada.api.profile
 
+import com.wnsgml972.strada.api.v1.account.domain.UserRepository
 import com.wnsgml972.strada.api.v1.account.service.UserDto
 import com.wnsgml972.strada.api.v1.account.service.UserService
+import com.wnsgml972.strada.api.v1.account.service.toEntity
 import com.wnsgml972.strada.api.v1.profile.service.UserProfileDTO
-import com.wnsgml972.strada.api.v1.profile.service.UserProfileRequest
 import com.wnsgml972.strada.api.v1.profile.service.UserProfileService
-import com.wnsgml972.strada.exception.StradaIllegalStateException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import org.springframework.transaction.annotation.Transactional
 
 @Component
 class UserProfileHelper @Autowired constructor(
     private val userService: UserService,
+    private val userRepository: UserRepository,
     private val userProfileService: UserProfileService,
 ) {
     fun signUp(userId: String): UserDto =
-        userService.signUp(userId)
+        userService.signUp(userId).userDto
 
     fun select(id: Long): UserProfileDTO =
         userProfileService.selectById(id)
@@ -24,6 +24,8 @@ class UserProfileHelper @Autowired constructor(
     fun selectByUserId(userId: String): UserProfileDTO =
         userProfileService.selectByUserId(userId)
 
-    fun signOut(userId: String) =
-        userService.signOut(userId)
+    fun signOut(userId: String) {
+        val entity = userService.findById(userId).toEntity()
+        userRepository.delete(entity)
+    }
 }

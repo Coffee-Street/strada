@@ -22,28 +22,28 @@ interface StradaExceptionHandler : AdviceTrait {
 
     @ExceptionHandler(StradaBadRequestException::class)
     fun handleBadRequestException(e: StradaBadRequestException): ResponseEntity<ErrorResponse> {
-        logger.debug("handleBadRequestException : ", e)
+        logger.warn("handleBadRequestException : ", e)
         val response = ErrorResponse(null, e.message)
         return ResponseEntity(response, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(StradaNotFoundException::class)
     fun handleNotFoundException(e: StradaNotFoundException): ResponseEntity<ErrorResponse> {
-        logger.debug("handleNotFoundException : ", e)
+        logger.warn("handleNotFoundException : ", e)
         val response = ErrorResponse(null, e.message)
         return ResponseEntity(response, HttpStatus.NOT_FOUND)
     }
 
     @ExceptionHandler(StradaIllegalStateException::class)
     fun handleIllegalStateException(e: StradaIllegalStateException): ResponseEntity<ErrorResponse> {
-        logger.debug("handleIllegalStateException : ", e)
+        logger.error("handleIllegalStateException : ", e)
         val response = ErrorResponse(null, e.message)
         return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
     }
 
     @ExceptionHandler(Exception::class)
     fun handleUnKnownException(e: Exception): ResponseEntity<ErrorResponse> {
-        logger.debug("handleUnKnownException : ", e)
+        logger.error("handleUnKnownException : ", e)
         val response = ErrorResponse(null, e.message)
         return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
     }

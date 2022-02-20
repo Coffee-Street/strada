@@ -2,7 +2,6 @@ package com.wnsgml972.strada.api.profile
 
 import com.wnsgml972.strada.AuthHelper
 import com.wnsgml972.strada.IntegrationTest
-import com.wnsgml972.strada.api.products.bread.BreadControllerIT
 import com.wnsgml972.strada.api.v1.profile.controller.UserProfileController
 import com.wnsgml972.strada.api.v1.profile.service.UserProfileDTO
 import com.wnsgml972.strada.api.v1.profile.service.UserProfileRequest
@@ -24,6 +23,7 @@ class UserProfileControllerIT @Autowired constructor(
     @BeforeEach
     fun `유저 생성`() {
         userProfileHelper.signUp(authHelper.phoneNumber)
+        Thread.sleep(1000)
     }
 
     @AfterEach
@@ -38,7 +38,7 @@ class UserProfileControllerIT @Autowired constructor(
 
         val accessToken = authHelper.getAccessToken()
         client.put()
-            .uri("${UserProfileController.USER_PROFILE_BASE_URL}")
+            .uri(UserProfileController.USER_PROFILE_BASE_URL)
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(userProfileRequest)
@@ -46,7 +46,7 @@ class UserProfileControllerIT @Autowired constructor(
             .expectStatus()
             .is2xxSuccessful
             .expectBody<UserProfileDTO>()
-            .consumeWith { result -> UserProfileControllerIT.logger.debug { "result=${result.responseBody}" } }
+            .consumeWith { result -> logger.debug { "result=${result.responseBody}" } }
     }
 
     companion object : KLogging()
