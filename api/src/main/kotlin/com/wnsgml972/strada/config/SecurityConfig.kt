@@ -1,7 +1,7 @@
 package com.wnsgml972.strada.config
 
-import com.wnsgml972.strada.api.v1.health.HealthCheckController
 import com.wnsgml972.strada.api.v1.account.controller.AccountController
+import com.wnsgml972.strada.api.v1.health.HealthCheckController
 import com.wnsgml972.strada.security.JwtAuthorizationFilter
 import com.wnsgml972.strada.security.OAuth2SecuritySpec
 import com.wnsgml972.strada.security.TokenAuthenticationProvider
@@ -37,10 +37,10 @@ class SecurityConfig @Autowired constructor(
                     "${HealthCheckController.HEALTH_BASE_URL}/**",
                     AccountController.ACCOUNT_BASE_URL).permitAll()
                 .antMatchers(
-                "/v3/api-docs/**",
-                "/swagger-ui/**",
-                "/swagger-ui.html",
-                "/webjars/**",
+                    "/v3/api-docs/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html",
+                    "/webjars/**",
             ).permitAll()
             .anyRequest().authenticated()
 
