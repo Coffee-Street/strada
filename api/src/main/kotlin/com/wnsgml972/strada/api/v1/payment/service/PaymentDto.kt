@@ -1,5 +1,7 @@
 package com.wnsgml972.strada.api.v1.payment.service
 
+import com.wnsgml972.strada.api.v1.account.domain.User
+
 data class PaymentDto(
     val aid: String,
     val amountVo: AmountVo,
@@ -12,5 +14,7 @@ data class PaymentDto(
     val paymentMethodType: String,
     val quantity: Int,
     val tid: String,
+    val paymentStatus: PaymentStatus,
+    val user: User,
     val id: Long
 )

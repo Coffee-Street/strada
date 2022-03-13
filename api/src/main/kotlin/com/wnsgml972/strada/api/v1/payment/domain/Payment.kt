@@ -1,8 +1,13 @@
 package com.wnsgml972.strada.api.v1.payment.domain
 
 import com.wnsgml972.strada.api.base.LongJpaEntity
+import com.wnsgml972.strada.api.v1.account.domain.User
+import com.wnsgml972.strada.api.v1.payment.service.PaymentStatus
 import javax.persistence.CascadeType
 import javax.persistence.Entity
+import javax.persistence.FetchType
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
 import javax.persistence.OneToOne
 
 @Entity
@@ -31,9 +36,15 @@ class Payment private constructor(
 
     val tid: String,
 
+    val paymentStatus: PaymentStatus,
+
+    @JoinColumn(name = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    val user: User,
+
     override var id: Long? = null,
 
-) : LongJpaEntity() {
+    ) : LongJpaEntity() {
     override fun equalProperties(other: Any): Boolean {
         return other is Payment &&
                 id == other.id &&
@@ -47,7 +58,9 @@ class Payment private constructor(
                 partnerUserId == other.partnerUserId &&
                 paymentMethodType == other.paymentMethodType &&
                 quantity == other.quantity &&
-                tid == other.tid
+                tid == other.tid &&
+                paymentStatus == other.paymentStatus &&
+                user == other.user
     }
 
     companion object {
@@ -63,8 +76,10 @@ class Payment private constructor(
             paymentMethodType: String,
             quantity: Int,
             tid: String,
+            paymentStatus: PaymentStatus,
+            user: User,
             id: Long?
         ) = Payment(aid, amount, approvedAt, cid, createdAt, itemName, partnerOrderId,
-            partnerUserId, paymentMethodType, quantity, tid, id)
+            partnerUserId, paymentMethodType, quantity, tid, paymentStatus, user, id)
     }
 }
