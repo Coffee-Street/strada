@@ -53,7 +53,7 @@ class PaymentControllerIT@Autowired constructor(
         )
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri("${KakaoPaymentController.USER_PROFILE_BASE_URL}/ready")
+            .uri("${KakaoPaymentController.KAKAO_PAYMENT_BASE_URL}/ready")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(paymentReadyRequest)
@@ -96,7 +96,7 @@ class PaymentControllerIT@Autowired constructor(
 
         val accessToken = authHelper.getAccessToken()
         client.post()
-            .uri("${KakaoPaymentController.USER_PROFILE_BASE_URL}/ready")
+            .uri("${KakaoPaymentController.KAKAO_PAYMENT_BASE_URL}/ready")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(paymentReadyRequest)
@@ -112,7 +112,7 @@ class PaymentControllerIT@Autowired constructor(
             }
 
         client.post()
-            .uri("${KakaoPaymentController.USER_PROFILE_BASE_URL}/approve/${paymentTransactionId}")
+            .uri("${KakaoPaymentController.KAKAO_PAYMENT_BASE_URL}/approve/${paymentTransactionId}")
             .header("Authorization", "Bearer $accessToken")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(paymentApproveRequest)

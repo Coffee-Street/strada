@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
 @RestController
-@RequestMapping(path = [KakaoPaymentController.USER_PROFILE_BASE_URL])
+@RequestMapping(path = [KakaoPaymentController.KAKAO_PAYMENT_BASE_URL])
 @Tag(
     name = "Payment",
     description = """Payment를 위한 API"""
@@ -95,6 +95,6 @@ class KakaoPaymentController @Autowired constructor(
 
     companion object : KLogging() {
         private const val KAKAO_PAYMENT_SERVICE_NAME = "/payment"
-        const val USER_PROFILE_BASE_URL = "$BASE_URL_V1/$KAKAO_PAYMENT_SERVICE_NAME"
+        const val KAKAO_PAYMENT_BASE_URL = "$BASE_URL_V1/$KAKAO_PAYMENT_SERVICE_NAME"
     }
 }
