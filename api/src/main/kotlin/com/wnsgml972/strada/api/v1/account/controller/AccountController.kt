@@ -4,7 +4,6 @@ import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.account.controller.AccountController.Companion.ACCOUNT_BASE_URL
 import com.wnsgml972.strada.api.v1.account.service.AccessTokenResponse
 import com.wnsgml972.strada.api.v1.account.service.AccessTokenRequest
-import com.wnsgml972.strada.api.v1.account.service.JwtService
 import com.wnsgml972.strada.api.v1.account.service.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -27,7 +26,6 @@ import javax.validation.Valid
 )
 class AccountController @Autowired constructor(
     private val userService: UserService,
-    private val jwtService: JwtService
 ) {
 
     @PostMapping
@@ -45,8 +43,10 @@ class AccountController @Autowired constructor(
         @Valid @RequestBody accessTokenRequest: AccessTokenRequest
     ): AccessTokenResponse {
         val phoneNumber = accessTokenRequest.phoneNumber
-        userService.signUp(phoneNumber)
-        return jwtService.createToken(phoneNumber)
+        return userService.signUp(phoneNumber)
+            .let {
+                AccessTokenResponse(it.accessToken)
+            }
     }
 
     companion object : KLogging() {

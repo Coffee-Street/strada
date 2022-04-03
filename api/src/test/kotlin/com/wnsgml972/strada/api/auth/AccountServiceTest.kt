@@ -3,7 +3,9 @@ package com.wnsgml972.strada.api.auth
 import com.wnsgml972.strada.AbstractWebTest
 import com.wnsgml972.strada.api.v1.account.domain.User
 import com.wnsgml972.strada.api.v1.account.domain.UserRepository
+import com.wnsgml972.strada.api.v1.account.service.JwtService
 import com.wnsgml972.strada.api.v1.account.service.UserService
+import com.wnsgml972.strada.api.v1.event.service.DomainEventService
 import com.wnsgml972.strada.api.v1.profile.service.UserProfileDTO
 import com.wnsgml972.strada.api.v1.profile.service.UserProfileService
 import com.wnsgml972.strada.exception.StradaNotFoundException
@@ -18,10 +20,13 @@ class AccountServiceTest : AbstractWebTest() {
     lateinit var sut: UserService
 
     lateinit var userRepository: UserRepository
-    lateinit var userProfileService: UserProfileService
+    private lateinit var userProfileService: UserProfileService
+    lateinit var jwtService: JwtService
+
     private val userMap = mutableMapOf<String, User>()
     private val userProfileDTOMap = mutableMapOf<String, UserProfileDTO>()
     private var capturedId = ""
+    private val domainEventService: DomainEventService = mockk(relaxed = true)
 
     @BeforeEach
     fun initialize() {
@@ -34,7 +39,7 @@ class AccountServiceTest : AbstractWebTest() {
         every {
             userRepository.findById(any())
         } answers {
-            Optional.of(userMap[capturedId] ?: throw StradaNotFoundException())
+            Optional.ofNullable(userMap[capturedId])
         }
 
         every {
@@ -48,6 +53,12 @@ class AccountServiceTest : AbstractWebTest() {
             userRepository.findAll()
         } answers {
             userMap.values.toList()
+        }
+
+        every {
+            userRepository.existsById(any())
+        } answers {
+            userMap.contains(capturedId)
         }
 
         userProfileService = mockk()
@@ -65,8 +76,15 @@ class AccountServiceTest : AbstractWebTest() {
             userProfileDTOMap[capturedId] ?: throw StradaNotFoundException()
         }
 
+        jwtService = mockk()
+        every {
+            jwtService.createToken(any())
+        } answers {
+            "random-token"
+        }
+
         // set unit test service
-        sut = UserService(userRepository, userProfileService)
+        sut = UserService(userRepository, domainEventService, jwtService)
     }
 
     @Test
@@ -75,7 +93,7 @@ class AccountServiceTest : AbstractWebTest() {
         capturedId = "010-1234-5678"
 
         // when: 가입 후 유저를 가져옵니다.
-        val user1 = sut.signUp(capturedId)
+        val user1 = sut.signUp(capturedId).userDto
         val user2 = sut.findById(capturedId)
         val totalUserCount = sut.findAll().size
 

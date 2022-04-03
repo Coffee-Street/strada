@@ -11,14 +11,14 @@ import javax.persistence.ManyToOne
 import javax.persistence.OneToOne
 
 @Entity
-@SuppressWarnings("LongParameterList")
+@SuppressWarnings("LongParameterList", "complexity")
 class Payment private constructor(
-    val aid: String,
+    val aid: String?,
 
     @OneToOne(cascade = [CascadeType.ALL])
-    val amount: Amount,
+    val amount: Amount?,
 
-    val approvedAt: String,
+    val approvedAt: String?,
 
     val cid: String,
 
@@ -34,17 +34,17 @@ class Payment private constructor(
 
     val quantity: Int,
 
-    val tid: String,
+    val tid: String?,
 
     val paymentStatus: PaymentStatus,
 
-    @JoinColumn(name = "id")
+    @JoinColumn
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     val user: User,
 
     override var id: Long? = null,
 
-    ) : LongJpaEntity() {
+) : LongJpaEntity() {
     override fun equalProperties(other: Any): Boolean {
         return other is Payment &&
                 id == other.id &&
@@ -65,9 +65,9 @@ class Payment private constructor(
 
     companion object {
         fun of(
-            aid: String,
-            amount: Amount,
-            approvedAt: String,
+            aid: String?,
+            amount: Amount?,
+            approvedAt: String?,
             cid: String,
             createdAt: String,
             itemName: String,
@@ -75,11 +75,23 @@ class Payment private constructor(
             partnerUserId: String,
             paymentMethodType: String,
             quantity: Int,
-            tid: String,
+            tid: String?,
             paymentStatus: PaymentStatus,
             user: User,
             id: Long?
-        ) = Payment(aid, amount, approvedAt, cid, createdAt, itemName, partnerOrderId,
-            partnerUserId, paymentMethodType, quantity, tid, paymentStatus, user, id)
+        ) = Payment(aid ?: null,
+            amount ?: null,
+            approvedAt ?: null,
+            cid,
+            createdAt,
+            itemName,
+            partnerOrderId,
+            partnerUserId,
+            paymentMethodType,
+            quantity,
+            tid ?: null,
+            paymentStatus,
+            user,
+            id)
     }
 }

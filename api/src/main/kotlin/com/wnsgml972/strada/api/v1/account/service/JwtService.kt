@@ -17,18 +17,16 @@ class JwtService(
 
     fun createToken(
         phoneNumber: String
-    ): AccessTokenResponse {
+    ): String {
         val subject = objectMapper.writeValueAsString(AccessTokenRequest(phoneNumber))
         val privateKey = jwtProperties.keyPair[0].privateKey
         val publicKey = jwtProperties.keyPair[0].publicKey
-        return AccessTokenResponse(
-            JWT.create()
-                .withSubject(subject)
-                .withAudience(JwtProperties.AUDIENCE)
-                .withIssuer(JwtProperties.ISSUER)
-                .withExpiresAt(Date.from(Instant.now().plusSeconds(SECONDS_TO_ADD)))
-                .sign(Algorithm.RSA256(publicKey, privateKey))
-        )
+        return JWT.create()
+            .withSubject(subject)
+            .withAudience(JwtProperties.AUDIENCE)
+            .withIssuer(JwtProperties.ISSUER)
+            .withExpiresAt(Date.from(Instant.now().plusSeconds(SECONDS_TO_ADD)))
+            .sign(Algorithm.RSA256(publicKey, privateKey))
     }
 
     companion object : KLogging() {

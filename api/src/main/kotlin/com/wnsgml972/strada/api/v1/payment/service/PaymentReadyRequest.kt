@@ -1,9 +1,6 @@
 package com.wnsgml972.strada.api.v1.payment.service
 
-data class PaymentInsertRequest(
-    val aid: String,
-    val amountVo: AmountVo,
-    val approvedAt: String,
+data class PaymentReadyRequest(
     val cid: String,
     val createdAt: String,
     val itemName: String,
@@ -11,5 +8,4 @@ data class PaymentInsertRequest(
     val partnerUserId: String,
     val paymentMethodType: String,
     val quantity: Int,
-    val tid: String,
 )

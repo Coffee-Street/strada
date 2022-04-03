@@ -1,0 +1,31 @@
+package com.wnsgml972.strada.api.payment
+
+
+import com.wnsgml972.strada.api.v1.payment.service.KakaoPaymentService
+import com.wnsgml972.strada.api.v1.payment.service.PaymentApproveRequest
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
+
+
+@Component
+class PaymentHelper  @Autowired constructor(
+    private val kakaoPaymentService: KakaoPaymentService
+){
+    @Transactional
+    fun insertPayment(id: String, paymentApproveRequest: PaymentApproveRequest) =
+        kakaoPaymentService.insert(id,paymentApproveRequest)
+
+    @Transactional
+    fun deletePayment(id: Long) =
+        kakaoPaymentService.delete(id)
+
+    @Transactional
+    fun clearPayment() =
+        kakaoPaymentService
+            .selectAll()
+            .forEach{
+                kakaoPaymentService
+                    .delete(it.id)
+            }
+}

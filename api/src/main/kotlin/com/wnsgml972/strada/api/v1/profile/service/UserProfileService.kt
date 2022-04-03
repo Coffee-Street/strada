@@ -24,10 +24,15 @@ class UserProfileService(
 
     @Transactional(readOnly = true)
     fun selectByUserId(userId: String): UserProfileDTO =
-        profileRepository
-            .findByUserId(userId)
-            .orElseThrow { StradaNotFoundException("$userId Not Found") }
+        load(userId)
             .toDto()
+
+    @Transactional(readOnly = true)
+    fun selectByUserIdOrNull(userId: String): UserProfileDTO? {
+        return profileRepository
+            .findByUserId(userId)
+            ?.toDto()
+    }
 
     @Transactional
     fun insert(userProfileRequest: UserProfileRequest) =
@@ -36,22 +41,21 @@ class UserProfileService(
             .toDto()
 
     @Transactional
-    fun update(id: Long, userProfileRequest: UserProfileRequest) =
-        load(id)
-            .let {
+    fun update(userId: String, userProfileRequest: UserProfileRequest) =
+        load(userId)
+            .run {
                 profileRepository
-                    .save(userProfileRequest.toEntity(id))
+                    .save(userProfileRequest.toEntity(this.id))
                     .toDto()
             }
 
     @Transactional
-    fun delete(id: Long) =
-        load(id)
+    fun delete(userId: String) =
+        load(userId)
             .run {
                 profileRepository.delete(this)
             }
 
-    @Transactional(readOnly = true)
     private fun load(id: Long): UserProfile =
         profileRepository
             .findById(id)
@@ -60,4 +64,12 @@ class UserProfileService(
                 it.id ?: throw StradaIllegalStateException("${it.id} is not initialized")
                 it
             }
+
+    private fun load(userId: String): UserProfile =
+        profileRepository
+            .findByUserId(userId)
+            ?.let {
+                it.id ?: throw StradaIllegalStateException("${it.id} is not initialized")
+                it
+            } ?: throw StradaNotFoundException("$userId's entity is Not Found")
 }

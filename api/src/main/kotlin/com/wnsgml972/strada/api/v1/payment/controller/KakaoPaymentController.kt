@@ -2,8 +2,11 @@ package com.wnsgml972.strada.api.v1.payment.controller
 
 import BASE_URL_V1
 import com.wnsgml972.strada.api.v1.payment.service.KakaoPaymentService
-import com.wnsgml972.strada.api.v1.payment.service.PaymentInsertRequest
+import com.wnsgml972.strada.api.v1.payment.service.PaymentApproveRequest
+import com.wnsgml972.strada.api.v1.payment.service.PaymentReadyRequest
+import com.wnsgml972.strada.api.v1.payment.service.PaymentStatusUpdateRequest
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
+import com.wnsgml972.strada.security.SecurityUtils
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
@@ -32,73 +35,63 @@ class KakaoPaymentController @Autowired constructor(
     @GetMapping
     @Operation(
         summary = "모든 결제 가져오기",
-        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
-    )
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     @ApiResponse(responseCode = "200", description = "List all Payment")
     fun findAll() = kakaoPaymentService.selectAll()
 
     @GetMapping("/{id}")
     @Operation(
         summary = "특정 결제 가져오기 for test",
-        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
-    )
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     @ApiResponse(responseCode = "200", description = "Find Payment")
-    fun find(
-        @PathVariable("id") id: Long
-    ) =
+    fun find(@PathVariable("id") id: Long) =
         kakaoPaymentService.selectById(id)
 
-    @PostMapping
+    @PostMapping("/ready")
+    @Operation(
+        summary = "Payment ready api",
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
+    @ApiResponse(responseCode = "200", description = "Create Payment")
+    fun ready(@RequestBody @Valid paymentReadyRequest: PaymentReadyRequest) =
+        kakaoPaymentService.insert(SecurityUtils.getPrincipal().phoneNumber.number, paymentReadyRequest)
+
+    @PostMapping("/approve/{id}")
     @Operation(
         summary = "결제하기 for test",
-        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
-    )
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     @ApiResponse(responseCode = "200", description = "Create Payment")
-    fun insert(
-        @RequestBody @Valid paymentInsertRequest: PaymentInsertRequest
+    fun approve(@PathVariable("id") id: Long, @RequestBody @Valid paymentApproveRequest: PaymentApproveRequest) =
+        kakaoPaymentService.update(id, paymentApproveRequest)
+
+    @PutMapping("/status/{id}")
+    @Operation(
+        summary = "결제 갱신하기 for test",
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
+    @ApiResponse(responseCode = "200", description = "Update Payment")
+    fun updateStatus(
+        @PathVariable("id") id: Long,
+        @RequestBody @Valid paymentStatusUpdateRequest: PaymentStatusUpdateRequest
     ) =
-        kakaoPaymentService.insert(paymentInsertRequest)
+        kakaoPaymentService.updatePaymentStatus(id, paymentStatusUpdateRequest)
 
     @PutMapping("/{id}")
     @Operation(
         summary = "결제 갱신하기 for test",
-        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
-    )
-    @ApiResponse(responseCode = "200", description = "Update Payment")
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
+    @ApiResponse(responseCode = "200", description = "Create Payment")
     fun update(
         @PathVariable("id") id: Long,
-        @RequestBody @Valid paymentInsertRequest: PaymentInsertRequest
+        @RequestBody @Valid paymentApproveRequest: PaymentApproveRequest
     ) =
-        kakaoPaymentService.update(id, paymentInsertRequest)
+        kakaoPaymentService.update(id, paymentApproveRequest)
 
     @DeleteMapping("/{id}")
     @Operation(
         summary = "결제 삭제하기 for test",
-        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)]
-    )
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     @ApiResponse(responseCode = "200", description = "Delete Payment")
-    fun delete(
-        @PathVariable("id") id: Long
-    ) =
+    fun delete(@PathVariable("id") id: Long) =
         kakaoPaymentService.delete(id)
-
-//    @GetMapping("success/{pg_token}")
-//    @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-//    @ApiResponses(
-// //        ApiResponse(responseCode = "200", description = "유저의 profile 가져오기"),
-// //        ApiResponse(responseCode = "401", description = "유저의 profile 인증 실패"),
-// //        ApiResponse(responseCode = "403", description = "유저의 profile 접근 금지"),
-//    )
-//    fun success(@PathVariable("pg_token") token: String): KakaoPayApprovalVo? {
-//        logger.debug("pg_token : ", token)
-//        return kakaoPaymentService.success(token)
-//    }
-//
-//    @PostMapping("/ready")
-//    @CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
-//    @Operation(security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-//    fun ready(@RequestBody kakaoPaymentReadyVo: KakaoPaymentReadyVo) = kakaoPaymentService.ready(kakaoPaymentReadyVo)
-//
 
     companion object : KLogging() {
         private const val KAKAO_PAYMENT_SERVICE_NAME = "/payment"

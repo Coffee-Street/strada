@@ -1,6 +1,7 @@
 version: "3"
 services:
   primary-mysql:
+    platform: linux/x86_64
     image: mysql:5.7
     restart: on-failure
     environment:
@@ -20,11 +21,12 @@ services:
       - "$HOME/mnt/strada/primary-mysql:/var/lib/strada/primary-mysql"
 
   secondary-mysql:
+    platform: linux/x86_64
     image: mysql:5.7
     restart: on-failure
     environment:
       MYSQL_DATABASE: test_db
-      MYSQL_USER: root
+#      MYSQL_USER: root
       MYSQL_PASSWORD: ''
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'

@@ -1,10 +1,11 @@
 package com.wnsgml972.strada.api.v1.payment.service
 
 import com.wnsgml972.strada.api.v1.account.domain.User
+import com.wnsgml972.strada.api.v1.account.service.toDto
 import com.wnsgml972.strada.api.v1.payment.domain.Payment
 import com.wnsgml972.strada.exception.StradaBadRequestException
 
-fun PaymentInsertRequest.toEntity(user: User, id: Long? = null) = Payment.of(
+fun PaymentApproveRequest.toEntity(user: User, id: Long? = null) = Payment.of(
     this.aid,
     this.amountVo.toEntity(),
     this.approvedAt,
@@ -20,10 +21,26 @@ fun PaymentInsertRequest.toEntity(user: User, id: Long? = null) = Payment.of(
     user,
     id
 )
+fun PaymentReadyRequest.toEntity(user: User, id: Long? = null) = Payment.of(
+    null,
+    null,
+    null,
+    this.cid,
+    this.createdAt,
+    this.itemName,
+    this.partnerOrderId,
+    this.partnerUserId,
+    this.paymentMethodType,
+    this.quantity,
+    null,
+    PaymentStatus.READY,
+    user,
+    id
+)
 
 fun Payment.toDto() = PaymentDto(
     this.aid,
-    this.amount.toVo(),
+    this.amount?.toVo(),
     this.approvedAt,
     this.cid,
     this.createdAt,
@@ -34,6 +51,6 @@ fun Payment.toDto() = PaymentDto(
     this.quantity,
     this.tid,
     this.paymentStatus,
-    this.user,
+    this.user.toDto(),
     this.id ?: throw StradaBadRequestException("$id is not null"),
 )
