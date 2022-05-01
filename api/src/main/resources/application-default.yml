@@ -38,3 +38,7 @@ spring:
             audit_table_suffix: _history
             modified_flag_suffix: _changed
             store_data_at_delete: true
+
+api:
+  kakao:
+    host: todo

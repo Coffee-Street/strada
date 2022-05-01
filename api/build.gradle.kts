@@ -65,6 +65,7 @@ dependencies {
     api(Libs.springBootStarter("aop"))
     api(Libs.springBootStarter("oauth2-resource-server"))
     api(Libs.springBootStarter("web"))
+    api(Libs.springBootStarter("webflux"))
     api(Libs.springBootStarter("validation"))
 
     api(Libs.springData("jpa"))
