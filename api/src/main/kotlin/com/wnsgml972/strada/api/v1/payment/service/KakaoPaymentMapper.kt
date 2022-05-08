@@ -7,10 +7,9 @@ import com.wnsgml972.strada.exception.StradaBadRequestException
 
 fun PaymentApproveRequest.toEntity(user: User, id: Long? = null) = Payment.of(
     this.aid,
-    this.amountVo.toEntity(),
+    this.amountVo.toEntity(id),
     this.approvedAt,
     this.cid,
-    this.createdAt,
     this.itemName,
     this.partnerOrderId,
     this.partnerUserId,
@@ -21,17 +20,17 @@ fun PaymentApproveRequest.toEntity(user: User, id: Long? = null) = Payment.of(
     user,
     id
 )
-fun PaymentReadyRequest.toEntity(user: User, id: Long? = null) = Payment.of(
+
+fun KakaoRestApiReadyRequest.toEntity(user: User, id: Long? = null) = Payment.of(
     null,
     null,
     null,
     this.cid,
-    this.createdAt,
-    this.itemName,
-    this.partnerOrderId,
-    this.partnerUserId,
-    this.paymentMethodType,
-    this.quantity,
+    this.item_name,
+    this.partner_order_id,
+    this.partner_user_id,
+    null,
+    this.quantity.toInt(),
     null,
     PaymentStatus.READY,
     user,

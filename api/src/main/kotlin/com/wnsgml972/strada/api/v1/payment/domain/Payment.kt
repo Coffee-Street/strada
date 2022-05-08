@@ -3,6 +3,8 @@ package com.wnsgml972.strada.api.v1.payment.domain
 import com.wnsgml972.strada.api.base.LongJpaEntity
 import com.wnsgml972.strada.api.v1.account.domain.User
 import com.wnsgml972.strada.api.v1.payment.service.PaymentStatus
+import org.springframework.data.annotation.CreatedDate
+import java.time.LocalDateTime
 import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.FetchType
@@ -22,7 +24,8 @@ class Payment private constructor(
 
     val cid: String,
 
-    val createdAt: String,
+    @CreatedDate
+    val createdAt: LocalDateTime?,
 
     val itemName: String,
 
@@ -30,7 +33,7 @@ class Payment private constructor(
 
     val partnerUserId: String,
 
-    val paymentMethodType: String,
+    val paymentMethodType: String?,
 
     val quantity: Int,
 
@@ -69,11 +72,10 @@ class Payment private constructor(
             amount: Amount?,
             approvedAt: String?,
             cid: String,
-            createdAt: String,
             itemName: String,
             partnerOrderId: String,
             partnerUserId: String,
-            paymentMethodType: String,
+            paymentMethodType: String?,
             quantity: Int,
             tid: String?,
             paymentStatus: PaymentStatus,
@@ -83,11 +85,11 @@ class Payment private constructor(
             amount ?: null,
             approvedAt ?: null,
             cid,
-            createdAt,
+            null,
             itemName,
             partnerOrderId,
             partnerUserId,
-            paymentMethodType,
+            paymentMethodType ?: null,
             quantity,
             tid ?: null,
             paymentStatus,

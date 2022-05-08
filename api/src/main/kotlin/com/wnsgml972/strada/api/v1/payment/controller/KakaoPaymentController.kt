@@ -1,9 +1,11 @@
 package com.wnsgml972.strada.api.v1.payment.controller
 
 import BASE_URL_V1
+import com.wnsgml972.strada.api.v1.kakao.service.KakaoApiService
 import com.wnsgml972.strada.api.v1.payment.service.KakaoPaymentService
+import com.wnsgml972.strada.api.v1.payment.service.KakaoRestApiReadyRequest
+import com.wnsgml972.strada.api.v1.payment.service.KakaoRestApiReadyResponse
 import com.wnsgml972.strada.api.v1.payment.service.PaymentApproveRequest
-import com.wnsgml972.strada.api.v1.payment.service.PaymentReadyRequest
 import com.wnsgml972.strada.api.v1.payment.service.PaymentStatusUpdateRequest
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import com.wnsgml972.strada.security.SecurityUtils
@@ -20,7 +22,10 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import org.springframework.web.servlet.view.RedirectView
 import javax.validation.Valid
 
 @RestController
@@ -30,7 +35,8 @@ import javax.validation.Valid
     description = """Payment를 위한 API"""
 )
 class KakaoPaymentController @Autowired constructor(
-    private val kakaoPaymentService: KakaoPaymentService
+    private val kakaoPaymentService: KakaoPaymentService,
+    private val kakaoApiService: KakaoApiService,
 ) {
     @GetMapping
     @Operation(
@@ -47,14 +53,6 @@ class KakaoPaymentController @Autowired constructor(
     fun find(@PathVariable("id") id: Long) =
         kakaoPaymentService.selectById(id)
 
-    @PostMapping("/ready")
-    @Operation(
-        summary = "Payment ready api",
-        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    @ApiResponse(responseCode = "200", description = "Create Payment")
-    fun ready(@RequestBody @Valid paymentReadyRequest: PaymentReadyRequest) =
-        kakaoPaymentService.insert(SecurityUtils.getPrincipal().phoneNumber.number, paymentReadyRequest)
-
     @PostMapping("/approve/{id}")
     @Operation(
         summary = "결제하기 for test",
@@ -70,7 +68,7 @@ class KakaoPaymentController @Autowired constructor(
     @ApiResponse(responseCode = "200", description = "Update Payment")
     fun updateStatus(
         @PathVariable("id") id: Long,
-        @RequestBody @Valid paymentStatusUpdateRequest: PaymentStatusUpdateRequest
+        @RequestBody @Valid paymentStatusUpdateRequest: PaymentStatusUpdateRequest,
     ) =
         kakaoPaymentService.updatePaymentStatus(id, paymentStatusUpdateRequest)
 
@@ -81,7 +79,7 @@ class KakaoPaymentController @Autowired constructor(
     @ApiResponse(responseCode = "200", description = "Create Payment")
     fun update(
         @PathVariable("id") id: Long,
-        @RequestBody @Valid paymentApproveRequest: PaymentApproveRequest
+        @RequestBody @Valid paymentApproveRequest: PaymentApproveRequest,
     ) =
         kakaoPaymentService.update(id, paymentApproveRequest)
 
@@ -92,6 +90,29 @@ class KakaoPaymentController @Autowired constructor(
     @ApiResponse(responseCode = "200", description = "Delete Payment")
     fun delete(@PathVariable("id") id: Long) =
         kakaoPaymentService.delete(id)
+
+    @PostMapping("/readyPayment")
+    @Operation(
+        summary = "결제 ready",
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
+    @ApiResponse(responseCode = "200", description = "Find Payment")
+    fun readyPayment(
+        @RequestBody @Valid kakaoRestApiReadyRequest: KakaoRestApiReadyRequest
+    ): KakaoRestApiReadyResponse {
+
+        return kakaoApiService.readyPayment(SecurityUtils.getPrincipal().phoneNumber.number, kakaoRestApiReadyRequest)
+    }
+
+    @GetMapping("/approve")
+    @Operation(
+        summary = "test")
+    @ApiResponse(responseCode = "200", description = "Find Payment")
+    fun approvePayment(@RequestParam("pg_token") pgToken: String, attributes: RedirectAttributes): RedirectView {
+
+        logger.debug { "pg_token: $pgToken" }
+        attributes.addAttribute("pg_token", pgToken)
+        return RedirectView("http://www.naver.com")
+    }
 
     companion object : KLogging() {
         private const val KAKAO_PAYMENT_SERVICE_NAME = "/payment"

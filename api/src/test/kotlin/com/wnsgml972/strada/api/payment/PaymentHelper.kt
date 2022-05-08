@@ -12,13 +12,6 @@ import org.springframework.transaction.annotation.Transactional
 class PaymentHelper  @Autowired constructor(
     private val kakaoPaymentService: KakaoPaymentService
 ){
-    @Transactional
-    fun insertPayment(id: String, paymentApproveRequest: PaymentApproveRequest) =
-        kakaoPaymentService.insert(id,paymentApproveRequest)
-
-    @Transactional
-    fun deletePayment(id: Long) =
-        kakaoPaymentService.delete(id)
 
     @Transactional
     fun clearPayment() =

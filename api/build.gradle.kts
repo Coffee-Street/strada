@@ -70,7 +70,6 @@ dependencies {
     api(Libs.springData("jpa"))
 
     implementation("org.springframework.data:spring-data-jpa")
-
     testApi(Libs.springBootStarter("test")) {
         exclude(module = "junit")
         exclude(module = "junit-vintage-engine")
@@ -148,4 +147,8 @@ dependencies {
 
     // Problem
     implementation(Libs.problem_spring_web)
+
+    // Http client
+    implementation("org.apache.httpcomponents:httpclient:4.5")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
 }

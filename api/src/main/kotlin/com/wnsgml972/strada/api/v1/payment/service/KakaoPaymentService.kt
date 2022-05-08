@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 
 class KakaoPaymentService(
     private val paymentRepository: PaymentRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 
 ) {
 
@@ -29,22 +29,34 @@ class KakaoPaymentService(
             .toDto()
 
     @Transactional
-    fun insert(userId: String, paymentReadyRequest: PaymentReadyRequest) =
+    fun insert(userId: String, kakaoRestApiReadyRequest: KakaoRestApiReadyRequest) =
         userRepository.findByIdOrNull(userId)
             ?.let {
                 paymentRepository
-                    .save(paymentReadyRequest.toEntity(it))
+                    .save(kakaoRestApiReadyRequest.toEntity(it))
                     .toDto()
             } ?: throw StradaNotFoundException("$userId is not found")
 
     @Transactional
-    fun insert(userId: String, paymentApproveRequest: PaymentApproveRequest) =
-        userRepository.findByIdOrNull(userId)
-            ?.let {
-            paymentRepository
-                .save(paymentApproveRequest.toEntity(it))
-                .toDto()
-        } ?: throw StradaNotFoundException("$userId is not found")
+    fun update(id: Long, kakaoRestApiReadyResponse: KakaoRestApiReadyResponse) =
+        load(id)
+            .let {
+                paymentRepository.save(Payment.of(
+                    it.aid,
+                    it.amount,
+                    it.approvedAt,
+                    it.cid,
+                    it.itemName,
+                    it.partnerOrderId,
+                    it.partnerUserId,
+                    it.paymentMethodType,
+                    it.quantity,
+                    kakaoRestApiReadyResponse.tid,
+                    PaymentStatus.READY,
+                    it.user,
+                    it.id
+                ))
+            }
 
     @Transactional
     fun updatePaymentStatus(id: Long, paymentStatusUpdateRequest: PaymentStatusUpdateRequest) =
@@ -55,7 +67,6 @@ class KakaoPaymentService(
                     it.amount,
                     it.approvedAt,
                     it.cid,
-                    it.createdAt,
                     it.itemName,
                     it.partnerOrderId,
                     it.partnerUserId,
