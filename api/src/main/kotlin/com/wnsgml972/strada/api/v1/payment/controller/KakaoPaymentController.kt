@@ -103,7 +103,7 @@ class KakaoPaymentController @Autowired constructor(
         return kakaoApiService.readyPayment(SecurityUtils.getPrincipal().phoneNumber.number, kakaoRestApiReadyRequest)
     }
 
-    @GetMapping("/approve")
+    @GetMapping("/approvePayment")
     @Operation(
         summary = "test")
     @ApiResponse(responseCode = "200", description = "Find Payment")

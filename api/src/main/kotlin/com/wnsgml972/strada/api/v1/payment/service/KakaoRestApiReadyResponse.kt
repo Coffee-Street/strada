@@ -10,5 +10,6 @@ data class KakaoRestApiReadyResponse(
     val next_redirect_pc_url: String,
     val android_app_scheme: String,
     val ios_app_scheme: String,
-    val created_at: Date
+    val created_at: Date,
+    var id: Long?
 )

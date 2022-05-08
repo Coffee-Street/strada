@@ -41,7 +41,7 @@ class SecurityConfig @Autowired constructor(
                     "/swagger-ui/**",
                     "/swagger-ui.html",
                     "/webjars/**",
-                    "/strada/**"
+                    "/strada/v1/payment/**"
             ).permitAll()
             .anyRequest().authenticated()
 

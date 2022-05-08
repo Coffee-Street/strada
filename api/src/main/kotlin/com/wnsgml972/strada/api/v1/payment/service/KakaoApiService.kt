@@ -39,6 +39,7 @@ class KakaoApiService @Autowired constructor(
             .bodyToMono(KakaoRestApiReadyResponse::class.java)
             .doOnSuccess {
                 kakaoPaymentService.update(paymentId, it)
+                it.id = paymentId
                 logger.debug { "[$apiName] api success $it" } }
             .retryWhen(
                 Retry.max(1).filter { throwable -> throwable is StradaIllegalStateException }
