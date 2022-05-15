@@ -114,6 +114,32 @@ class KakaoPaymentController @Autowired constructor(
         return RedirectView("http://www.naver.com")
     }
 
+    @GetMapping("/success")
+    @Operation(summary = "redirect success test")
+    @ApiResponse(responseCode = "200", description = "Redirect success case, return App Scheme URL")
+    fun success(@RequestParam("pg_token") pgToken: String): RedirectView {
+        logger.debug("pg_token: ${pgToken}")
+        return RedirectView("strada://payment/success?pg_token=$pgToken")
+    }
+//    fun success(@RequestParam("pg_token") pgToken: String, @RequestParam("tid") tid: String): RedirectView {
+//        logger.debug("pg_token: ${pgToken}, tid: ${tid}")
+//        return RedirectView("strada://payment/success?pg_token=$pgToken&tid=$tid")
+//    }
+
+    @GetMapping("/fail")
+    @Operation(summary = "redirect fail test")
+    @ApiResponse(responseCode = "200", description = "Redirect fail case")
+    fun fail(): RedirectView {
+        return RedirectView("strada://payment/fail")
+    }
+
+    @GetMapping("/cancel")
+    @Operation(summary = "redirect cancel test")
+    @ApiResponse(responseCode = "200", description = "Redirect cancel case")
+    fun cancel(): RedirectView {
+        return RedirectView("strada://payment/cancel")
+    }
+
     companion object : KLogging() {
         private const val KAKAO_PAYMENT_SERVICE_NAME = "/payment"
         const val KAKAO_PAYMENT_BASE_URL = "$BASE_URL_V1/$KAKAO_PAYMENT_SERVICE_NAME"
