@@ -39,37 +39,33 @@ class PaymentControllerIT@Autowired constructor(
         userProfileHelper.signOut(authHelper.phoneNumber)
     }
 
-    @Test
-    @Order(1)
-    fun `payment ready test`() {
-        val dto = KakaoRestApiReadyRequest(
-            "TC0ONETIME",
-            "partner_order_id",
-            "partner_user_id",
-            "초코파이",
-            "1",
-            "2000",
-            "200",
-            "0",
-            "http://127.0.0.1:8080/strada/v1/payment/test/approve",
-            "http://127.0.0.1:3000/fail",
-            "http://127.0.0.1:3000/cancel",
-        )
-        val accessToken = authHelper.getAccessToken()
-        client.post()
-            .uri("${KakaoPaymentController.KAKAO_PAYMENT_BASE_URL}/ready")
-            .header("Authorization", "Bearer $accessToken")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(dto)
-            .exchange()
-            .expectStatus()
-            .is2xxSuccessful
-            .expectBody<PaymentDto>()
-            .consumeWith { result -> PaymentControllerIT.logger.debug { "result=${result.responseBody}" } }
-    }
-
+//    @Test
+//    @Order(1)
+//    fun `payment ready test`() {
+//        val dto = KakaoRestApiReadyRequest(
+//            "TC0ONETIME",
+//            "partner_order_id",
+//            "partner_user_id",
+//            "초코파이",
+//            "1",
+//            "2000",
+//            "200",
+//            "0",
+//            "http://127.0.0.1:8080/strada/v1/payment/test/approve",
+//            "http://127.0.0.1:3000/fail",
+//            "http://127.0.0.1:3000/cancel",
+//        )
+//        val accessToken = authHelper.getAccessToken()
+//        client.post()
+//            .uri("${KakaoPaymentController.KAKAO_PAYMENT_BASE_URL}/ready")
+//            .header("Authorization", "Bearer $accessToken")
+//            .contentType(MediaType.APPLICATION_JSON)
+//            .bodyValue(dto)
+//            .exchange()
+//            .expectStatus()
+//            .is2xxSuccessful
+//            .expectBody<PaymentDto>()
+//            .consumeWith { result -> PaymentControllerIT.logger.debug { "result=${result.responseBody}" } }
+//    }
     companion object : KLogging()
-
-
-
 }
