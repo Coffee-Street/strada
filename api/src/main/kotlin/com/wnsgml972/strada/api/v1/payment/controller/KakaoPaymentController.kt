@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import org.springframework.web.servlet.view.RedirectView
 import javax.validation.Valid
 
@@ -63,25 +62,15 @@ class KakaoPaymentController @Autowired constructor(
         summary = "결제 ready",
         security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     @ApiResponse(responseCode = "200", description = "ready Payment")
-    fun readyPayment(
+    fun ready(
         @RequestBody @Valid kakaoRestApiReadyRequest: KakaoRestApiReadyRequest
     ): KakaoRestApiReadyResponse =
         kakaoPaymentService.readyPayment(SecurityUtils.getPrincipal().phoneNumber.number, kakaoRestApiReadyRequest)
 
     @GetMapping("/success")
-    @Operation(
-        summary = "ready success")
-    @ApiResponse(responseCode = "200", description = "ready 성공")
-    fun successReady(@RequestParam("pg_token") pgToken: String, attributes: RedirectAttributes): RedirectView {
-        attributes.addAttribute("pg_token", pgToken)
-        return RedirectView("http://127.0.0.1:3000")
-    }
-
-    @GetMapping("/success")
     @Operation(summary = "redirect success test")
     @ApiResponse(responseCode = "200", description = "Redirect success case, return App Scheme URL")
     fun success(@RequestParam("pg_token") pgToken: String): RedirectView {
-        logger.debug("pg_token: ${pgToken}")
         return RedirectView("strada://payment/success?pg_token=$pgToken")
     }
 
@@ -103,7 +92,7 @@ class KakaoPaymentController @Autowired constructor(
         summary = "결제 approve",
         security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
     @ApiResponse(responseCode = "200", description = "Approve payment")
-    fun approvePayment(@RequestBody @Valid paymentApproveRequest: PaymentApproveRequest): KakaoRestApiApproveResponse =
+    fun approve(@RequestBody @Valid paymentApproveRequest: PaymentApproveRequest): KakaoRestApiApproveResponse =
         kakaoPaymentService.approvePayment(paymentApproveRequest)
 
     companion object : KLogging() {
