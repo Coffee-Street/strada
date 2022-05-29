@@ -15,4 +15,8 @@ class ObjectToMultiValueMapper@Autowired constructor(
         objectMapper
             .convertValue<Map<K, V>>(dto)
             .let { LinkedMultiValueMap<K, V>().apply { setAll(it) } }
+    final inline fun <reified K, reified V> convert(dto: KakaoRestApiApproveRequest): LinkedMultiValueMap<K, V> =
+        objectMapper
+            .convertValue<Map<K, V>>(dto)
+            .let { LinkedMultiValueMap<K, V>().apply { setAll(it) } }
 }

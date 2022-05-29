@@ -4,15 +4,18 @@ import com.wnsgml972.strada.api.base.LongJpaEntity
 import com.wnsgml972.strada.api.v1.account.domain.User
 import com.wnsgml972.strada.api.v1.payment.service.PaymentStatus
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 import javax.persistence.CascadeType
 import javax.persistence.Entity
+import javax.persistence.EntityListeners
 import javax.persistence.FetchType
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.OneToOne
 
 @Entity
+@EntityListeners(AuditingEntityListener::class)
 @SuppressWarnings("LongParameterList", "complexity")
 class Payment private constructor(
     val aid: String?,
@@ -20,12 +23,12 @@ class Payment private constructor(
     @OneToOne(cascade = [CascadeType.ALL])
     val amount: Amount?,
 
-    val approvedAt: String?,
+    val approvedAt: LocalDateTime?,
 
     val cid: String,
 
     @CreatedDate
-    val createdAt: LocalDateTime?,
+    var createdAt: LocalDateTime?,
 
     val itemName: String,
 
@@ -70,7 +73,7 @@ class Payment private constructor(
         fun of(
             aid: String?,
             amount: Amount?,
-            approvedAt: String?,
+            approvedAt: LocalDateTime?,
             cid: String,
             itemName: String,
             partnerOrderId: String,

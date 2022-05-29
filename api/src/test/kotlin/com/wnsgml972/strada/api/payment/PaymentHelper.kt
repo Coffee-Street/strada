@@ -18,7 +18,9 @@ class PaymentHelper  @Autowired constructor(
         kakaoPaymentService
             .selectAll()
             .forEach{
-                kakaoPaymentService
-                    .delete(it.id)
+                it.tid?.let { it1 ->
+                    kakaoPaymentService
+                        .deleteByTid(it1)
+                }
             }
 }

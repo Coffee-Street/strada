@@ -68,69 +68,6 @@ class PaymentControllerIT@Autowired constructor(
             .consumeWith { result -> PaymentControllerIT.logger.debug { "result=${result.responseBody}" } }
     }
 
-    @Test
-    @Order(2)
-    fun `payment approve test`() {
-        var paymentTransactionId: Long? = null
-        val dto = KakaoRestApiReadyRequest(
-            "TC0ONETIME",
-            "partner_order_id",
-            "partner_user_id",
-            "초코파이",
-            "1",
-            "2000",
-            "200",
-            "0",
-            "http://127.0.0.1:8080/strada/v1/payment/test/approve",
-            "http://127.0.0.1:3000/fail",
-            "http://127.0.0.1:3000/cancel",
-        )
-
-        val paymentApproveRequest = PaymentApproveRequest(
-            "testaid",
-            AmountVo(
-                0, 0,0,0,0
-            ),
-            "2022-03-20T21:48:42",
-            "testcid",
-            "2022-03-20T21:46:42",
-            "testitem",
-            "1",
-            "testuser",
-            "CARD",
-            1,
-            "testtid"
-        )
-
-        val accessToken = authHelper.getAccessToken()
-        client.post()
-            .uri("${KakaoPaymentController.KAKAO_PAYMENT_BASE_URL}/readyPayment")
-            .header("Authorization", "Bearer $accessToken")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(dto)
-            .exchange()
-            .expectStatus()
-            .is2xxSuccessful
-            .expectBody<PaymentDto>()
-            .consumeWith {
-                    result -> PaymentControllerIT.logger.debug { "result=${result.responseBody}" }
-                .run {
-                    paymentTransactionId = result.responseBody?.id
-                }
-            }
-
-        client.post()
-            .uri("${KakaoPaymentController.KAKAO_PAYMENT_BASE_URL}/approvePayment/${paymentTransactionId}")
-            .header("Authorization", "Bearer $accessToken")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(paymentApproveRequest)
-            .exchange()
-            .expectStatus()
-            .is2xxSuccessful
-            .expectBody<PaymentDto>()
-            .consumeWith { result -> PaymentControllerIT.logger.debug { "result=${result.responseBody}" } }
-    }
-
     companion object : KLogging()
 
 

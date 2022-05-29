@@ -2,24 +2,8 @@ package com.wnsgml972.strada.api.v1.payment.service
 
 import com.wnsgml972.strada.api.v1.account.domain.User
 import com.wnsgml972.strada.api.v1.account.service.toDto
+import com.wnsgml972.strada.api.v1.payment.domain.Amount
 import com.wnsgml972.strada.api.v1.payment.domain.Payment
-import com.wnsgml972.strada.exception.StradaBadRequestException
-
-fun PaymentApproveRequest.toEntity(user: User, id: Long? = null) = Payment.of(
-    this.aid,
-    this.amountVo.toEntity(id),
-    this.approvedAt,
-    this.cid,
-    this.itemName,
-    this.partnerOrderId,
-    this.partnerUserId,
-    this.paymentMethodType,
-    this.quantity,
-    this.tid,
-    PaymentStatus.APPROVED,
-    user,
-    id
-)
 
 fun KakaoRestApiReadyRequest.toEntity(user: User, id: Long? = null) = Payment.of(
     null,
@@ -51,5 +35,27 @@ fun Payment.toDto() = PaymentDto(
     this.tid,
     this.paymentStatus,
     this.user.toDto(),
-    this.id ?: throw StradaBadRequestException("$id is not null"),
+)
+
+fun KakaoRestApiApproveResponse.toEntity(user: User, id: Long?) = Payment.of(
+    this.aid,
+    Amount.of(
+        this.amount.discount,
+        this.amount.point,
+        this.amount.taxFree,
+        this.amount.total,
+        this.amount.vat,
+        this.amount.id
+    ),
+    this.approved_at,
+    this.cid,
+    this.item_name,
+    this.partner_order_id,
+    this.partner_user_id,
+    this.payment_method_type,
+    this.quantity.toInt(),
+    this.tid,
+    PaymentStatus.APPROVED,
+    user,
+    id
 )

@@ -11,5 +11,4 @@ data class KakaoRestApiReadyResponse(
     val android_app_scheme: String,
     val ios_app_scheme: String,
     val created_at: Date,
-    var id: Long?
 )

@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 data class PaymentDto(
     val aid: String?,
     val amountVo: AmountVo?,
-    val approvedAt: String?,
+    val approvedAt: LocalDateTime?,
     val cid: String,
     val createdAt: LocalDateTime?,
     val itemName: String,
@@ -17,5 +17,4 @@ data class PaymentDto(
     val tid: String?,
     val paymentStatus: PaymentStatus,
     val userDto: UserDto,
-    val id: Long
 )

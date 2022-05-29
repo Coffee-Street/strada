@@ -6,12 +6,16 @@ import com.wnsgml972.strada.security.JwtAuthorizationFilter
 import com.wnsgml972.strada.security.OAuth2SecuritySpec
 import com.wnsgml972.strada.security.TokenAuthenticationProvider
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
@@ -41,10 +45,25 @@ class SecurityConfig @Autowired constructor(
                     "/swagger-ui/**",
                     "/swagger-ui.html",
                     "/webjars/**",
-                    "/strada/v1/payment/**"
+                    "/strada/v1/payments/success",
+                    "/strada/v1/payments/approve"
             ).permitAll()
             .anyRequest().authenticated()
+            .and()
+            .cors()
 
         OAuth2SecuritySpec().configure(http)
+    }
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource? {
+        val configuration = CorsConfiguration()
+        configuration.addAllowedOrigin("http://127.0.0.1:3000")
+        configuration.addAllowedHeader("*")
+        configuration.addAllowedMethod("*")
+        configuration.allowCredentials = true
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
     }
 }

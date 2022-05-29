@@ -1,12 +1,11 @@
 package com.wnsgml972.strada.api.v1.payment.controller
 
 import BASE_URL_V1
-import com.wnsgml972.strada.api.v1.kakao.service.KakaoApiService
 import com.wnsgml972.strada.api.v1.payment.service.KakaoPaymentService
+import com.wnsgml972.strada.api.v1.payment.service.KakaoRestApiApproveResponse
 import com.wnsgml972.strada.api.v1.payment.service.KakaoRestApiReadyRequest
 import com.wnsgml972.strada.api.v1.payment.service.KakaoRestApiReadyResponse
 import com.wnsgml972.strada.api.v1.payment.service.PaymentApproveRequest
-import com.wnsgml972.strada.api.v1.payment.service.PaymentStatusUpdateRequest
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import com.wnsgml972.strada.security.SecurityUtils
 import io.swagger.v3.oas.annotations.Operation
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -36,7 +34,6 @@ import javax.validation.Valid
 )
 class KakaoPaymentController @Autowired constructor(
     private val kakaoPaymentService: KakaoPaymentService,
-    private val kakaoApiService: KakaoApiService,
 ) {
     @GetMapping
     @Operation(
@@ -53,36 +50,6 @@ class KakaoPaymentController @Autowired constructor(
     fun find(@PathVariable("id") id: Long) =
         kakaoPaymentService.selectById(id)
 
-    @PostMapping("/approve/{id}")
-    @Operation(
-        summary = "결제하기 for test",
-        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    @ApiResponse(responseCode = "200", description = "Create Payment")
-    fun approve(@PathVariable("id") id: Long, @RequestBody @Valid paymentApproveRequest: PaymentApproveRequest) =
-        kakaoPaymentService.update(id, paymentApproveRequest)
-
-    @PutMapping("/status/{id}")
-    @Operation(
-        summary = "결제 갱신하기 for test",
-        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    @ApiResponse(responseCode = "200", description = "Update Payment")
-    fun updateStatus(
-        @PathVariable("id") id: Long,
-        @RequestBody @Valid paymentStatusUpdateRequest: PaymentStatusUpdateRequest,
-    ) =
-        kakaoPaymentService.updatePaymentStatus(id, paymentStatusUpdateRequest)
-
-    @PutMapping("/{id}")
-    @Operation(
-        summary = "결제 갱신하기 for test",
-        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    @ApiResponse(responseCode = "200", description = "Create Payment")
-    fun update(
-        @PathVariable("id") id: Long,
-        @RequestBody @Valid paymentApproveRequest: PaymentApproveRequest,
-    ) =
-        kakaoPaymentService.update(id, paymentApproveRequest)
-
     @DeleteMapping("/{id}")
     @Operation(
         summary = "결제 삭제하기 for test",
@@ -91,27 +58,23 @@ class KakaoPaymentController @Autowired constructor(
     fun delete(@PathVariable("id") id: Long) =
         kakaoPaymentService.delete(id)
 
-    @PostMapping("/readyPayment")
+    @PostMapping("/ready")
     @Operation(
         summary = "결제 ready",
         security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
-    @ApiResponse(responseCode = "200", description = "Find Payment")
+    @ApiResponse(responseCode = "200", description = "ready Payment")
     fun readyPayment(
         @RequestBody @Valid kakaoRestApiReadyRequest: KakaoRestApiReadyRequest
-    ): KakaoRestApiReadyResponse {
+    ): KakaoRestApiReadyResponse =
+        kakaoPaymentService.readyPayment(SecurityUtils.getPrincipal().phoneNumber.number, kakaoRestApiReadyRequest)
 
-        return kakaoApiService.readyPayment(SecurityUtils.getPrincipal().phoneNumber.number, kakaoRestApiReadyRequest)
-    }
-
-    @GetMapping("/approvePayment")
+    @GetMapping("/success")
     @Operation(
-        summary = "test")
-    @ApiResponse(responseCode = "200", description = "Find Payment")
-    fun approvePayment(@RequestParam("pg_token") pgToken: String, attributes: RedirectAttributes): RedirectView {
-
-        logger.debug { "pg_token: $pgToken" }
+        summary = "ready success")
+    @ApiResponse(responseCode = "200", description = "ready 성공")
+    fun successReady(@RequestParam("pg_token") pgToken: String, attributes: RedirectAttributes): RedirectView {
         attributes.addAttribute("pg_token", pgToken)
-        return RedirectView("http://www.naver.com")
+        return RedirectView("http://127.0.0.1:3000")
     }
 
     @GetMapping("/success")
@@ -121,10 +84,6 @@ class KakaoPaymentController @Autowired constructor(
         logger.debug("pg_token: ${pgToken}")
         return RedirectView("strada://payment/success?pg_token=$pgToken")
     }
-//    fun success(@RequestParam("pg_token") pgToken: String, @RequestParam("tid") tid: String): RedirectView {
-//        logger.debug("pg_token: ${pgToken}, tid: ${tid}")
-//        return RedirectView("strada://payment/success?pg_token=$pgToken&tid=$tid")
-//    }
 
     @GetMapping("/fail")
     @Operation(summary = "redirect fail test")
@@ -139,9 +98,16 @@ class KakaoPaymentController @Autowired constructor(
     fun cancel(): RedirectView {
         return RedirectView("strada://payment/cancel")
     }
+    @PostMapping("/approve")
+    @Operation(
+        summary = "결제 approve",
+        security = [SecurityRequirement(name = SpringdocOpenApiConfig.OPEN_API_BEARER_KEY)])
+    @ApiResponse(responseCode = "200", description = "Approve payment")
+    fun approvePayment(@RequestBody @Valid paymentApproveRequest: PaymentApproveRequest): KakaoRestApiApproveResponse =
+        kakaoPaymentService.approvePayment(paymentApproveRequest)
 
     companion object : KLogging() {
-        private const val KAKAO_PAYMENT_SERVICE_NAME = "/payment"
+        private const val KAKAO_PAYMENT_SERVICE_NAME = "/payments"
         const val KAKAO_PAYMENT_BASE_URL = "$BASE_URL_V1/$KAKAO_PAYMENT_SERVICE_NAME"
     }
 }
