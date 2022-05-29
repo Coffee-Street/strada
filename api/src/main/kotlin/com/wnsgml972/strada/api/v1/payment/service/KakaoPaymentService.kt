@@ -35,7 +35,7 @@ class KakaoPaymentService(
                 update(payment.id!!, response)
             }?.onFailure {
                 updatePaymentStatus(payment.id!!, PaymentStatus.FAILED)
-                throw StradaNotFoundException("${payment.tid} is failed")
+                throw StradaNotFoundException("${payment.tid} is failed. $it",it)
             }?.getOrNull()
         } ?: throw StradaNotFoundException("${paymentApproveRequest.tid} is not found")
 
@@ -54,7 +54,7 @@ class KakaoPaymentService(
                     update(payment.id!!, response)
                 }?.onFailure {
                     updatePaymentStatus(payment.id!!, PaymentStatus.FAILED)
-                    throw StradaNotFoundException("${payment.tid} is failed")
+                    throw StradaNotFoundException("${payment.id} is failed. $it",it)
                 }?.getOrNull()
             } ?: throw StradaNotFoundException("$targetUserId is not found")
 
