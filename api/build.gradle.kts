@@ -149,6 +149,5 @@ dependencies {
     implementation(Libs.problem_spring_web)
 
     // Http client
-    implementation("org.apache.httpcomponents:httpclient:4.5")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation(Libs.springBootStarter("webflux"))
 }

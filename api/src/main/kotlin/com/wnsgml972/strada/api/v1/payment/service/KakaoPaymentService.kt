@@ -24,19 +24,19 @@ class KakaoPaymentService(
         paymentApproveRequest: PaymentApproveRequest,
     ): KakaoRestApiApproveResponse =
         paymentRepository.findByTid(paymentApproveRequest.tid)?.let { payment ->
-            payment.id?.runCatching {
+            payment.id.runCatching {
                 kakaoApiService.approvePayment(KakaoRestApiApproveRequest(
                     payment.cid,
                     paymentApproveRequest.tid,
                     payment.partnerOrderId,
                     payment.partnerUserId,
-                    paymentApproveRequest.pg_token))
-            }?.onSuccess { response ->
+                    paymentApproveRequest.pgToken))
+            }.onSuccess { response ->
                 update(payment.id!!, response)
-            }?.onFailure {
+            }.onFailure {
                 updatePaymentStatus(payment.id!!, PaymentStatus.FAILED)
                 throw StradaNotFoundException("${payment.tid} is failed. $it", it)
-            }?.getOrNull()
+            }.getOrNull()
         } ?: throw StradaNotFoundException("${paymentApproveRequest.tid} is not found")
 
     fun readyPayment(
@@ -102,21 +102,9 @@ class KakaoPaymentService(
     fun update(id: Long, kakaoRestApiApproveResponse: KakaoRestApiApproveResponse): PaymentDto =
         load(id)
             .let {
-                paymentRepository.save(Payment.of(
-                    kakaoRestApiApproveResponse.aid,
-                    kakaoRestApiApproveResponse.amount,
-                    kakaoRestApiApproveResponse.approved_at,
-                    kakaoRestApiApproveResponse.cid,
-                    kakaoRestApiApproveResponse.item_name,
-                    kakaoRestApiApproveResponse.partner_order_id,
-                    kakaoRestApiApproveResponse.partner_user_id,
-                    kakaoRestApiApproveResponse.payment_method_type,
-                    kakaoRestApiApproveResponse.quantity.toInt(),
-                    kakaoRestApiApproveResponse.tid,
-                    PaymentStatus.APPROVED,
-                    it.user,
-                    it.id
-                )).toDto()
+                paymentRepository
+                    .save(kakaoRestApiApproveResponse.toEntity(it.user, it.id))
+                    .toDto()
             }
 
     @Transactional

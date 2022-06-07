@@ -5,6 +5,7 @@ import com.wnsgml972.strada.api.v1.payment.service.KakaoRestApiApproveResponse
 import com.wnsgml972.strada.api.v1.payment.service.KakaoRestApiReadyRequest
 import com.wnsgml972.strada.api.v1.payment.service.KakaoRestApiReadyResponse
 import com.wnsgml972.strada.api.v1.payment.service.ObjectToMultiValueMapper
+import com.wnsgml972.strada.config.KakaoApiProperties
 import com.wnsgml972.strada.exception.StradaIllegalStateException
 import com.wnsgml972.strada.handler.WebClientExceptionHandler
 import mu.KLogging
@@ -21,6 +22,7 @@ class KakaoApiService @Autowired constructor(
     @Qualifier("kakaoApiWebClient")
     private val kakaoApiWebClient: WebClient,
     private val objectToMultiValueMapper: ObjectToMultiValueMapper,
+    private val kakaoApiProperties: KakaoApiProperties,
 ) {
     fun readyPayment(
         targetUserId: String,
@@ -30,8 +32,8 @@ class KakaoApiService @Autowired constructor(
         val apiName = "readyPayment"
         return kakaoApiWebClient.post()
             .uri { it.path("/ready").build() }
-            .header("Authorization", "KakaoAK " + "b3c9f7176efadd6a944606020fefd4da")
-            .bodyValue(objectToMultiValueMapper.convert<String, String>(kakaoRestApiReadyRequest))
+            .header("Authorization", "KakaoAK ${kakaoApiProperties.appAdminKey}")
+            .bodyValue(objectToMultiValueMapper.convert(kakaoRestApiReadyRequest))
             .retrieve()
             .onStatus(HttpStatus::is4xxClientError) { WebClientExceptionHandler.onStatus4XXClientError(it) }
             .onStatus(HttpStatus::is5xxServerError) { WebClientExceptionHandler.onStatus5XXServerError(apiName, it) }
@@ -49,8 +51,8 @@ class KakaoApiService @Autowired constructor(
         val apiName = "approvePayment"
         return kakaoApiWebClient.post()
             .uri { it.path("/approve").build() }
-            .header("Authorization", "KakaoAK " + "b3c9f7176efadd6a944606020fefd4da")
-            .bodyValue(objectToMultiValueMapper.convert<String, String>(kakaoRestApiApproveRequest))
+            .header("Authorization", "KakaoAK ${kakaoApiProperties.appAdminKey}")
+            .bodyValue(objectToMultiValueMapper.convert(kakaoRestApiApproveRequest))
             .retrieve()
             .onStatus(HttpStatus::is4xxClientError) { WebClientExceptionHandler.onStatus4XXClientError(it) }
             .onStatus(HttpStatus::is5xxServerError) { WebClientExceptionHandler.onStatus5XXServerError(apiName, it) }

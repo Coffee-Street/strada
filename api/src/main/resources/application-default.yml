@@ -41,3 +41,9 @@ spring:
 api:
   kakao:
     host: "https://kapi.kakao.com/v1/payment"
+    app-admin-key: "b3c9f7176efadd6a944606020fefd4da"
+    redirection:
+      - "/strada/v1/payments/success"
+      - "/strada/v1/payments/approve"
+      - "/strada/v1/payments/cancel"
+      - "/strada/v1/payments/fail"

@@ -3,14 +3,14 @@ package com.wnsgml972.strada.api.v1.payment.service
 @SuppressWarnings("ConstructorParameterNaming")
 data class KakaoRestApiReadyRequest(
     val cid: String,
-    val partner_order_id: String,
-    val partner_user_id: String,
-    val item_name: String,
+    val partnerOrderId: String,
+    val partnerUserId: String,
+    val itemName: String,
     val quantity: String,
-    val total_amount: String,
-    val vat_amount: String,
-    val tax_free_amount: String,
-    val approval_url: String,
-    val fail_url: String,
-    val cancel_url: String
+    val totalAmount: String,
+    val vatAmount: String,
+    val taxFreeAmount: String,
+    val approvalUrl: String,
+    val failUrl: String,
+    val cancelUrl: String
 )

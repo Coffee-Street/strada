@@ -4,7 +4,7 @@ package com.wnsgml972.strada.api.v1.payment.service
 data class KakaoRestApiApproveRequest(
     val cid: String,
     val tid: String,
-    val partner_order_id: String,
-    val partner_user_id: String,
-    val pg_token: String,
+    val partnerOrderId: String,
+    val partnerUserId: String,
+    val pgToken: String,
 )

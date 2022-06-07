@@ -19,9 +19,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
+@SuppressWarnings("SpreadOperator")
 class SecurityConfig @Autowired constructor(
     private val tokenAuthenticationProvider: TokenAuthenticationProvider,
     private val jwtAuthorizationFilter: JwtAuthorizationFilter,
+    private val kakaoApiProperties: KakaoApiProperties,
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(auth: AuthenticationManagerBuilder) {
@@ -35,18 +37,17 @@ class SecurityConfig @Autowired constructor(
             .and()
             .addFilter(jwtAuthorizationFilter)
             .authorizeRequests()
-                .antMatchers(
-                    "/",
-                    HealthCheckController.HEALTH_BASE_URL,
-                    "${HealthCheckController.HEALTH_BASE_URL}/**",
-                    AccountController.ACCOUNT_BASE_URL).permitAll()
-                .antMatchers(
-                    "/v3/api-docs/**",
-                    "/swagger-ui/**",
-                    "/swagger-ui.html",
-                    "/webjars/**",
-                    "/strada/v1/payments/success",
-                    "/strada/v1/payments/approve"
+            .antMatchers(
+                "/",
+                HealthCheckController.HEALTH_BASE_URL,
+                "${HealthCheckController.HEALTH_BASE_URL}/**",
+                AccountController.ACCOUNT_BASE_URL).permitAll()
+            .antMatchers(
+                "/v3/api-docs/**",
+                "/swagger-ui/**",
+                "/swagger-ui.html",
+                "/webjars/**",
+                *kakaoApiProperties.redirection.toTypedArray()
             ).permitAll()
             .anyRequest().authenticated()
             .and()

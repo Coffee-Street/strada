@@ -7,4 +7,6 @@ import org.springframework.boot.context.properties.ConstructorBinding
 @ConfigurationProperties("api.kakao")
 class KakaoApiProperties(
     val host: String,
+    val appAdminKey: String,
+    val redirection: List<String>
 )
