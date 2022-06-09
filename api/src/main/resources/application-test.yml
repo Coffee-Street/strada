@@ -44,6 +44,5 @@ api:
     app-admin-key: "b3c9f7176efadd6a944606020fefd4da"
     redirection:
       - "/strada/v1/payments/success"
-      - "/strada/v1/payments/approve"
       - "/strada/v1/payments/cancel"
       - "/strada/v1/payments/fail"

@@ -1,6 +1,6 @@
 package com.wnsgml972.strada.api.v1.payment.service
 
-import java.time.LocalDateTime
+import java.util.Date
 
 @SuppressWarnings("ConstructorParameterNaming")
 data class KakaoRestApiApproveResponse(
@@ -15,7 +15,7 @@ data class KakaoRestApiApproveResponse(
     val itemName: String,
     val itemCode: String?,
     val quantity: Integer,
-    val createdAt: LocalDateTime,
-    val approvedAt: LocalDateTime,
+    val createdAt: Date,
+    val approvedAt: Date,
     val payload: String?
 )

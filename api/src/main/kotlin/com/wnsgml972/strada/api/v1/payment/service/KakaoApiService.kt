@@ -65,8 +65,6 @@ class KakaoApiService @Autowired constructor(
     }
 
     companion object : KLogging() {
-        private const val BASE_KAKAO_URL = "/todo"
-        private const val READY_URL = "$BASE_KAKAO_URL/ready"
         private const val READY_API_TIMEOUT_MILLIS = 2000L
     }
 }

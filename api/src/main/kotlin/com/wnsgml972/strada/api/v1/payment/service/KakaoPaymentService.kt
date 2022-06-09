@@ -1,13 +1,13 @@
 package com.wnsgml972.strada.api.v1.payment.service
 
-import com.wnsgml972.strada.api.v1.account.domain.UserRepository
+import com.wnsgml972.strada.api.v1.account.service.UserService
+import com.wnsgml972.strada.api.v1.account.service.toEntity
 import com.wnsgml972.strada.api.v1.kakao.service.KakaoApiService
 import com.wnsgml972.strada.api.v1.payment.domain.Payment
 import com.wnsgml972.strada.api.v1.payment.domain.PaymentRepository
 import com.wnsgml972.strada.exception.StradaIllegalStateException
 import com.wnsgml972.strada.exception.StradaNotFoundException
 import mu.KLogging
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,48 +15,47 @@ import org.springframework.transaction.annotation.Transactional
 @SuppressWarnings("TooManyFunctions")
 class KakaoPaymentService(
     private val paymentRepository: PaymentRepository,
-    private val userRepository: UserRepository,
-    private val kakaoApiService: KakaoApiService
+    private val kakaoApiService: KakaoApiService,
+    private val userService: UserService
 
 ) {
 
     fun approvePayment(
         paymentApproveRequest: PaymentApproveRequest,
     ): KakaoRestApiApproveResponse =
-        paymentRepository.findByTid(paymentApproveRequest.tid)?.let { payment ->
-            payment.id.runCatching {
-                kakaoApiService.approvePayment(KakaoRestApiApproveRequest(
-                    payment.cid,
-                    paymentApproveRequest.tid,
-                    payment.partnerOrderId,
-                    payment.partnerUserId,
-                    paymentApproveRequest.pgToken))
-            }.onSuccess { response ->
-                update(payment.id!!, response)
-            }.onFailure {
-                updatePaymentStatus(payment.id!!, PaymentStatus.FAILED)
-                throw StradaNotFoundException("${payment.tid} is failed. $it", it)
-            }.getOrNull()
-        } ?: throw StradaNotFoundException("${paymentApproveRequest.tid} is not found")
+        load(paymentApproveRequest.tid).runCatching {
+            kakaoApiService.approvePayment(KakaoRestApiApproveRequest(
+                this.cid,
+                paymentApproveRequest.tid,
+                this.partnerOrderId,
+                this.partnerUserId,
+                paymentApproveRequest.pgToken))
+        }.onSuccess { response ->
+            update(response)
+        }.onFailure {
+            updatePaymentStatus(paymentApproveRequest.tid, PaymentStatus.FAILED)
+        }.getOrThrow()
 
     fun readyPayment(
         targetUserId: String,
         kakaoRestApiReadyRequest: KakaoRestApiReadyRequest,
     ): KakaoRestApiReadyResponse =
-        userRepository.findByIdOrNull(targetUserId)
-            ?.let { user ->
+        userService.findById(targetUserId)
+            .let { user ->
                 paymentRepository
-                    .save(kakaoRestApiReadyRequest.toEntity(user))
-            }?.let { payment ->
-                payment.id?.runCatching {
+                    .save(kakaoRestApiReadyRequest.toEntity(user.toEntity()))
+            }.let { payment ->
+                runCatching {
                     kakaoApiService.readyPayment(targetUserId, kakaoRestApiReadyRequest)
-                }?.onSuccess { response ->
-                    update(payment.id!!, response)
-                }?.onFailure {
-                    updatePaymentStatus(payment.id!!, PaymentStatus.FAILED)
-                    throw StradaNotFoundException("${payment.id} is failed. $it", it)
-                }?.getOrNull()
-            } ?: throw StradaNotFoundException("$targetUserId is not found")
+                }.onSuccess { response ->
+                    payment.id?.let { id ->
+                        update(id, response)
+                    }
+                }.onFailure {
+                    payment.tid ?: throw StradaNotFoundException("${payment.id} is failed. $it", it)
+                    updatePaymentStatus(payment.tid, PaymentStatus.FAILED)
+                }.getOrThrow()
+            }
 
     @Transactional(readOnly = true)
     fun selectAll() =
@@ -70,12 +69,12 @@ class KakaoPaymentService(
 
     @Transactional
     fun insert(userId: String, kakaoRestApiReadyRequest: KakaoRestApiReadyRequest) =
-        userRepository.findByIdOrNull(userId)
-            ?.let {
+        userService.findById(userId)
+            .let {
                 paymentRepository
-                    .save(kakaoRestApiReadyRequest.toEntity(it))
+                    .save(kakaoRestApiReadyRequest.toEntity(it.toEntity()))
                     .toDto()
-            } ?: throw StradaNotFoundException("$userId is not found")
+            }
 
     @Transactional
     fun update(id: Long, kakaoRestApiReadyResponse: KakaoRestApiReadyResponse): PaymentDto =
@@ -99,8 +98,8 @@ class KakaoPaymentService(
             }
 
     @Transactional
-    fun update(id: Long, kakaoRestApiApproveResponse: KakaoRestApiApproveResponse): PaymentDto =
-        load(id)
+    fun update(kakaoRestApiApproveResponse: KakaoRestApiApproveResponse): PaymentDto =
+        load(kakaoRestApiApproveResponse.tid)
             .let {
                 paymentRepository
                     .save(kakaoRestApiApproveResponse.toEntity(it.user, it.id))
@@ -108,8 +107,8 @@ class KakaoPaymentService(
             }
 
     @Transactional
-    fun updatePaymentStatus(id: Long, paymentStatus: PaymentStatus) =
-        load(id)
+    fun updatePaymentStatus(tid: String, paymentStatus: PaymentStatus) =
+        load(tid)
             .let {
                 paymentRepository.save(Payment.of(
                     it.aid,
@@ -124,7 +123,7 @@ class KakaoPaymentService(
                     it.tid,
                     paymentStatus,
                     it.user,
-                    id
+                    it.id
                 ))
             }
             .toDto()
@@ -139,7 +138,8 @@ class KakaoPaymentService(
     @Transactional
     fun deleteByTid(tid: String) =
         paymentRepository.findByTid(tid)
-            ?.let {
+            .orElseThrow { StradaNotFoundException("$tid Not Found") }
+            .let {
                 paymentRepository.delete(it)
             }
 
@@ -150,6 +150,16 @@ class KakaoPaymentService(
             .orElseThrow { StradaNotFoundException("$id Not Found") }
             .let {
                 it.id ?: throw StradaIllegalStateException("${it.id} is not initialized")
+                it
+            }
+
+    @Transactional(readOnly = true)
+    fun load(tid: String): Payment =
+        paymentRepository
+            .findByTid(tid)
+            .orElseThrow { StradaNotFoundException("$tid Not Found") }
+            .let {
+                it.id ?: throw StradaIllegalStateException("id of $tid is not initialized")
                 it
             }
 

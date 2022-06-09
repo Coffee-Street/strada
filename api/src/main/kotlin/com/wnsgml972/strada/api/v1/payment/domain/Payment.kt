@@ -5,7 +5,7 @@ import com.wnsgml972.strada.api.v1.account.domain.User
 import com.wnsgml972.strada.api.v1.payment.service.PaymentStatus
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
-import java.time.LocalDateTime
+import java.util.Date
 import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.EntityListeners
@@ -23,12 +23,12 @@ class Payment private constructor(
     @OneToOne(cascade = [CascadeType.ALL])
     val amount: Amount?,
 
-    val approvedAt: LocalDateTime?,
+    val approvedAt: Date?,
 
     val cid: String,
 
     @CreatedDate
-    var createdAt: LocalDateTime?,
+    var createdAt: Date?,
 
     val itemName: String,
 
@@ -45,7 +45,7 @@ class Payment private constructor(
     val paymentStatus: PaymentStatus,
 
     @JoinColumn
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.MERGE])
     val user: User,
 
     override var id: Long? = null,
@@ -73,7 +73,7 @@ class Payment private constructor(
         fun of(
             aid: String?,
             amount: Amount?,
-            approvedAt: LocalDateTime?,
+            approvedAt: Date?,
             cid: String,
             itemName: String,
             partnerOrderId: String,

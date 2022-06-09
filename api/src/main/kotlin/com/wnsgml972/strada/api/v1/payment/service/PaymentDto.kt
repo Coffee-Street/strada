@@ -1,14 +1,14 @@
 package com.wnsgml972.strada.api.v1.payment.service
 
 import com.wnsgml972.strada.api.v1.account.service.UserDto
-import java.time.LocalDateTime
+import java.util.Date
 
 data class PaymentDto(
     val aid: String?,
     val amountVo: AmountVo?,
-    val approvedAt: LocalDateTime?,
+    val approvedAt: Date?,
     val cid: String,
-    val createdAt: LocalDateTime?,
+    val createdAt: Date?,
     val itemName: String,
     val partnerOrderId: String,
     val partnerUserId: String,
