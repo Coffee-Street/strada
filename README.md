@@ -51,10 +51,9 @@ todo
 
 <img src = "https://github.com/Coffee-Street/Document/blob/master/assets/purchase_product_flow.png" width="80%" height="80%">
 
-
 ## DB ERD
 
-todo
+![ERD](https://github.com/Coffee-Street/Document/blob/master/assets/2022-06-11-strada_erd.png)
 
 ## License
 
