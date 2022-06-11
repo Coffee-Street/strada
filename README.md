@@ -12,8 +12,9 @@ docker-compose up
 ```
 
 ## Server Structure
+![Architecture](https://user-images.githubusercontent.com/34090998/173180093-2cac0853-676d-4767-bc8d-b5e70f1f0db3.png)
 
-todo
+
 
 ## Goals
 
