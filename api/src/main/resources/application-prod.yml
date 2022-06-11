@@ -38,3 +38,11 @@ spring:
             audit_table_suffix: _history
             modified_flag_suffix: _changed
             store_data_at_delete: true
+api:
+  kakao:
+    host: "https://kapi.kakao.com/v1/payment"
+    app-admin-key: "b3c9f7176efadd6a944606020fefd4da"
+    redirection:
+      - "/strada/v1/payments/success"
+      - "/strada/v1/payments/cancel"
+      - "/strada/v1/payments/fail"
