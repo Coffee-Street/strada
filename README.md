@@ -15,6 +15,11 @@ docker-compose up
 
 ![Architecture](https://user-images.githubusercontent.com/34090998/173180518-cb23fa97-5e5d-42fa-9094-96970f864f11.png)
 
+## Client
+
+- [strada-ios](https://github.com/Coffee-Street/strada-ios)
+- [strada-flutter](https://github.com/Coffee-Street/strada-flutter)
+
 ## Goals
 
 * 카페에서 사용할 수 있는 모바일 어플리케이션과 API 서버를 개발하여 상품 조회, 주문, 결제 등의 서비스를 제공한다.
