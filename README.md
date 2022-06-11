@@ -19,9 +19,9 @@ docker-compose up
 ## Goals
 
 * 카페에서 사용할 수 있는 모바일 어플리케이션과 API 서버를 개발하여 상품 조회, 주문, 결제 등의 서비스를 제공한다.
-* Container 가상화, DB 이중화를 통해 높은 트래픽에도 안정적으로 서비스 될 수 있도록 구현한다.
-* 단위테스트, Techspec 문서화, 코드 Review를 통해 효율적인 협업을 추구한다.
-
+* JPA(ORM)를 활용하여 RDB의 트랜잭션을 관리하여 생산성을 향상시킨다.
+* Container 가상화, DB 이중화를 통해 고가용성을 구현한다.
+* 단위테스트, Tech Spec 문서화, Code Review를 통해 높은 퀄리티의 소프트웨어를 구현한다.
 
 ## Key Issues
 
