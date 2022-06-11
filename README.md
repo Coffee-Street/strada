@@ -53,7 +53,7 @@ todo
 
 ## DB ERD
 
-![ERD](https://github.com/Coffee-Street/Document/blob/master/assets/2022-06-11-strada_erd.png)
+![ERD](https://github.com/Coffee-Street/Document/blob/master/assets/2022-0611-strada_erd.png)
 
 ## License
 
