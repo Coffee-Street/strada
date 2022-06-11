@@ -15,7 +15,6 @@ docker-compose up
 ![Architecture](https://user-images.githubusercontent.com/34090998/173180093-2cac0853-676d-4767-bc8d-b5e70f1f0db3.png)
 
 
-
 ## Goals
 
 todo
@@ -50,7 +49,8 @@ todo
 
 ## Purchase Product Flow (feat. kakaopay)
 
-todo
+<img src = "https://github.com/Coffee-Street/Document/blob/master/assets/purchase_product_flow.png" width="80%" height="80%">
+
 
 ## DB ERD
 
