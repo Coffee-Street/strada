@@ -12,16 +12,19 @@ docker-compose up
 ```
 
 ## Server Structure
-![Architecture](https://user-images.githubusercontent.com/34090998/173180093-2cac0853-676d-4767-bc8d-b5e70f1f0db3.png)
 
+![Architecture](https://user-images.githubusercontent.com/34090998/173180518-cb23fa97-5e5d-42fa-9094-96970f864f11.png)
 
 ## Goals
 
-todo
+* 카페에서 사용할 수 있는 모바일 어플리케이션과 API 서버를 개발하여 상품 조회, 주문, 결제 등의 서비스를 제공한다.
+* JPA를 깊게 이해하고 사용하여 비효율적인 IO를 발생시키지 않으며, 효율적인 쿼리가 동작하도록 구현한다.
+* Container 가상화, DB 이중화를 통해 고가용성을 구현한다.
+* 단위테스트, Tech Spec 문서화, Code Review를 통해 높은 퀄리티의 소프트웨어를 구현한다.
 
 ## Key Issues
 
-todo
+* [Kakao 결제 API를 호출한 뒤 Deeplink를 통해 앱의 결제 화면으로 돌아오는 과정](https://github.com/Coffee-Street/Document/blob/master/tech-spec/KakaoPaymentTechSpec.md)
 
 ## Done
 
