@@ -129,6 +129,50 @@ class KakaoPaymentService(
             .toDto()
 
     @Transactional
+    fun fail(paymentFailRequest: PaymentFailRequest) =
+        load(paymentFailRequest.tid)
+            .let {
+                paymentRepository.save(Payment.of(
+                    it.aid,
+                    it.amount,
+                    it.approvedAt,
+                    it.cid,
+                    it.itemName,
+                    it.partnerOrderId,
+                    it.partnerUserId,
+                    it.paymentMethodType,
+                    it.quantity,
+                    it.tid,
+                    PaymentStatus.FAILED,
+                    it.user,
+                    it.id
+                ))
+            }
+            .toDto()
+
+    @Transactional
+    fun cancel(paymentCancelRequest: PaymentCancelRequest) =
+        load(paymentCancelRequest.tid)
+            .let {
+                paymentRepository.save(Payment.of(
+                    it.aid,
+                    it.amount,
+                    it.approvedAt,
+                    it.cid,
+                    it.itemName,
+                    it.partnerOrderId,
+                    it.partnerUserId,
+                    it.paymentMethodType,
+                    it.quantity,
+                    it.tid,
+                    PaymentStatus.CANCEL,
+                    it.user,
+                    it.id
+                ))
+            }
+            .toDto()
+
+    @Transactional
     fun delete(id: Long) =
         load(id)
             .let {
@@ -143,8 +187,7 @@ class KakaoPaymentService(
                 paymentRepository.delete(it)
             }
 
-    @Transactional(readOnly = true)
-    fun load(id: Long): Payment =
+    private fun load(id: Long): Payment =
         paymentRepository
             .findById(id)
             .orElseThrow { StradaNotFoundException("$id Not Found") }
@@ -153,8 +196,7 @@ class KakaoPaymentService(
                 it
             }
 
-    @Transactional(readOnly = true)
-    fun load(tid: String): Payment =
+    private fun load(tid: String): Payment =
         paymentRepository
             .findByTid(tid)
             .orElseThrow { StradaNotFoundException("$tid Not Found") }

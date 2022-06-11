@@ -6,6 +6,8 @@ import com.wnsgml972.strada.api.v1.payment.service.KakaoRestApiApproveResponse
 import com.wnsgml972.strada.api.v1.payment.service.KakaoRestApiReadyRequest
 import com.wnsgml972.strada.api.v1.payment.service.KakaoRestApiReadyResponse
 import com.wnsgml972.strada.api.v1.payment.service.PaymentApproveRequest
+import com.wnsgml972.strada.api.v1.payment.service.PaymentCancelRequest
+import com.wnsgml972.strada.api.v1.payment.service.PaymentFailRequest
 import com.wnsgml972.strada.config.management.SpringdocOpenApiConfig
 import com.wnsgml972.strada.security.SecurityUtils
 import io.swagger.v3.oas.annotations.Operation
@@ -94,6 +96,18 @@ class KakaoPaymentController @Autowired constructor(
     @ApiResponse(responseCode = "200", description = "Approve payment")
     fun approve(@RequestBody @Valid paymentApproveRequest: PaymentApproveRequest): KakaoRestApiApproveResponse =
         kakaoPaymentService.approvePayment(paymentApproveRequest)
+
+    @PostMapping("/fail")
+    @Operation(summary = "Payment fail api")
+    @ApiResponse(responseCode = "200", description = "Payment fail api")
+    fun fail(@RequestBody @Valid paymentFailRequest: PaymentFailRequest) =
+        kakaoPaymentService.fail(paymentFailRequest)
+
+    @PostMapping("/cancel")
+    @Operation(summary = "Payment cancel api")
+    @ApiResponse(responseCode = "200", description = "Payment cancel api")
+    fun cancel(@RequestBody @Valid paymentCancelRequest: PaymentCancelRequest) =
+        kakaoPaymentService.cancel(paymentCancelRequest)
 
     companion object : KLogging() {
         private const val KAKAO_PAYMENT_SERVICE_NAME = "/payments"
