@@ -57,7 +57,7 @@ docker-compose up
 
 ## Purchase Product Flow (feat. kakaopay)
 
-<img src = "https://github.com/Coffee-Street/Document/blob/master/assets/purchase_product_flow.png" width="80%" height="80%">
+<img src = "https://github.com/Coffee-Street/Document/blob/master/assets/KakaoPay%20API.svg" width="80%" height="80%">
 
 ## DB ERD
 
